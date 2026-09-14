@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:wordlists": "node scripts/build-wordlists.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
