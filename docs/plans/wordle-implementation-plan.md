@@ -16,19 +16,19 @@ browser via `localStorage`.
 
 ## Tech stack
 
-| Concern | Choice | Why |
-|---|---|---|
-| Framework | React 18 + TypeScript | Component model fits a multi-game portal; TS catches state/type bugs early |
-| Build tool | Vite | Fast dev server, simple static build output |
-| Routing | React Router | `/` portal home, `/wordle` (room for future games) |
-| Styling | Tailwind CSS | Fast to build a clean, responsive board/keyboard |
-| Persistence | `localStorage` (not cookies) | No backend to send cookies to; localStorage is the correct client-only equivalent — larger capacity, simpler API |
-| i18n | Lightweight custom `I18nProvider` (React context + `en.json`/`fi.json`) | Only two languages and a modest string count; avoids an unnecessary dependency |
-| Unit tests | Vitest | Native Vite integration, Jest-compatible API |
-| Component tests | React Testing Library + Vitest | Tests components the way a user interacts with them |
-| E2E/UI tests | Playwright | Real browser, keyboard input, localStorage assertions |
-| Lint/format | ESLint + Prettier, TS strict mode | |
-| Hosting | Static host (GitHub Pages / Netlify / Vercel — TBD) | No backend needed |
+| Concern         | Choice                                                                  | Why                                                                                                              |
+| --------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Framework       | React 18 + TypeScript                                                   | Component model fits a multi-game portal; TS catches state/type bugs early                                       |
+| Build tool      | Vite                                                                    | Fast dev server, simple static build output                                                                      |
+| Routing         | React Router                                                            | `/` portal home, `/wordle` (room for future games)                                                               |
+| Styling         | Tailwind CSS                                                            | Fast to build a clean, responsive board/keyboard                                                                 |
+| Persistence     | `localStorage` (not cookies)                                            | No backend to send cookies to; localStorage is the correct client-only equivalent — larger capacity, simpler API |
+| i18n            | Lightweight custom `I18nProvider` (React context + `en.json`/`fi.json`) | Only two languages and a modest string count; avoids an unnecessary dependency                                   |
+| Unit tests      | Vitest                                                                  | Native Vite integration, Jest-compatible API                                                                     |
+| Component tests | React Testing Library + Vitest                                          | Tests components the way a user interacts with them                                                              |
+| E2E/UI tests    | Playwright                                                              | Real browser, keyboard input, localStorage assertions                                                            |
+| Lint/format     | ESLint + Prettier, TS strict mode                                       |                                                                                                                  |
+| Hosting         | Static host (GitHub Pages / Netlify / Vercel — TBD)                     | No backend needed                                                                                                |
 
 ## Finnish word list pipeline
 
@@ -41,6 +41,7 @@ This is handled by a **build-time script**, not a runtime fetch, so the game doe
 kotus.fi being reachable and doesn't ship the full ~90k-entry lexicon (with metadata) to the browser.
 
 `scripts/build-wordlists.mjs`:
+
 1. Download and parse the TSV.
 2. Keep only word classes suitable for guessing: `substantiivi`, `adjektiivi`, `verbi`, `adverbi`.
    Drop `interjektio`, abbreviations, etc.
@@ -105,6 +106,7 @@ sanaattoriv2/
 ## Phased build plan
 
 ### Phase 0 — Repo & scaffolding
+
 - `git init`, initial commit.
 - Vite + React + TypeScript scaffold.
 - ESLint + Prettier, TS strict mode.
@@ -113,18 +115,21 @@ sanaattoriv2/
 - Base GitHub Actions workflow (lint, typecheck, unit) — extended in later phases.
 
 ### Phase 1 — Finnish word list pipeline
+
 - `scripts/build-wordlists.mjs`: download, filter, group, emit JSON.
 - Unit tests for the filtering/parsing logic against sample TSV fixtures.
 - Generate and commit `src/data/words-4.json` … `words-7.json`.
 - Minimum-word-count sanity check per length.
 
 ### Phase 2 — Core Wordle game logic (no UI)
+
 - `evaluateGuess.ts`: two-pass letter evaluation, duplicate-letter correctness.
 - `pickWord.ts`: random selection from a given length's pool.
 - Win/loss detection.
 - Full unit test coverage including duplicate-letter and edge-case word lengths (4 vs 7).
 
 ### Phase 3 — Wordle UI
+
 - Board/Row/Tile components rendering guess state.
 - On-screen + physical keyboard input handling.
 - Invalid-guess handling (not in word list, wrong length).
@@ -132,36 +137,43 @@ sanaattoriv2/
 - Component tests for all of the above.
 
 ### Phase 4 — Settings: word length
+
 - Word-length selector (4/5/6/7), persisted last-used length.
 - Resets board/game state on change.
 - Component + unit tests.
 
 ### Phase 5 — Statistics
+
 - `storage/stats.ts`: per-length stats persisted to localStorage, schema-versioned.
 - Stats UI (modal or panel): played, current streak, max streak per length.
 - Unit tests for streak/win-rate logic; component tests for the stats UI.
 
 ### Phase 6 — Internationalization
+
 - `en.json` / `fi.json` dictionaries, `I18nProvider`.
 - Language toggle in the header, persisted preference, Finnish default.
 - Component tests verifying both languages render correctly and toggle persists.
 
 ### Phase 7 — Portal shell
+
 - Home page listing available games (Wordle only for now).
 - Routing between portal and game(s).
 - Shared layout/navigation.
 
 ### Phase 8 — Polish & accessibility
+
 - Tile flip / reveal animations.
 - Responsive/mobile layout.
 - Accessibility: `aria-live` on row results, focus management, keyboard-only playability.
 
 ### Phase 9 — E2E suite
+
 - Playwright specs: win playthrough, loss playthrough, stats persistence across reload,
   language persistence, word-length switch behavior, portal navigation.
 - Wire into CI.
 
 ### Phase 10 — Deployment
+
 - Choose static host (GitHub Pages / Netlify / Vercel).
 - Configure build/base path for that host.
 - Optional: CI deploy workflow on merge to main.
