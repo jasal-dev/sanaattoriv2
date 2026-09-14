@@ -1,0 +1,22 @@
+{
+  "app.title": "Sanaattori",
+  "app.subtitle": "Suomenkielisten sanapelien portaali",
+  "wordle.wordLengthLabel": "Sanan pituus",
+  "wordle.statsButton": "Tilastot",
+  "wordle.checkGuess": "Tarkista arvaus",
+  "wordle.deleteLetter": "Poista kirjain",
+  "wordle.board": "Pelilauta",
+  "wordle.errorTooShort": "Liian vähän kirjaimia",
+  "wordle.errorNotInWordList": "Sana ei ole sanalistalla",
+  "wordle.youWon": "Löysit sanan!",
+  "wordle.youLost": "Hävisit tällä kertaa",
+  "wordle.answerWas": "Sana oli:",
+  "wordle.playAgain": "Pelaa uudelleen",
+  "stats.title": "Tilastot",
+  "stats.length": "Pituus",
+  "stats.played": "Pelatut",
+  "stats.won": "Voitetut",
+  "stats.streak": "Putki",
+  "stats.maxStreak": "Paras putki",
+  "stats.close": "Sulje"
+}

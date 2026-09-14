@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
+import { I18nProvider } from '../../i18n/I18nProvider'
 import { getWordList } from './wordLists'
 import { WordleGame } from './WordleGame'
 
@@ -11,6 +12,10 @@ const wordLength = 4
 const words = getWordList(wordLength)
 const answer = words[0]
 
+function renderGame(props: Parameters<typeof WordleGame>[0] = {}) {
+  return render(<WordleGame {...props} />, { wrapper: I18nProvider })
+}
+
 function typeOnScreen(text: string) {
   for (const letter of text) {
     fireEvent.click(screen.getByRole('button', { name: letter }))
@@ -19,28 +24,28 @@ function typeOnScreen(text: string) {
 
 describe('WordleGame', () => {
   it('fills tiles as letters are typed on the on-screen keyboard', () => {
-    const { container } = render(<WordleGame wordLength={wordLength} />)
+    const { container } = renderGame({ wordLength })
     typeOnScreen('KA')
     const tiles = container.querySelectorAll('[data-status="filled"]')
     expect(tiles).toHaveLength(2)
   })
 
   it('shows an error for a too-short guess and does not advance the board', () => {
-    render(<WordleGame wordLength={wordLength} />)
+    renderGame({ wordLength })
     typeOnScreen('K')
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     expect(screen.getByRole('alert')).toHaveTextContent('Liian vähän kirjaimia')
   })
 
   it('shows an error for a guess that is not a real word', () => {
-    render(<WordleGame wordLength={wordLength} />)
+    renderGame({ wordLength })
     typeOnScreen('ZZZZ')
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     expect(screen.getByRole('alert')).toHaveTextContent('Sana ei ole sanalistalla')
   })
 
   it('supports typing via the physical keyboard', () => {
-    const { container } = render(<WordleGame wordLength={wordLength} />)
+    const { container } = renderGame({ wordLength })
     for (const letter of answer) {
       fireEvent.keyDown(window, { key: letter })
     }
@@ -50,7 +55,7 @@ describe('WordleGame', () => {
   })
 
   it('shows the win modal on a correct guess and resets on play again', () => {
-    render(<WordleGame wordLength={wordLength} />)
+    renderGame({ wordLength })
     typeOnScreen(answer)
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
 

@@ -1,14 +1,10 @@
 import { useCallback, useEffect } from 'react'
+import { useI18n } from '../../i18n/I18nProvider'
 import { Board } from './components/Board'
 import { GameOverModal } from './components/GameOverModal'
 import { Keyboard } from './components/Keyboard'
 import { useWordleGame } from './hooks/useWordleGame'
 import type { WordLength } from './wordLists'
-
-const ERROR_MESSAGES: Record<string, string> = {
-  'too-short': 'Liian vähän kirjaimia',
-  'not-in-word-list': 'Sana ei ole sanalistalla',
-}
 
 const LETTER_KEY = /^[A-ZÅÄÖ]$/
 
@@ -17,8 +13,14 @@ export interface WordleGameProps {
 }
 
 export function WordleGame({ wordLength = 5 }: WordleGameProps) {
+  const { t } = useI18n()
   const { state, letterStatuses, addLetter, removeLetter, submitGuess, newGame } =
     useWordleGame(wordLength)
+
+  const errorMessages: Record<string, string> = {
+    'too-short': t('wordle.errorTooShort'),
+    'not-in-word-list': t('wordle.errorNotInWordList'),
+  }
 
   const handleKey = useCallback(
     (key: string) => {
@@ -45,7 +47,7 @@ export function WordleGame({ wordLength = 5 }: WordleGameProps) {
   return (
     <div className="flex flex-col items-center gap-6">
       <p role="alert" className="h-5 text-sm font-medium text-red-600">
-        {state.error ? ERROR_MESSAGES[state.error] : ''}
+        {state.error ? errorMessages[state.error] : ''}
       </p>
       <Board
         wordLength={wordLength}

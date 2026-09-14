@@ -1,3 +1,4 @@
+import { useI18n } from '../../../i18n/I18nProvider'
 import type { LetterStatus } from '../logic/evaluateGuess'
 
 export interface KeyboardProps {
@@ -17,11 +18,6 @@ const KEY_LABELS: Record<string, string> = {
   BACKSPACE: '⌫',
 }
 
-const KEY_ARIA_LABELS: Record<string, string> = {
-  ENTER: 'Tarkista arvaus',
-  BACKSPACE: 'Poista kirjain',
-}
-
 const STATUS_STYLES: Record<LetterStatus, string> = {
   correct: 'bg-green-600 text-white',
   present: 'bg-yellow-500 text-white',
@@ -29,6 +25,12 @@ const STATUS_STYLES: Record<LetterStatus, string> = {
 }
 
 export function Keyboard({ onKey, letterStatuses, disabled = false }: KeyboardProps) {
+  const { t } = useI18n()
+  const keyAriaLabels: Record<string, string> = {
+    ENTER: t('wordle.checkGuess'),
+    BACKSPACE: t('wordle.deleteLetter'),
+  }
+
   return (
     <div className="flex flex-col gap-1.5">
       {ROWS.map((row, i) => (
@@ -42,7 +44,7 @@ export function Keyboard({ onKey, letterStatuses, disabled = false }: KeyboardPr
                 type="button"
                 disabled={disabled}
                 onClick={() => onKey(key)}
-                aria-label={KEY_ARIA_LABELS[key] ?? key}
+                aria-label={keyAriaLabels[key] ?? key}
                 data-status={status ?? 'unused'}
                 className={`flex h-12 items-center justify-center rounded font-semibold uppercase disabled:opacity-50 ${
                   isWide ? 'px-3 text-xs' : 'w-9 text-sm'

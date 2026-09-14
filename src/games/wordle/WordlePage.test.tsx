@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { I18nProvider } from '../../i18n/I18nProvider'
 import { loadWordLength } from './settings'
 import { WordlePage } from './WordlePage'
 import { getWordList } from './wordLists'
@@ -9,6 +10,10 @@ vi.mock('./logic/pickWord', () => ({
 }))
 
 const defaultAnswer = getWordList(5)[0]
+
+function renderPage() {
+  return render(<WordlePage />, { wrapper: I18nProvider })
+}
 
 function getBoardRows(container: HTMLElement) {
   return container.querySelectorAll('[role="row"]')
@@ -26,7 +31,7 @@ describe('WordlePage', () => {
   })
 
   it('defaults to a 5-letter board with 6 rows', () => {
-    const { container } = render(<WordlePage />)
+    const { container } = renderPage()
     const rows = getBoardRows(container)
     expect(rows).toHaveLength(6)
     expect(rows[0].querySelectorAll('[data-status]')).toHaveLength(5)
@@ -34,20 +39,20 @@ describe('WordlePage', () => {
 
   it('loads a previously saved word length', () => {
     localStorage.setItem('sanaattori:wordle:wordLength', '7')
-    const { container } = render(<WordlePage />)
+    const { container } = renderPage()
     const rows = getBoardRows(container)
     expect(rows).toHaveLength(8)
     expect(rows[0].querySelectorAll('[data-status]')).toHaveLength(7)
   })
 
   it('persists the word length when the selector changes it', () => {
-    render(<WordlePage />)
+    renderPage()
     fireEvent.click(screen.getByRole('button', { name: '4' }))
     expect(loadWordLength()).toBe(4)
   })
 
   it('resets the board to the new length and clears the in-progress guess', () => {
-    const { container } = render(<WordlePage />)
+    const { container } = renderPage()
     fireEvent.click(screen.getByRole('button', { name: 'K' }))
     fireEvent.click(screen.getByRole('button', { name: 'A' }))
     expect(container.querySelectorAll('[data-status="filled"]')).toHaveLength(2)
@@ -60,7 +65,7 @@ describe('WordlePage', () => {
   })
 
   it('marks the current word length as pressed in the selector', () => {
-    render(<WordlePage />)
+    renderPage()
     expect(screen.getByRole('button', { name: '5' })).toHaveAttribute('aria-pressed', 'true')
 
     fireEvent.click(screen.getByRole('button', { name: '6' }))
@@ -69,14 +74,14 @@ describe('WordlePage', () => {
   })
 
   it('opens a stats modal with everything zeroed before any game finishes', () => {
-    render(<WordlePage />)
+    renderPage()
     fireEvent.click(screen.getByRole('button', { name: 'Tilastot' }))
     const dialog = screen.getByRole('dialog', { name: 'Tilastot' })
     expect(rowTexts(dialog)).toContainEqual(['5', '0', '0', '0', '0'])
   })
 
   it('reflects a finished game once the stats modal is (re)opened', () => {
-    render(<WordlePage />)
+    renderPage()
     for (const letter of defaultAnswer) {
       fireEvent.click(screen.getByRole('button', { name: letter }))
     }

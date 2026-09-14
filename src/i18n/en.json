@@ -1,0 +1,22 @@
+{
+  "app.title": "Sanaattori",
+  "app.subtitle": "A portal for Finnish word games",
+  "wordle.wordLengthLabel": "Word length",
+  "wordle.statsButton": "Stats",
+  "wordle.checkGuess": "Check guess",
+  "wordle.deleteLetter": "Delete letter",
+  "wordle.board": "Game board",
+  "wordle.errorTooShort": "Not enough letters",
+  "wordle.errorNotInWordList": "Not in the word list",
+  "wordle.youWon": "You found the word!",
+  "wordle.youLost": "Better luck next time",
+  "wordle.answerWas": "The word was:",
+  "wordle.playAgain": "Play again",
+  "stats.title": "Statistics",
+  "stats.length": "Length",
+  "stats.played": "Played",
+  "stats.won": "Won",
+  "stats.streak": "Streak",
+  "stats.maxStreak": "Best streak",
+  "stats.close": "Close"
+}

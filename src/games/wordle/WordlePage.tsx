@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useI18n } from '../../i18n/I18nProvider'
 import { loadStats, type WordleStats } from '../../storage/stats'
 import { StatsModal } from './components/StatsModal'
 import { WordLengthSelector } from './components/WordLengthSelector'
@@ -7,6 +8,7 @@ import { WordleGame } from './WordleGame'
 import type { WordLength } from './wordLists'
 
 export function WordlePage() {
+  const { t } = useI18n()
   const [wordLength, setWordLength] = useState<WordLength>(() => loadWordLength())
   const [stats, setStats] = useState<WordleStats | null>(null)
 
@@ -24,7 +26,7 @@ export function WordlePage() {
           onClick={() => setStats(loadStats())}
           className="rounded bg-neutral-200 px-3 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-neutral-300"
         >
-          Tilastot
+          {t('wordle.statsButton')}
         </button>
       </div>
       {/* Remounting on a word-length change gives a fresh game: new answer,

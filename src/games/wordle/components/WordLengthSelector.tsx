@@ -1,3 +1,4 @@
+import { useI18n } from '../../../i18n/I18nProvider'
 import type { WordLength } from '../wordLists'
 
 const LENGTHS: WordLength[] = [4, 5, 6, 7]
@@ -8,8 +9,9 @@ export interface WordLengthSelectorProps {
 }
 
 export function WordLengthSelector({ value, onChange }: WordLengthSelectorProps) {
+  const { t } = useI18n()
   return (
-    <div role="group" aria-label="Sanan pituus" className="flex gap-2">
+    <div role="group" aria-label={t('wordle.wordLengthLabel')} className="flex gap-2">
       {LENGTHS.map((length) => (
         <button
           key={length}
