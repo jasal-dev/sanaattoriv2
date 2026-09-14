@@ -1,5 +1,6 @@
 import { act, renderHook, type RenderHookResult } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { getLengthStats, loadStats } from '../../../storage/stats'
 import { getWordList } from '../wordLists'
 import { useWordleGame, type UseWordleGame } from './useWordleGame'
 
@@ -32,6 +33,10 @@ function submit(result: Hook) {
 }
 
 describe('useWordleGame', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   it('starts on the (mocked) picked answer with an empty board', () => {
     const { result } = renderHook(() => useWordleGame(wordLength))
     expect(result.current.state.answer).toBe(answer)
@@ -88,6 +93,18 @@ describe('useWordleGame', () => {
     expect(result.current.state.evaluations[0]).toEqual(new Array(wordLength).fill('correct'))
   })
 
+  it('records a win in the persisted stats for this word length', () => {
+    const { result } = renderHook(() => useWordleGame(wordLength))
+    typeGuess(result, answer)
+    submit(result)
+    expect(getLengthStats(loadStats(), wordLength)).toEqual({
+      played: 1,
+      won: 1,
+      currentStreak: 1,
+      maxStreak: 1,
+    })
+  })
+
   it('loses after exhausting all guesses without the answer', () => {
     const { result } = renderHook(() => useWordleGame(wordLength))
     const wrongWords = words.slice(1, wordLength + 2)
@@ -99,6 +116,37 @@ describe('useWordleGame', () => {
     }
     expect(result.current.state.status).toBe('lost')
     expect(result.current.state.guesses).toHaveLength(wordLength + 1)
+  })
+
+  it('records a loss in the persisted stats only once the game is over', () => {
+    const { result } = renderHook(() => useWordleGame(wordLength))
+    const wrongWords = words.slice(1, wordLength + 2)
+
+    for (const guess of wrongWords.slice(0, wrongWords.length - 1)) {
+      typeGuess(result, guess)
+      submit(result)
+    }
+    // Still playing: no result recorded yet, even though guesses were made.
+    expect(loadStats()).toEqual({})
+
+    typeGuess(result, wrongWords[wrongWords.length - 1])
+    submit(result)
+    expect(getLengthStats(loadStats(), wordLength)).toEqual({
+      played: 1,
+      won: 0,
+      currentStreak: 0,
+      maxStreak: 0,
+    })
+  })
+
+  it('does not record another result when newGame starts a fresh round', () => {
+    const { result } = renderHook(() => useWordleGame(wordLength))
+    typeGuess(result, answer)
+    submit(result)
+    expect(getLengthStats(loadStats(), wordLength).played).toBe(1)
+
+    act(() => result.current.newGame())
+    expect(getLengthStats(loadStats(), wordLength).played).toBe(1)
   })
 
   it('ignores further input once the game is over', () => {

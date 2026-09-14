@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
+import { recordResult } from '../../../storage/stats'
 import { evaluateGuess, type LetterStatus } from '../logic/evaluateGuess'
 import { getGameStatus, getMaxGuesses, isWinningGuess, type GameStatus } from '../logic/gameStatus'
 import { pickWord } from '../logic/pickWord'
@@ -78,14 +79,18 @@ export function useWordleGame(wordLength: WordLength): UseWordleGame {
     setError(null)
 
     const evaluation = evaluateGuess(currentGuess, answer)
-    setGuesses((prev) => {
-      const next = [...prev, currentGuess]
-      setStatus(getGameStatus(next.length, maxGuesses, isWinningGuess(evaluation)))
-      return next
-    })
+    const won = isWinningGuess(evaluation)
+    const nextStatus = getGameStatus(guesses.length + 1, maxGuesses, won)
+
+    setGuesses((prev) => [...prev, currentGuess])
     setEvaluations((prev) => [...prev, evaluation])
     setCurrentGuess('')
-  }, [status, currentGuess, wordLength, wordSet, answer, maxGuesses])
+    setStatus(nextStatus)
+
+    if (nextStatus === 'won' || nextStatus === 'lost') {
+      recordResult(wordLength, won)
+    }
+  }, [status, currentGuess, wordLength, wordSet, answer, maxGuesses, guesses])
 
   const letterStatuses = useMemo(() => {
     const map: Record<string, LetterStatus> = {}

@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { loadStats, type WordleStats } from '../../storage/stats'
+import { StatsModal } from './components/StatsModal'
 import { WordLengthSelector } from './components/WordLengthSelector'
 import { loadWordLength, saveWordLength } from './settings'
 import { WordleGame } from './WordleGame'
@@ -6,6 +8,7 @@ import type { WordLength } from './wordLists'
 
 export function WordlePage() {
   const [wordLength, setWordLength] = useState<WordLength>(() => loadWordLength())
+  const [stats, setStats] = useState<WordleStats | null>(null)
 
   function handleWordLengthChange(length: WordLength) {
     setWordLength(length)
@@ -14,10 +17,22 @@ export function WordlePage() {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <WordLengthSelector value={wordLength} onChange={handleWordLengthChange} />
+      <div className="flex items-center gap-4">
+        <WordLengthSelector value={wordLength} onChange={handleWordLengthChange} />
+        <button
+          type="button"
+          onClick={() => setStats(loadStats())}
+          className="rounded bg-neutral-200 px-3 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-neutral-300"
+        >
+          Tilastot
+        </button>
+      </div>
       {/* Remounting on a word-length change gives a fresh game: new answer,
           empty board, no carried-over guesses. */}
       <WordleGame key={wordLength} wordLength={wordLength} />
+      {/* Re-read on each open rather than keeping stats in state permanently,
+          since a finished game writes to storage from inside WordleGame. */}
+      {stats && <StatsModal stats={stats} onClose={() => setStats(null)} />}
     </div>
   )
 }
