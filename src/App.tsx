@@ -1,4 +1,4 @@
-import { WordleGame } from './games/wordle/WordleGame'
+import { WordlePage } from './games/wordle/WordlePage'
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
         <h1 className="text-3xl font-semibold">Sanaattori</h1>
         <p className="text-neutral-500">Suomenkielisten sanapelien portaali</p>
       </div>
-      <WordleGame />
+      <WordlePage />
     </main>
   )
 }
