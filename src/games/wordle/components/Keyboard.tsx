@@ -32,9 +32,9 @@ export function Keyboard({ onKey, letterStatuses, disabled = false }: KeyboardPr
   }
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex w-full max-w-[24rem] flex-col gap-1.5">
       {ROWS.map((row, i) => (
-        <div key={i} className="flex justify-center gap-1">
+        <div key={i} className="flex gap-1">
           {row.map((key) => {
             const isWide = key === 'ENTER' || key === 'BACKSPACE'
             const status = letterStatuses[key]
@@ -46,8 +46,8 @@ export function Keyboard({ onKey, letterStatuses, disabled = false }: KeyboardPr
                 onClick={() => onKey(key)}
                 aria-label={keyAriaLabels[key] ?? key}
                 data-status={status ?? 'unused'}
-                className={`flex h-12 items-center justify-center rounded font-semibold uppercase disabled:opacity-50 ${
-                  isWide ? 'px-3 text-xs' : 'w-9 text-sm'
+                className={`flex h-12 min-w-0 items-center justify-center rounded font-semibold uppercase disabled:opacity-50 ${
+                  isWide ? 'flex-[1.5] text-xs' : 'flex-1 text-sm'
                 } ${status ? STATUS_STYLES[status] : 'bg-neutral-200 text-neutral-900'}`}
               >
                 {KEY_LABELS[key] ?? key}

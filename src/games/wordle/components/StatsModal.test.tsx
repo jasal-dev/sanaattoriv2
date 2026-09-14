@@ -41,4 +41,16 @@ describe('StatsModal', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Sulje' }))
     expect(onClose).toHaveBeenCalledOnce()
   })
+
+  it('moves focus into the dialog on mount', () => {
+    renderModal({ stats: {}, onClose: () => {} })
+    expect(screen.getByRole('dialog')).toHaveFocus()
+  })
+
+  it('calls onClose when Escape is pressed', () => {
+    const onClose = vi.fn()
+    renderModal({ stats: {}, onClose })
+    fireEvent.keyDown(window, { key: 'Escape' })
+    expect(onClose).toHaveBeenCalledOnce()
+  })
 })

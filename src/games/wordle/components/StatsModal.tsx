@@ -1,5 +1,6 @@
-import { getLengthStats, type WordleStats } from '../../../storage/stats'
+import { useEffect, useRef } from 'react'
 import { useI18n } from '../../../i18n/I18nProvider'
+import { getLengthStats, type WordleStats } from '../../../storage/stats'
 import type { WordLength } from '../wordLists'
 
 const LENGTHS: WordLength[] = [4, 5, 6, 7]
@@ -11,9 +12,22 @@ export interface StatsModalProps {
 
 export function StatsModal({ stats, onClose }: StatsModalProps) {
   const { t } = useI18n()
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    dialogRef.current?.focus()
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [onClose])
+
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/50 p-4"
+      ref={dialogRef}
+      tabIndex={-1}
+      className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 focus:outline-none"
       role="dialog"
       aria-modal="true"
       aria-label={t('stats.title')}

@@ -67,4 +67,24 @@ describe('WordleGame', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'K' })).toBeEnabled()
   })
+
+  it('announces each letter of a submitted guess via an aria-live region', () => {
+    const { container } = renderGame({ wordLength })
+    typeOnScreen(answer)
+    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    const liveRegion = container.querySelector('[aria-live="polite"]')
+    expect(liveRegion?.textContent).toBe(
+      answer
+        .split('')
+        .map((letter) => `${letter} oikein`)
+        .join(', '),
+    )
+  })
+
+  it('moves focus into the game-over dialog once the game ends', () => {
+    renderGame({ wordLength })
+    typeOnScreen(answer)
+    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    expect(screen.getByRole('dialog')).toHaveFocus()
+  })
 })

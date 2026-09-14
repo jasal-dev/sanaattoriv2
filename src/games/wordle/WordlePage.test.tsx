@@ -91,4 +91,15 @@ describe('WordlePage', () => {
     const dialog = screen.getByRole('dialog', { name: 'Tilastot' })
     expect(rowTexts(dialog)).toContainEqual(['5', '1', '1', '1', '1'])
   })
+
+  it('does not leak physical keyboard input into the board hidden behind the stats modal', () => {
+    const { container } = renderPage()
+    fireEvent.click(screen.getByRole('button', { name: 'Tilastot' }))
+    expect(screen.getByRole('dialog', { name: 'Tilastot' })).toHaveFocus()
+
+    fireEvent.keyDown(window, { key: 'A' })
+    fireEvent.keyDown(window, { key: 'B' })
+
+    expect(container.querySelectorAll('[data-status="filled"]')).toHaveLength(0)
+  })
 })

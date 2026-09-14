@@ -7,13 +7,21 @@ export interface RowProps {
   evaluation?: LetterStatus[]
 }
 
+const REVEAL_STAGGER_MS = 200
+
 export function Row({ wordLength, guess, evaluation }: RowProps) {
   return (
-    <div className="flex gap-1.5" role="row">
+    <div
+      className="grid gap-1.5"
+      style={{ gridTemplateColumns: `repeat(${wordLength}, minmax(0, 1fr))` }}
+      role="row"
+    >
       {Array.from({ length: wordLength }, (_, i) => {
         const letter = guess[i] ?? ''
         const status: TileStatus = evaluation ? evaluation[i] : letter ? 'filled' : 'empty'
-        return <Tile key={i} letter={letter} status={status} />
+        return (
+          <Tile key={i} letter={letter} status={status} revealDelayMs={i * REVEAL_STAGGER_MS} />
+        )
       })}
     </div>
   )

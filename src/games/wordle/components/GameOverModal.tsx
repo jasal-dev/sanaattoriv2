@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useI18n } from '../../../i18n/I18nProvider'
 
 export interface GameOverModalProps {
@@ -8,9 +9,19 @@ export interface GameOverModalProps {
 
 export function GameOverModal({ status, answer, onPlayAgain }: GameOverModalProps) {
   const { t } = useI18n()
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  // Move focus into the dialog so keyboard/screen-reader users land on the
+  // result instead of a now-disabled keyboard key.
+  useEffect(() => {
+    dialogRef.current?.focus()
+  }, [])
+
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/50 p-4"
+      ref={dialogRef}
+      tabIndex={-1}
+      className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 focus:outline-none"
       role="dialog"
       aria-modal="true"
     >

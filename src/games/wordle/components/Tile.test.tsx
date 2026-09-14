@@ -20,4 +20,22 @@ describe('Tile', () => {
       expect(screen.getByText('A')).toHaveAttribute('data-status', status)
     },
   )
+
+  it.each(['correct', 'present', 'absent'] as const)(
+    'plays the reveal animation once a status is evaluated (%s)',
+    (status) => {
+      render(<Tile letter="A" status={status} revealDelayMs={400} />)
+      const tile = screen.getByText('A')
+      expect(tile.className).toContain('tile-reveal')
+      expect(tile.style.animationDelay).toBe('400ms')
+    },
+  )
+
+  it.each(['empty', 'filled'] as const)(
+    'does not animate before a status is evaluated (%s)',
+    (status) => {
+      render(<Tile letter="A" status={status} />)
+      expect(screen.getByText('A').className).not.toContain('tile-reveal')
+    },
+  )
 })

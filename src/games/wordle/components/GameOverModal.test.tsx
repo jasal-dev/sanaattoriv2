@@ -26,4 +26,9 @@ describe('GameOverModal', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Pelaa uudelleen' }))
     expect(onPlayAgain).toHaveBeenCalledOnce()
   })
+
+  it('moves focus into the dialog on mount', () => {
+    renderModal({ status: 'won', answer: 'KUKKA', onPlayAgain: () => {} })
+    expect(screen.getByRole('dialog')).toHaveFocus()
+  })
 })
