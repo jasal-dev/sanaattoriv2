@@ -18,10 +18,10 @@ export function WordLengthSelector({ value, onChange }: WordLengthSelectorProps)
           type="button"
           aria-pressed={length === value}
           onClick={() => onChange(length)}
-          className={`h-9 w-9 rounded font-semibold ${
+          className={`h-9 w-9 rounded font-semibold transition-colors ${
             length === value
-              ? 'bg-neutral-900 text-white'
-              : 'bg-neutral-200 text-neutral-900 hover:bg-neutral-300'
+              ? 'bg-ink-700 text-white'
+              : 'border border-slate-300 bg-white text-ink-900 hover:bg-slate-50'
           }`}
         >
           {length}

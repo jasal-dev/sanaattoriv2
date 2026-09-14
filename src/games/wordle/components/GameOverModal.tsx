@@ -25,17 +25,17 @@ export function GameOverModal({ status, answer, onPlayAgain }: GameOverModalProp
       role="dialog"
       aria-modal="true"
     >
-      <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-6 text-center shadow-lg">
-        <h2 className="text-2xl font-bold text-neutral-900">
+      <div className="flex flex-col items-center gap-4 rounded-xl bg-white p-6 text-center shadow-lg">
+        <h2 className="font-display text-2xl font-bold tracking-wide text-ink-900 uppercase">
           {status === 'won' ? t('wordle.youWon') : t('wordle.youLost')}
         </h2>
-        <p className="text-neutral-700">
-          {t('wordle.answerWas')} <strong>{answer}</strong>
+        <p className="text-slate-600">
+          {t('wordle.answerWas')} <strong className="text-ink-900">{answer}</strong>
         </p>
         <button
           type="button"
           onClick={onPlayAgain}
-          className="rounded bg-neutral-900 px-4 py-2 font-semibold text-white"
+          className="rounded bg-ink-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-ink-900"
         >
           {t('wordle.playAgain')}
         </button>

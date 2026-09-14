@@ -1,5 +1,16 @@
 @import 'tailwindcss';
 
+@theme {
+  --font-display: 'Oswald', ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink-900: #1b2a41;
+  --color-ink-700: #3e5c76;
+  --color-ink-400: #8ca3c4;
+  --color-ink-100: #eef2f6;
+  --color-present: #bfdbfe;
+  --color-absent: #e5e7eb;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .tile-reveal {
     animation: tile-reveal 0.5s ease both;

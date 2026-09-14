@@ -13,22 +13,20 @@ export interface BoardProps {
 export function Board({ wordLength, maxGuesses, guesses, evaluations, currentGuess }: BoardProps) {
   const { t } = useI18n()
   return (
-    <div
-      className="flex w-full max-w-[24rem] flex-col gap-1.5"
-      role="grid"
-      aria-label={t('wordle.board')}
-    >
-      {Array.from({ length: maxGuesses }, (_, i) => {
-        if (i < guesses.length) {
-          return (
-            <Row key={i} wordLength={wordLength} guess={guesses[i]} evaluation={evaluations[i]} />
-          )
-        }
-        if (i === guesses.length) {
-          return <Row key={i} wordLength={wordLength} guess={currentGuess} />
-        }
-        return <Row key={i} wordLength={wordLength} guess="" />
-      })}
+    <div className="w-full max-w-[24rem] rounded-xl border border-slate-200 bg-white p-4">
+      <div className="flex flex-col gap-1.5" role="grid" aria-label={t('wordle.board')}>
+        {Array.from({ length: maxGuesses }, (_, i) => {
+          if (i < guesses.length) {
+            return (
+              <Row key={i} wordLength={wordLength} guess={guesses[i]} evaluation={evaluations[i]} />
+            )
+          }
+          if (i === guesses.length) {
+            return <Row key={i} wordLength={wordLength} guess={currentGuess} />
+          }
+          return <Row key={i} wordLength={wordLength} guess="" />
+        })}
+      </div>
     </div>
   )
 }

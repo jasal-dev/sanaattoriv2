@@ -24,7 +24,7 @@ export function WordlePage() {
         <button
           type="button"
           onClick={() => setStats(loadStats())}
-          className="rounded bg-neutral-200 px-3 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-neutral-300"
+          className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm font-semibold text-ink-900 transition-colors hover:bg-slate-50"
         >
           {t('wordle.statsButton')}
         </button>

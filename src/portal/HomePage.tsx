@@ -5,7 +5,7 @@ export function HomePage() {
   const { t } = useI18n()
   return (
     <div className="flex flex-col items-center gap-4">
-      <h2 className="text-sm font-semibold tracking-wide text-neutral-500 uppercase">
+      <h2 className="font-display text-sm font-semibold tracking-widest text-slate-500 uppercase">
         {t('portal.gamesHeading')}
       </h2>
       <GameCard

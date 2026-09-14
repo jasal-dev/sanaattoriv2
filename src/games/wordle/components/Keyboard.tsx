@@ -14,14 +14,14 @@ const ROWS = [
 ]
 
 const KEY_LABELS: Record<string, string> = {
-  ENTER: 'OK',
+  ENTER: 'ENTER',
   BACKSPACE: '⌫',
 }
 
 const STATUS_STYLES: Record<LetterStatus, string> = {
-  correct: 'bg-green-600 text-white',
-  present: 'bg-yellow-500 text-white',
-  absent: 'bg-neutral-400 text-white',
+  correct: 'bg-ink-700 text-white',
+  present: 'bg-present text-ink-900',
+  absent: 'bg-absent text-slate-500',
 }
 
 export function Keyboard({ onKey, letterStatuses, disabled = false }: KeyboardProps) {
@@ -32,30 +32,39 @@ export function Keyboard({ onKey, letterStatuses, disabled = false }: KeyboardPr
   }
 
   return (
-    <div className="flex w-full max-w-[24rem] flex-col gap-1.5">
-      {ROWS.map((row, i) => (
-        <div key={i} className="flex gap-1">
-          {row.map((key) => {
-            const isWide = key === 'ENTER' || key === 'BACKSPACE'
-            const status = letterStatuses[key]
-            return (
-              <button
-                key={key}
-                type="button"
-                disabled={disabled}
-                onClick={() => onKey(key)}
-                aria-label={keyAriaLabels[key] ?? key}
-                data-status={status ?? 'unused'}
-                className={`flex h-12 min-w-0 items-center justify-center rounded font-semibold uppercase disabled:opacity-50 ${
-                  isWide ? 'flex-[1.5] text-xs' : 'flex-1 text-sm'
-                } ${status ? STATUS_STYLES[status] : 'bg-neutral-200 text-neutral-900'}`}
-              >
-                {KEY_LABELS[key] ?? key}
-              </button>
-            )
-          })}
-        </div>
-      ))}
+    <div className="w-full max-w-[24rem] rounded-xl border border-slate-200 bg-white p-4">
+      <div className="flex flex-col gap-1.5">
+        {ROWS.map((row, i) => (
+          <div key={i} className="flex gap-1">
+            {row.map((key) => {
+              const sizeClass =
+                key === 'ENTER'
+                  ? 'flex-[2.2] text-[0.6rem] sm:text-[0.65rem]'
+                  : key === 'BACKSPACE'
+                    ? 'flex-[1.4] text-sm'
+                    : 'flex-1 text-sm'
+              const status = letterStatuses[key]
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  disabled={disabled}
+                  onClick={() => onKey(key)}
+                  aria-label={keyAriaLabels[key] ?? key}
+                  data-status={status ?? 'unused'}
+                  className={`flex h-12 min-w-0 items-center justify-center rounded font-semibold uppercase transition-colors disabled:opacity-50 ${sizeClass} ${
+                    status
+                      ? STATUS_STYLES[status]
+                      : 'border border-slate-300 bg-white text-ink-900 hover:bg-slate-50'
+                  }`}
+                >
+                  {KEY_LABELS[key] ?? key}
+                </button>
+              )
+            })}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

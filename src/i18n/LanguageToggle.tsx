@@ -10,17 +10,17 @@ const LANGUAGE_LABELS: Record<Language, string> = { fi: 'Suomi', en: 'English' }
 export function LanguageToggle() {
   const { language, setLanguage } = useI18n()
   return (
-    <div role="group" aria-label="Language / Kieli" className="flex gap-2">
+    <div role="group" aria-label="Language / Kieli" className="flex gap-1.5">
       {LANGUAGES.map((lang) => (
         <button
           key={lang}
           type="button"
           aria-pressed={lang === language}
           onClick={() => setLanguage(lang)}
-          className={`rounded px-3 py-1.5 text-sm font-semibold ${
+          className={`rounded px-2.5 py-1 text-xs font-semibold tracking-wide uppercase transition-colors ${
             lang === language
-              ? 'bg-neutral-900 text-white'
-              : 'bg-neutral-200 text-neutral-900 hover:bg-neutral-300'
+              ? 'bg-white text-ink-900'
+              : 'bg-white/10 text-ink-100 hover:bg-white/20'
           }`}
         >
           {LANGUAGE_LABELS[lang]}

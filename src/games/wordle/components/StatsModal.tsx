@@ -32,11 +32,13 @@ export function StatsModal({ stats, onClose }: StatsModalProps) {
       aria-modal="true"
       aria-label={t('stats.title')}
     >
-      <div className="flex w-full max-w-sm flex-col gap-4 rounded-lg bg-white p-6 shadow-lg">
-        <h2 className="text-xl font-bold text-neutral-900">{t('stats.title')}</h2>
-        <table className="w-full text-sm text-neutral-900">
+      <div className="flex w-full max-w-sm flex-col gap-4 rounded-xl bg-white p-6 shadow-lg">
+        <h2 className="font-display text-xl font-bold tracking-wide text-ink-900 uppercase">
+          {t('stats.title')}
+        </h2>
+        <table className="w-full text-sm text-ink-900">
           <thead>
-            <tr className="text-left text-neutral-500">
+            <tr className="text-left text-slate-500">
               <th className="py-1 font-medium">{t('stats.length')}</th>
               <th className="py-1 font-medium">{t('stats.played')}</th>
               <th className="py-1 font-medium">{t('stats.won')}</th>
@@ -48,7 +50,7 @@ export function StatsModal({ stats, onClose }: StatsModalProps) {
             {LENGTHS.map((length) => {
               const lengthStats = getLengthStats(stats, length)
               return (
-                <tr key={length} className="border-t border-neutral-200">
+                <tr key={length} className="border-t border-slate-200">
                   <td className="py-1.5">{length}</td>
                   <td className="py-1.5">{lengthStats.played}</td>
                   <td className="py-1.5">{lengthStats.won}</td>
@@ -62,7 +64,7 @@ export function StatsModal({ stats, onClose }: StatsModalProps) {
         <button
           type="button"
           onClick={onClose}
-          className="self-center rounded bg-neutral-900 px-4 py-2 font-semibold text-white"
+          className="self-center rounded bg-ink-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-ink-900"
         >
           {t('stats.close')}
         </button>

@@ -10,11 +10,11 @@ export interface TileProps {
 }
 
 const STATUS_STYLES: Record<TileStatus, string> = {
-  empty: 'border-neutral-300 text-neutral-900',
-  filled: 'border-neutral-500 text-neutral-900',
-  correct: 'border-green-600 bg-green-600 text-white',
-  present: 'border-yellow-500 bg-yellow-500 text-white',
-  absent: 'border-neutral-400 bg-neutral-400 text-white',
+  empty: 'border-slate-300 bg-white text-ink-900',
+  filled: 'border-ink-700 bg-white text-ink-900',
+  correct: 'border-ink-700 bg-ink-700 text-white',
+  present: 'border-present bg-present text-ink-900',
+  absent: 'border-absent bg-absent text-slate-500',
 }
 
 const EVALUATED_STATUSES = new Set<TileStatus>(['correct', 'present', 'absent'])
@@ -24,7 +24,7 @@ export function Tile({ letter, status, revealDelayMs = 0 }: TileProps) {
   return (
     <div
       data-status={status}
-      className={`flex aspect-square w-full items-center justify-center border-2 text-2xl font-bold uppercase ${STATUS_STYLES[status]} ${isEvaluated ? 'tile-reveal' : ''}`}
+      className={`flex aspect-square w-full items-center justify-center rounded border-2 text-2xl font-bold uppercase ${STATUS_STYLES[status]} ${isEvaluated ? 'tile-reveal' : ''}`}
       style={isEvaluated ? { animationDelay: `${revealDelayMs}ms` } : undefined}
     >
       {letter}
