@@ -1,6 +1,9 @@
 {
   "app.title": "Sanaattori",
   "app.subtitle": "A portal for Finnish word games",
+  "portal.gamesHeading": "Games",
+  "games.wordle.title": "Wordle",
+  "games.wordle.description": "Guess the Finnish word in a limited number of tries",
   "wordle.wordLengthLabel": "Word length",
   "wordle.statsButton": "Stats",
   "wordle.checkGuess": "Check guess",

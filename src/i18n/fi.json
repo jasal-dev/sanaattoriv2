@@ -1,6 +1,9 @@
 {
   "app.title": "Sanaattori",
   "app.subtitle": "Suomenkielisten sanapelien portaali",
+  "portal.gamesHeading": "Pelit",
+  "games.wordle.title": "Wordle",
+  "games.wordle.description": "Arvaa suomenkielinen sana rajallisella yritysten määrällä",
   "wordle.wordLengthLabel": "Sanan pituus",
   "wordle.statsButton": "Tilastot",
   "wordle.checkGuess": "Tarkista arvaus",
