@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
-import { useFixedAnswer } from './helpers'
+import { useFixedAnswer, waitForGameReady } from './helpers'
 
 test('Sanuri Pro requires every guess to use previously revealed hints', async ({ page }) => {
   await useFixedAnswer(page)
   await page.goto('/sanuri-pro')
   await expect(page.getByRole('grid')).toBeVisible()
+  await waitForGameReady(page)
 
   // With Math.random fixed to 0, the answer is the alphabetically-first
   // 5-letter word: AALOE. AAMEN reveals A correct in positions 0 and 1, and
@@ -45,6 +46,7 @@ test('plain Sanuri has no hard-mode restriction', async ({ page }) => {
   await useFixedAnswer(page)
   await page.goto('/sanuri')
   await expect(page.getByRole('grid')).toBeVisible()
+  await waitForGameReady(page)
 
   // Sanuri draws its answer from the easy list (AALTO for length 5), but
   // hard mode only cares about what earlier guesses revealed, independent

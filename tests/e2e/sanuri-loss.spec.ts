@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
-import { useFixedAnswer } from './helpers'
+import { useFixedAnswer, waitForGameReady } from './helpers'
 
 test('full loss playthrough reveals the answer', async ({ page }) => {
   await useFixedAnswer(page)
   await page.goto('/sanuri')
   await expect(page.getByRole('grid')).toBeVisible()
+  await waitForGameReady(page)
 
   // maxGuesses for a 5-letter word is 6. Sanuri draws its answer from the
   // easy list, whose alphabetically-first 5-letter word is AALTO. These six

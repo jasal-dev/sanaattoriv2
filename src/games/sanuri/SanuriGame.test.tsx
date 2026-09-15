@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../i18n/I18nProvider'
 import { getWordList } from './wordLists'
 import { SanuriGame } from './SanuriGame'
@@ -9,11 +9,21 @@ vi.mock('./logic/pickWord', () => ({
 }))
 
 const wordLength = 4
-const words = getWordList(wordLength)
-const answer = words[0]
+let words: readonly string[]
+let answer: string
 
-function renderGame(props: Parameters<typeof SanuriGame>[0] = {}) {
-  return render(<SanuriGame {...props} />, { wrapper: I18nProvider })
+beforeAll(async () => {
+  words = await getWordList(wordLength)
+  answer = words[0]
+})
+
+// Renders and waits for the (lazy-loaded) word lists to arrive — the
+// keyboard stays disabled until then, same as it does while the game is
+// over, so waiting for it to become enabled is the readiness signal.
+async function renderGame(props: Parameters<typeof SanuriGame>[0] = {}) {
+  const utils = render(<SanuriGame {...props} />, { wrapper: I18nProvider })
+  await waitFor(() => expect(screen.getByRole('button', { name: 'K' })).toBeEnabled())
+  return utils
 }
 
 function typeOnScreen(text: string) {
@@ -27,29 +37,34 @@ describe('SanuriGame', () => {
     localStorage.clear()
   })
 
-  it('fills tiles as letters are typed on the on-screen keyboard', () => {
-    const { container } = renderGame({ wordLength })
+  it('disables the keyboard until the word lists have loaded', () => {
+    render(<SanuriGame wordLength={wordLength} />, { wrapper: I18nProvider })
+    expect(screen.getByRole('button', { name: 'K' })).toBeDisabled()
+  })
+
+  it('fills tiles as letters are typed on the on-screen keyboard', async () => {
+    const { container } = await renderGame({ wordLength })
     typeOnScreen('KA')
     const tiles = container.querySelectorAll('[data-status="filled"]')
     expect(tiles).toHaveLength(2)
   })
 
-  it('shows an error for a too-short guess and does not advance the board', () => {
-    renderGame({ wordLength })
+  it('shows an error for a too-short guess and does not advance the board', async () => {
+    await renderGame({ wordLength })
     typeOnScreen('K')
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     expect(screen.getByRole('alert')).toHaveTextContent('Liian vähän kirjaimia')
   })
 
-  it('shows an error for a guess that is not a real word', () => {
-    renderGame({ wordLength })
+  it('shows an error for a guess that is not a real word', async () => {
+    await renderGame({ wordLength })
     typeOnScreen('ZZZZ')
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     expect(screen.getByRole('alert')).toHaveTextContent('Sana ei ole sanalistalla')
   })
 
-  it('supports typing via the physical keyboard', () => {
-    const { container } = renderGame({ wordLength })
+  it('supports typing via the physical keyboard', async () => {
+    const { container } = await renderGame({ wordLength })
     for (const letter of answer) {
       fireEvent.keyDown(window, { key: letter })
     }
@@ -58,8 +73,8 @@ describe('SanuriGame', () => {
     expect(board?.querySelectorAll('[data-status="correct"]')).toHaveLength(wordLength)
   })
 
-  it('shows the win modal on a correct guess and resets on play again', () => {
-    renderGame({ wordLength })
+  it('shows the win modal on a correct guess and resets on play again', async () => {
+    await renderGame({ wordLength })
     typeOnScreen(answer)
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
 
@@ -72,8 +87,8 @@ describe('SanuriGame', () => {
     expect(screen.getByRole('button', { name: 'K' })).toBeEnabled()
   })
 
-  it('shows the current streak in the win modal', () => {
-    renderGame({ wordLength })
+  it('shows the current streak in the win modal', async () => {
+    await renderGame({ wordLength })
     typeOnScreen(answer)
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
 
@@ -81,8 +96,8 @@ describe('SanuriGame', () => {
     expect(screen.getByRole('dialog')).toHaveTextContent('1')
   })
 
-  it('increments the shown streak across consecutive wins', () => {
-    renderGame({ wordLength })
+  it('increments the shown streak across consecutive wins', async () => {
+    await renderGame({ wordLength })
     typeOnScreen(answer)
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     fireEvent.click(screen.getByRole('button', { name: 'Pelaa uudelleen' }))
@@ -92,8 +107,8 @@ describe('SanuriGame', () => {
     expect(screen.getByRole('dialog')).toHaveTextContent('2')
   })
 
-  it('shows no streak lines on a first loss, since there was no streak to break', () => {
-    renderGame({ wordLength })
+  it('shows no streak lines on a first loss, since there was no streak to break', async () => {
+    await renderGame({ wordLength })
     const wrongWords = words.slice(1, wordLength + 2)
     for (const guess of wrongWords) {
       typeOnScreen(guess)
@@ -105,8 +120,8 @@ describe('SanuriGame', () => {
     expect(screen.queryByText('Putki päättyi:')).not.toBeInTheDocument()
   })
 
-  it('shows the ended streak in the loss modal after a win streak is broken', () => {
-    renderGame({ wordLength })
+  it('shows the ended streak in the loss modal after a win streak is broken', async () => {
+    await renderGame({ wordLength })
     typeOnScreen(answer)
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     fireEvent.click(screen.getByRole('button', { name: 'Pelaa uudelleen' }))
@@ -123,10 +138,10 @@ describe('SanuriGame', () => {
     expect(screen.queryByText('Nykyinen putki:')).not.toBeInTheDocument()
   })
 
-  it('shows an error for a guess that violates hard mode (Sanuri Pro)', () => {
+  it('shows an error for a guess that violates hard mode (Sanuri Pro)', async () => {
     // Against answer AAMU: 'AMIS' reveals 'A' correct in position 0 and 'M'
     // present. 'BUDO' then drops that confirmed-correct 'A' from position 0.
-    renderGame({ wordLength, variant: 'pro' })
+    await renderGame({ wordLength, variant: 'pro' })
     typeOnScreen('AMIS')
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
 
@@ -137,8 +152,8 @@ describe('SanuriGame', () => {
     )
   })
 
-  it('does not enforce hard mode in the easy variant', () => {
-    renderGame({ wordLength, variant: 'easy' })
+  it('does not enforce hard mode in the easy variant', async () => {
+    await renderGame({ wordLength, variant: 'easy' })
     typeOnScreen('AMIS')
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
 
@@ -147,8 +162,8 @@ describe('SanuriGame', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('')
   })
 
-  it('announces each letter of a submitted guess via an aria-live region', () => {
-    const { container } = renderGame({ wordLength })
+  it('announces each letter of a submitted guess via an aria-live region', async () => {
+    const { container } = await renderGame({ wordLength })
     typeOnScreen(answer)
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     const liveRegion = container.querySelector('[aria-live="polite"]')
@@ -160,8 +175,8 @@ describe('SanuriGame', () => {
     )
   })
 
-  it('moves focus into the game-over dialog once the game ends', () => {
-    renderGame({ wordLength })
+  it('moves focus into the game-over dialog once the game ends', async () => {
+    await renderGame({ wordLength })
     typeOnScreen(answer)
     fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     expect(screen.getByRole('dialog')).toHaveFocus()

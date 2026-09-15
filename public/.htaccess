@@ -1,0 +1,37 @@
+# Sanaattori — static hosting config for a plain Apache web hotel.
+# Everything here is optional/degrades gracefully (<IfModule> guards) if a
+# module isn't enabled on the host, rather than causing a 500 error.
+
+# --- Compress text-based responses ---------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# --- Cache hashed build assets aggressively; the filename changes on every
+# --- release (Vite fingerprints them), so a stale cache is never served.
+# --- index.html itself must always be revalidated so a new deploy is
+# --- picked up immediately instead of staying cached for a year.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "^index\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+# --- Single-page app routing: the React app handles routes like /sanuri
+# --- client-side, so a direct visit or reload on such a path must still be
+# --- served index.html rather than a 404 from Apache.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

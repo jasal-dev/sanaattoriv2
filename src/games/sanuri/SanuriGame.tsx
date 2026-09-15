@@ -103,7 +103,7 @@ export function SanuriGame({ wordLength = 5, variant = 'pro' }: SanuriGameProps)
       <Keyboard
         onKey={handleKey}
         letterStatuses={letterStatuses}
-        disabled={state.status !== 'playing'}
+        disabled={!state.ready || state.status !== 'playing'}
       />
       {(state.status === 'won' || state.status === 'lost') && (
         <GameOverModal

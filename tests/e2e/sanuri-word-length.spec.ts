@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
-import { useFixedAnswer } from './helpers'
+import { useFixedAnswer, waitForGameReady } from './helpers'
 
 test('switching word length resets the board and tracks stats separately', async ({ page }) => {
   await useFixedAnswer(page)
   await page.goto('/sanuri')
   await expect(page.getByRole('grid')).toBeVisible()
+  await waitForGameReady(page)
 
   // Start a 5-letter guess, then switch to 4 letters before submitting —
   // the switch should reset the board rather than carry the guess over.
@@ -16,6 +17,7 @@ test('switching word length resets the board and tracks stats separately', async
   await page.keyboard.press('Escape')
   await expect(page.locator('[data-status="filled"]')).toHaveCount(0)
   await expect(page.getByRole('row').first().locator('[data-status]')).toHaveCount(4)
+  await waitForGameReady(page)
 
   // Play the 4-letter game to a win (answer is fixed to the alphabetically
   // first word of whichever length is selected: AAMU for length 4).

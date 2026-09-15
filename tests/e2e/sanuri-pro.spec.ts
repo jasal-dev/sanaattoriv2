@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { useFixedAnswer } from './helpers'
+import { useFixedAnswer, waitForGameReady } from './helpers'
 
 test('Sanuri Pro draws its answer from the full word list and keeps its own stats', async ({
   page,
@@ -7,6 +7,7 @@ test('Sanuri Pro draws its answer from the full word list and keeps its own stat
   await useFixedAnswer(page)
   await page.goto('/sanuri-pro')
   await expect(page.getByRole('heading', { name: 'Sanuri Pro' })).toBeVisible()
+  await waitForGameReady(page)
 
   // Sanuri Pro draws from the full word list, whose alphabetically-first
   // 5-letter word is AALOE — unlike plain Sanuri, which lands on AALTO from

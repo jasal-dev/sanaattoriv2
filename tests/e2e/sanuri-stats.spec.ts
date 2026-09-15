@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
-import { useFixedAnswer } from './helpers'
+import { useFixedAnswer, waitForGameReady } from './helpers'
 
 test('stats persist across a reload', async ({ page }) => {
   await useFixedAnswer(page)
   await page.goto('/sanuri')
   await expect(page.getByRole('grid')).toBeVisible()
+  await waitForGameReady(page)
 
   await page.keyboard.type('AALTO')
   await page.getByRole('button', { name: 'Tarkista arvaus' }).click()

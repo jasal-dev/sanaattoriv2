@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { getLengthStats, loadStats, recordResult } from '../../../storage/stats'
 import { evaluateGuess, type LetterStatus } from '../logic/evaluateGuess'
 import { getGameStatus, getMaxGuesses, isWinningGuess, type GameStatus } from '../logic/gameStatus'
@@ -27,6 +27,8 @@ export interface SanuriGameState {
   currentStreak: number | null
   /** The win streak broken by this loss; null on a win, or if there was no streak to break. */
   endedStreak: number | null
+  /** False while this length/variant's word lists are still being fetched — the game isn't playable yet. */
+  ready: boolean
 }
 
 export interface UseSanuriGame {
@@ -42,12 +44,15 @@ export interface UseSanuriGame {
 export function useSanuriGame(wordLength: WordLength, variant: GameVariant): UseSanuriGame {
   // Guesses are always validated against the full word list regardless of
   // variant — only the pool the answer is drawn from narrows for 'easy'.
-  const answerWords = useMemo(() => getAnswerWordList(variant, wordLength), [variant, wordLength])
-  const validWords = useMemo(() => getWordList(wordLength), [wordLength])
-  const wordSet = useMemo(() => new Set(validWords), [validWords])
+  // Both lists are lazy-loaded (see wordLists.ts), so they're kept in refs
+  // rather than state: reading them doesn't itself need to trigger a
+  // re-render, `ready` below does that once they've arrived.
+  const answerWordsRef = useRef<readonly string[]>([])
+  const wordSetRef = useRef<ReadonlySet<string>>(new Set())
+  const [ready, setReady] = useState(false)
   const maxGuesses = useMemo(() => getMaxGuesses(wordLength), [wordLength])
 
-  const [answer, setAnswer] = useState(() => pickWord(answerWords))
+  const [answer, setAnswer] = useState('')
   const [guesses, setGuesses] = useState<string[]>([])
   const [evaluations, setEvaluations] = useState<LetterStatus[][]>([])
   const [currentGuess, setCurrentGuess] = useState('')
@@ -56,8 +61,36 @@ export function useSanuriGame(wordLength: WordLength, variant: GameVariant): Use
   const [currentStreak, setCurrentStreak] = useState<number | null>(null)
   const [endedStreak, setEndedStreak] = useState<number | null>(null)
 
+  // `ready` starts false and only ever flips to true, never back — callers
+  // remount this hook (via a `key` on <SanuriGame>) rather than changing
+  // wordLength/variant on a live instance, so a fresh mount is the only
+  // reset this needs; it isn't wired to reset itself mid-lifetime.
+  useEffect(() => {
+    let cancelled = false
+    Promise.all([getAnswerWordList(variant, wordLength), getWordList(wordLength)]).then(
+      ([answerWords, validWords]) => {
+        if (cancelled) return
+        answerWordsRef.current = answerWords
+        wordSetRef.current = new Set(validWords)
+        setAnswer(pickWord(answerWords))
+        setGuesses([])
+        setEvaluations([])
+        setCurrentGuess('')
+        setStatus('playing')
+        setError(null)
+        setCurrentStreak(null)
+        setEndedStreak(null)
+        setReady(true)
+      },
+    )
+    return () => {
+      cancelled = true
+    }
+  }, [wordLength, variant])
+
   const newGame = useCallback(() => {
-    setAnswer(pickWord(answerWords))
+    if (!ready) return
+    setAnswer(pickWord(answerWordsRef.current))
     setGuesses([])
     setEvaluations([])
     setCurrentGuess('')
@@ -65,30 +98,30 @@ export function useSanuriGame(wordLength: WordLength, variant: GameVariant): Use
     setError(null)
     setCurrentStreak(null)
     setEndedStreak(null)
-  }, [answerWords])
+  }, [ready])
 
   const addLetter = useCallback(
     (letter: string) => {
-      if (status !== 'playing') return
+      if (!ready || status !== 'playing') return
       setError(null)
       setCurrentGuess((guess) => (guess.length < wordLength ? guess + letter : guess))
     },
-    [status, wordLength],
+    [ready, status, wordLength],
   )
 
   const removeLetter = useCallback(() => {
-    if (status !== 'playing') return
+    if (!ready || status !== 'playing') return
     setError(null)
     setCurrentGuess((guess) => guess.slice(0, -1))
-  }, [status])
+  }, [ready, status])
 
   const submitGuess = useCallback(() => {
-    if (status !== 'playing') return
+    if (!ready || status !== 'playing') return
     if (currentGuess.length < wordLength) {
       setError('too-short')
       return
     }
-    if (!wordSet.has(currentGuess)) {
+    if (!wordSetRef.current.has(currentGuess)) {
       setError('not-in-word-list')
       return
     }
@@ -122,7 +155,7 @@ export function useSanuriGame(wordLength: WordLength, variant: GameVariant): Use
         setEndedStreak(streakBeforeResult > 0 ? streakBeforeResult : null)
       }
     }
-  }, [status, currentGuess, wordLength, variant, wordSet, answer, maxGuesses, guesses, evaluations])
+  }, [ready, status, currentGuess, wordLength, variant, answer, maxGuesses, guesses, evaluations])
 
   const letterStatuses = useMemo(() => {
     const map: Record<string, LetterStatus> = {}
@@ -152,6 +185,7 @@ export function useSanuriGame(wordLength: WordLength, variant: GameVariant): Use
       error,
       currentStreak,
       endedStreak,
+      ready,
     },
     letterStatuses,
     addLetter,

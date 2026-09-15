@@ -1,42 +1,44 @@
-import words4 from '../../data/words-4.json'
-import words4Easy from '../../data/words-4-easy.json'
-import words5 from '../../data/words-5.json'
-import words5Easy from '../../data/words-5-easy.json'
-import words6 from '../../data/words-6.json'
-import words6Easy from '../../data/words-6-easy.json'
-import words7 from '../../data/words-7.json'
-import words7Easy from '../../data/words-7-easy.json'
-
 export type WordLength = 4 | 5 | 6 | 7
-
-const WORD_LISTS: Record<WordLength, readonly string[]> = {
-  4: words4,
-  5: words5,
-  6: words6,
-  7: words7,
-}
-
-// Subset of WORD_LISTS filtered to words common in everyday Finnish (see
-// scripts/build-wordlists.mjs), for a less obscure answer pool.
-const EASY_WORD_LISTS: Record<WordLength, readonly string[]> = {
-  4: words4Easy,
-  5: words5Easy,
-  6: words6Easy,
-  7: words7Easy,
-}
-
-export function getWordList(length: WordLength): readonly string[] {
-  return WORD_LISTS[length]
-}
-
-export function getEasyWordList(length: WordLength): readonly string[] {
-  return EASY_WORD_LISTS[length]
-}
 
 /** 'easy' is the Sanuri game (common everyday words); 'pro' is Sanuri Pro (the full dictionary). */
 export type GameVariant = 'easy' | 'pro'
 
+// Each word list is its own dynamic import so a session only ever downloads
+// the one length (and variant) actually being played, instead of all 8
+// lists (~230KB raw) up front. The bundler still resolves each of these
+// statically — the length only picks which already-known chunk to fetch —
+// so this stays a plain lazy load, not a runtime-constructed path.
+export async function getWordList(length: WordLength): Promise<readonly string[]> {
+  switch (length) {
+    case 4:
+      return (await import('../../data/words-4.json')).default
+    case 5:
+      return (await import('../../data/words-5.json')).default
+    case 6:
+      return (await import('../../data/words-6.json')).default
+    case 7:
+      return (await import('../../data/words-7.json')).default
+  }
+}
+
+/** Subset of the full list filtered to words common in everyday Finnish (see scripts/build-wordlists.mjs), for a less obscure answer pool. */
+export async function getEasyWordList(length: WordLength): Promise<readonly string[]> {
+  switch (length) {
+    case 4:
+      return (await import('../../data/words-4-easy.json')).default
+    case 5:
+      return (await import('../../data/words-5-easy.json')).default
+    case 6:
+      return (await import('../../data/words-6-easy.json')).default
+    case 7:
+      return (await import('../../data/words-7-easy.json')).default
+  }
+}
+
 /** The pool an answer is drawn from for a variant — guesses are always validated against the full list regardless of variant, only the answer pool narrows. */
-export function getAnswerWordList(variant: GameVariant, length: WordLength): readonly string[] {
+export function getAnswerWordList(
+  variant: GameVariant,
+  length: WordLength,
+): Promise<readonly string[]> {
   return variant === 'easy' ? getEasyWordList(length) : getWordList(length)
 }
