@@ -1,10 +1,10 @@
 # Sanaattori
 
-A frontend-only portal for Finnish word games. First game: a Wordle clone with configurable
-word length (4–7 letters). No backend — progress and stats are stored in the browser via
-`localStorage`.
+A frontend-only portal for Finnish word games. First game: Sanuri, a Wordle clone with
+configurable word length (4–7 letters). No backend — progress and stats are stored in the
+browser via `localStorage`.
 
-See [docs/plans/wordle-implementation-plan.md](docs/plans/wordle-implementation-plan.md) for the
+See [docs/plans/sanuri-implementation-plan.md](docs/plans/sanuri-implementation-plan.md) for the
 full implementation plan.
 
 ## Scripts
@@ -32,7 +32,7 @@ lowercase Finnish nouns/adjectives/verbs/adverbs of the target lengths. The list
 word list, ranked against the Finnish [OpenSubtitles frequency
 list](https://github.com/hermitdave/FrequencyWords) (`content/2018/fi/fi_full.txt`, licensed
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)), as a less-obscure subset for
-use as Wordle answers via `getEasyWordList()`.
+use as Sanuri answers via `getEasyWordList()`.
 
 These files are committed to the repo rather than fetched at runtime, so the app doesn't depend
 on kaino.kotus.fi or GitHub being reachable. Re-run `npm run build:wordlists` to refresh them.

@@ -1,7 +1,9 @@
-import type { WordLength } from '../games/wordle/wordLists'
+import type { GameVariant, WordLength } from '../games/sanuri/wordLists'
 import { readJson, writeJson } from './localStorage'
 
-const STORAGE_KEY = 'sanaattori:stats:v1'
+function storageKey(variant: GameVariant): string {
+  return `sanaattori:stats:${variant}:v1`
+}
 
 export interface LengthStats {
   played: number
@@ -10,7 +12,7 @@ export interface LengthStats {
   maxStreak: number
 }
 
-export type WordleStats = Partial<Record<WordLength, LengthStats>>
+export type SanuriStats = Partial<Record<WordLength, LengthStats>>
 
 const EMPTY_LENGTH_STATS: LengthStats = { played: 0, won: 0, currentStreak: 0, maxStreak: 0 }
 
@@ -30,11 +32,11 @@ function isLengthStats(value: unknown): value is LengthStats {
  * a LengthStats (e.g. written by a future/older schema) rather than
  * discarding every length's stats over one bad entry.
  */
-export function loadStats(): WordleStats {
-  const stored = readJson<Record<string, unknown>>(STORAGE_KEY)
+export function loadStats(variant: GameVariant): SanuriStats {
+  const stored = readJson<Record<string, unknown>>(storageKey(variant))
   if (typeof stored !== 'object' || stored === null) return {}
 
-  const stats: WordleStats = {}
+  const stats: SanuriStats = {}
   for (const [key, value] of Object.entries(stored)) {
     const length = Number(key)
     if (Number.isInteger(length) && isLengthStats(value)) {
@@ -44,17 +46,21 @@ export function loadStats(): WordleStats {
   return stats
 }
 
-export function getLengthStats(stats: WordleStats, wordLength: WordLength): LengthStats {
+export function getLengthStats(stats: SanuriStats, wordLength: WordLength): LengthStats {
   return stats[wordLength] ?? EMPTY_LENGTH_STATS
 }
 
-/** Records one finished game's result for a word length and persists the update. */
-export function recordResult(wordLength: WordLength, won: boolean): WordleStats {
-  const stats = loadStats()
+/** Records one finished game's result for a variant and word length, and persists the update. */
+export function recordResult(
+  variant: GameVariant,
+  wordLength: WordLength,
+  won: boolean,
+): SanuriStats {
+  const stats = loadStats(variant)
   const current = getLengthStats(stats, wordLength)
   const nextStreak = won ? current.currentStreak + 1 : 0
 
-  const next: WordleStats = {
+  const next: SanuriStats = {
     ...stats,
     [wordLength]: {
       played: current.played + 1,
@@ -63,6 +69,6 @@ export function recordResult(wordLength: WordLength, won: boolean): WordleStats 
       maxStreak: Math.max(current.maxStreak, nextStreak),
     },
   }
-  writeJson(STORAGE_KEY, next)
+  writeJson(storageKey(variant), next)
   return next
 }

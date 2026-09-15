@@ -19,8 +19,8 @@ export function LanguageToggle() {
           onClick={() => setLanguage(lang)}
           className={`rounded px-2.5 py-1 text-xs font-semibold tracking-wide uppercase transition-colors ${
             lang === language
-              ? 'bg-white text-ink-900'
-              : 'bg-white/10 text-ink-100 hover:bg-white/20'
+              ? 'bg-ink-700 text-white'
+              : 'border border-slate-300 bg-white text-ink-900 hover:bg-slate-50'
           }`}
         >
           {LANGUAGE_LABELS[lang]}

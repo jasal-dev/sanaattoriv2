@@ -18,7 +18,7 @@ export function parseTsv(text) {
 }
 
 /**
- * A word is usable as a Wordle answer only if it consists solely of lowercase
+ * A word is usable as a Sanuri answer only if it consists solely of lowercase
  * Finnish letters (a-z, å, ä, ö) — this rejects compounds with digits/hyphens
  * (e.g. "3D-tulostin"), multi-word entries, and proper nouns/abbreviations
  * (which are capitalized in the source).
@@ -85,7 +85,7 @@ export function parseFrequencyRanks(text) {
  * for the top half), ranked by `frequencyRanks`. The Kotus dictionary
  * contains many words that are rarely used in everyday Finnish;
  * cross-referencing against a corpus frequency list gives an "easy" subset
- * suitable as Wordle answers. Words absent from `frequencyRanks` are treated
+ * suitable as Sanuri answers. Words absent from `frequencyRanks` are treated
  * as least frequent and dropped first. The result is sorted alphabetically,
  * matching buildWordListsByLength's output.
  */

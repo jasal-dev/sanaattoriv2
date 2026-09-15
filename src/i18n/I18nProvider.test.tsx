@@ -10,14 +10,14 @@ describe('I18nProvider / useI18n', () => {
   it('defaults to Finnish', () => {
     const { result } = renderHook(() => useI18n(), { wrapper: I18nProvider })
     expect(result.current.language).toBe('fi')
-    expect(result.current.t('wordle.playAgain')).toBe('Pelaa uudelleen')
+    expect(result.current.t('sanuri.playAgain')).toBe('Pelaa uudelleen')
   })
 
   it('loads a previously saved language preference', () => {
     localStorage.setItem('sanaattori:language', '"en"')
     const { result } = renderHook(() => useI18n(), { wrapper: I18nProvider })
     expect(result.current.language).toBe('en')
-    expect(result.current.t('wordle.playAgain')).toBe('Play again')
+    expect(result.current.t('sanuri.playAgain')).toBe('Play again')
   })
 
   it('falls back to Finnish for an invalid stored language', () => {

@@ -14,9 +14,15 @@ function Providers({ children }: { children: ReactNode }) {
 }
 
 describe('HomePage', () => {
-  it('lists the Wordle game as a link to /wordle', () => {
+  it('lists Sanuri as a link to /sanuri', () => {
     render(<HomePage />, { wrapper: Providers })
-    const link = screen.getByRole('link', { name: /Wordle/ })
-    expect(link).toHaveAttribute('href', '/wordle')
+    const link = screen.getByRole('link', { name: 'Sanuri' })
+    expect(link).toHaveAttribute('href', '/sanuri')
+  })
+
+  it('lists Sanuri Pro as a link to /sanuri-pro', () => {
+    render(<HomePage />, { wrapper: Providers })
+    const link = screen.getByRole('link', { name: 'Sanuri Pro' })
+    expect(link).toHaveAttribute('href', '/sanuri-pro')
   })
 })
