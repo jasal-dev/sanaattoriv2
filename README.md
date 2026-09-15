@@ -17,7 +17,8 @@ full implementation plan.
 - `npm run typecheck` — TypeScript, no emit
 - `npm run test` / `npm run test:watch` — unit/component tests (Vitest)
 - `npm run test:e2e` — end-to-end tests (Playwright)
-- `npm run build:wordlists` — regenerate `src/data/words-{4,5,6,7}.json` from the Kotus source
+- `npm run build:wordlists` — regenerate `src/data/words-{4,5,6,7}[-easy].json` from the Kotus
+  and frequency sources
 
 ## Word list data
 
@@ -27,5 +28,11 @@ Kotimaisten kielten keskus's (Kotus) [Nykysuomen sanalista
 lowercase Finnish nouns/adjectives/verbs/adverbs of the target lengths. The list is licensed
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) by Kotus.
 
+`src/data/words-4-easy.json` … `words-7-easy.json` are the most frequent half of each length's
+word list, ranked against the Finnish [OpenSubtitles frequency
+list](https://github.com/hermitdave/FrequencyWords) (`content/2018/fi/fi_full.txt`, licensed
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)), as a less-obscure subset for
+use as Wordle answers via `getEasyWordList()`.
+
 These files are committed to the repo rather than fetched at runtime, so the app doesn't depend
-on kaino.kotus.fi being reachable. Re-run `npm run build:wordlists` to refresh them.
+on kaino.kotus.fi or GitHub being reachable. Re-run `npm run build:wordlists` to refresh them.

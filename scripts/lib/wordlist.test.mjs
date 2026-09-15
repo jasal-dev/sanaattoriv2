@@ -4,7 +4,9 @@ import {
   buildWordListsByLength,
   hasAcceptableWordClass,
   isAcceptableWord,
+  parseFrequencyRanks,
   parseTsv,
+  selectEasyWords,
 } from './wordlist.mjs'
 
 describe('parseTsv', () => {
@@ -100,5 +102,42 @@ describe('buildWordListsByLength', () => {
   it('only includes the requested lengths', () => {
     expect(result[4]).toEqual([])
     expect(Object.keys(result).map(Number).sort()).toEqual([4, 5, 6, 7])
+  })
+})
+
+describe('parseFrequencyRanks', () => {
+  it('ranks words by line order, 0 = most frequent, uppercased', () => {
+    const text = ['kissa 500', 'koira 400', 'talo 300'].join('\n')
+    const ranks = parseFrequencyRanks(text)
+    expect(ranks.get('KISSA')).toBe(0)
+    expect(ranks.get('KOIRA')).toBe(1)
+    expect(ranks.get('TALO')).toBe(2)
+  })
+
+  it('skips blank lines and keeps the first occurrence of a repeated word', () => {
+    const text = ['kissa 500', '', 'kissa 1'].join('\n')
+    const ranks = parseFrequencyRanks(text)
+    expect(ranks.size).toBe(1)
+    expect(ranks.get('KISSA')).toBe(0)
+  })
+})
+
+describe('selectEasyWords', () => {
+  // Line order = frequency order, most frequent first: kissa, koira, talo, susi.
+  const ranks = parseFrequencyRanks(['kissa 500', 'koira 400', 'talo 300', 'susi 200'].join('\n'))
+
+  it('keeps the most frequent targetFraction of the list, sorted alphabetically', () => {
+    expect(selectEasyWords(['KISSA', 'KOIRA', 'TALO', 'SUSI'], ranks, 0.5)).toEqual([
+      'KISSA',
+      'KOIRA',
+    ])
+  })
+
+  it('rounds the target count to the nearest word', () => {
+    expect(selectEasyWords(['KISSA', 'KOIRA', 'TALO'], ranks, 0.5)).toEqual(['KISSA', 'KOIRA'])
+  })
+
+  it('treats words absent from the frequency list as least frequent', () => {
+    expect(selectEasyWords(['KISSA', 'HARVINAINEN'], ranks, 1)).toEqual(['KISSA'])
   })
 })
