@@ -1,5 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { MemoryRouter } from 'react-router-dom'
 import { I18nProvider } from '../../i18n/I18nProvider'
 import { getWordList } from './wordLists'
 import { SanuriGame } from './SanuriGame'
@@ -21,7 +22,13 @@ beforeAll(async () => {
 // keyboard stays disabled until then, same as it does while the game is
 // over, so waiting for it to become enabled is the readiness signal.
 async function renderGame(props: Parameters<typeof SanuriGame>[0] = {}) {
-  const utils = render(<SanuriGame {...props} />, { wrapper: I18nProvider })
+  const utils = render(<SanuriGame {...props} />, {
+    wrapper: ({ children }) => (
+      <MemoryRouter>
+        <I18nProvider>{children}</I18nProvider>
+      </MemoryRouter>
+    ),
+  })
   await waitFor(() => expect(screen.getByRole('button', { name: 'K' })).toBeEnabled())
   return utils
 }
@@ -32,9 +39,29 @@ function typeOnScreen(text: string) {
   }
 }
 
+// The game-over modal is delayed until the submitted row's tiles have
+// finished their flip animation (see rowRevealDurationMs). Fake timers let
+// the test fast-forward through that delay deterministically instead of
+// waiting on real wall-clock time.
+function submitGuess() {
+  vi.useFakeTimers()
+  // fireEvent.click flushes its own effects (including scheduling the
+  // reveal timeouts) before this returns — advancing the fake timers has to
+  // happen in a separate act() afterwards, or it'd run against an empty
+  // timer queue since the effects haven't been committed yet.
+  fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+  act(() => {
+    vi.runAllTimers()
+  })
+}
+
 describe('SanuriGame', () => {
   beforeEach(() => {
     localStorage.clear()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
   })
 
   it('disables the keyboard until the word lists have loaded', () => {
@@ -68,7 +95,11 @@ describe('SanuriGame', () => {
     for (const letter of answer) {
       fireEvent.keyDown(window, { key: letter })
     }
+    vi.useFakeTimers()
     fireEvent.keyDown(window, { key: 'Enter' })
+    act(() => {
+      vi.runAllTimers()
+    })
     const board = container.querySelector('[role="grid"]')
     expect(board?.querySelectorAll('[data-status="correct"]')).toHaveLength(wordLength)
   })
@@ -76,9 +107,8 @@ describe('SanuriGame', () => {
   it('shows the win modal on a correct guess and resets on play again', async () => {
     await renderGame({ wordLength })
     typeOnScreen(answer)
-    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    submitGuess()
 
-    expect(screen.getByRole('dialog')).toBeInTheDocument()
     expect(screen.getByText('Löysit sanan!')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'K' })).toBeDisabled()
 
@@ -90,7 +120,7 @@ describe('SanuriGame', () => {
   it('shows the current streak in the win modal', async () => {
     await renderGame({ wordLength })
     typeOnScreen(answer)
-    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    submitGuess()
 
     expect(screen.getByText('Nykyinen putki:')).toBeInTheDocument()
     expect(screen.getByRole('dialog')).toHaveTextContent('1')
@@ -99,21 +129,25 @@ describe('SanuriGame', () => {
   it('increments the shown streak across consecutive wins', async () => {
     await renderGame({ wordLength })
     typeOnScreen(answer)
-    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    submitGuess()
     fireEvent.click(screen.getByRole('button', { name: 'Pelaa uudelleen' }))
 
     typeOnScreen(answer)
-    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    submitGuess()
     expect(screen.getByRole('dialog')).toHaveTextContent('2')
   })
 
   it('shows no streak lines on a first loss, since there was no streak to break', async () => {
     await renderGame({ wordLength })
     const wrongWords = words.slice(1, wordLength + 2)
+    vi.useFakeTimers()
     for (const guess of wrongWords) {
       typeOnScreen(guess)
       fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     }
+    act(() => {
+      vi.runAllTimers()
+    })
 
     expect(screen.getByText('Hävisit tällä kertaa')).toBeInTheDocument()
     expect(screen.queryByText('Nykyinen putki:')).not.toBeInTheDocument()
@@ -123,14 +157,18 @@ describe('SanuriGame', () => {
   it('shows the ended streak in the loss modal after a win streak is broken', async () => {
     await renderGame({ wordLength })
     typeOnScreen(answer)
-    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    submitGuess()
     fireEvent.click(screen.getByRole('button', { name: 'Pelaa uudelleen' }))
 
     const wrongWords = words.slice(1, wordLength + 2)
+    vi.useFakeTimers()
     for (const guess of wrongWords) {
       typeOnScreen(guess)
       fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
     }
+    act(() => {
+      vi.runAllTimers()
+    })
 
     expect(screen.getByText('Hävisit tällä kertaa')).toBeInTheDocument()
     expect(screen.getByText('Putki päättyi:')).toBeInTheDocument()
@@ -165,7 +203,7 @@ describe('SanuriGame', () => {
   it('announces each letter of a submitted guess via an aria-live region', async () => {
     const { container } = await renderGame({ wordLength })
     typeOnScreen(answer)
-    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    submitGuess()
     const liveRegion = container.querySelector('[aria-live="polite"]')
     expect(liveRegion?.textContent).toBe(
       answer
@@ -178,7 +216,7 @@ describe('SanuriGame', () => {
   it('moves focus into the game-over dialog once the game ends', async () => {
     await renderGame({ wordLength })
     typeOnScreen(answer)
-    fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+    submitGuess()
     expect(screen.getByRole('dialog')).toHaveFocus()
   })
 })

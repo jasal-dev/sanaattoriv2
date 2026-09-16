@@ -1,5 +1,5 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
 import { loadWordLength } from './games/sanuri/settings'
 import { getEasyWordList, getWordList } from './games/sanuri/wordLists'
@@ -45,10 +45,28 @@ function win(answer: string) {
   fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
 }
 
+// The game-over modal is delayed until the submitted row's tiles have
+// finished their flip animation. Fake timers fast-forward through that
+// delay deterministically instead of waiting on real wall-clock time.
+function winAndRevealModal(answer: string) {
+  vi.useFakeTimers()
+  for (const letter of answer) {
+    fireEvent.click(screen.getByRole('button', { name: letter }))
+  }
+  fireEvent.click(screen.getByRole('button', { name: 'Tarkista arvaus' }))
+  act(() => {
+    vi.runAllTimers()
+  })
+}
+
 describe('App', () => {
   beforeEach(() => {
     window.history.pushState({}, '', '/')
     localStorage.clear()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
   })
 
   it('renders the portal home with links to both Sanuri games', () => {
@@ -177,6 +195,22 @@ describe('App', () => {
     })
   })
 
+  describe('exit button, from the header', () => {
+    it('leaving an unfinished game does not count it in the stats', async () => {
+      renderApp()
+      await goToSanuri()
+      fireEvent.click(screen.getByRole('button', { name: 'K' }))
+      fireEvent.click(screen.getByRole('button', { name: 'A' }))
+
+      fireEvent.click(screen.getByRole('link', { name: 'Lopeta peli' }))
+      await goToSanuri()
+
+      fireEvent.click(screen.getByRole('button', { name: 'Tilastot' }))
+      const dialog = screen.getByRole('dialog', { name: 'Tilastot' })
+      expect(rowTexts(dialog)).toContainEqual(['5', '0', '0', '0', '0'])
+    })
+  })
+
   describe('Sanuri Pro', () => {
     it('draws its answer from the full word list, not the easy subset', async () => {
       renderApp()
@@ -184,7 +218,7 @@ describe('App', () => {
       // The mocked pickWord returns the pool's first word — winning with the
       // full list's alphabetically-first word proves Pro isn't restricted to
       // the easy subset, whose first word for length 5 differs (AALTO).
-      win((await getWordList(5))[0])
+      winAndRevealModal((await getWordList(5))[0])
       expect(screen.getByText('Löysit sanan!')).toBeInTheDocument()
     })
 

@@ -1,10 +1,17 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
+import { MemoryRouter } from 'react-router-dom'
 import { I18nProvider } from '../../../i18n/I18nProvider'
 import { GameOverModal } from './GameOverModal'
 
 function renderModal(props: Parameters<typeof GameOverModal>[0]) {
-  return render(<GameOverModal {...props} />, { wrapper: I18nProvider })
+  return render(<GameOverModal {...props} />, {
+    wrapper: ({ children }) => (
+      <MemoryRouter>
+        <I18nProvider>{children}</I18nProvider>
+      </MemoryRouter>
+    ),
+  })
 }
 
 describe('GameOverModal', () => {
@@ -43,6 +50,17 @@ describe('GameOverModal', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: 'Pelaa uudelleen' }))
     expect(onPlayAgain).toHaveBeenCalledOnce()
+  })
+
+  it('links a quit button back to the portal home', () => {
+    renderModal({
+      status: 'won',
+      answer: 'KUKKA',
+      currentStreak: 1,
+      endedStreak: null,
+      onPlayAgain: () => {},
+    })
+    expect(screen.getByRole('link', { name: 'Lopeta' })).toHaveAttribute('href', '/')
   })
 
   it('moves focus into the dialog on mount', () => {

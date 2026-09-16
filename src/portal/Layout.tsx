@@ -44,15 +44,54 @@ export function Layout() {
               <button
                 type="button"
                 onClick={() => setStats(loadStats(activeGame.variant))}
-                className="rounded px-2.5 py-1.5 text-sm font-semibold text-ink-100 transition-colors hover:bg-white/10"
+                aria-label={t('sanuri.statsButton')}
+                className="flex h-9 w-9 items-center justify-center rounded text-ink-100 transition-colors hover:bg-white/10"
               >
-                {t('sanuri.statsButton')}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                >
+                  <path d="M3 3v18h18" />
+                  <path d="M18 17V9" />
+                  <path d="M13 17V5" />
+                  <path d="M8 17v-3" />
+                </svg>
               </button>
             )}
             <SettingsMenu
               wordLength={activeGame ? wordLength : undefined}
               onWordLengthChange={activeGame ? handleWordLengthChange : undefined}
             />
+            {activeGame && (
+              <Link
+                to="/"
+                aria-label={t('sanuri.exitGame')}
+                className="flex h-9 w-9 items-center justify-center rounded text-ink-100 transition-colors hover:bg-white/10"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+              </Link>
+            )}
           </div>
         </header>
         <div className="flex min-h-0 flex-1 flex-col items-center gap-[clamp(0.5rem,1.5dvh,1.5rem)] overflow-y-auto bg-ink-100 px-4 py-[clamp(0.5rem,2dvh,1.5rem)] sm:px-8">

@@ -21,6 +21,8 @@
   "sanuri.currentStreak": "Nykyinen putki:",
   "sanuri.streakEnded": "Putki päättyi:",
   "sanuri.playAgain": "Pelaa uudelleen",
+  "sanuri.quit": "Lopeta",
+  "sanuri.exitGame": "Lopeta peli",
   "sanuri.status.correct": "oikein",
   "sanuri.status.present": "väärässä kohdassa",
   "sanuri.status.absent": "ei sanassa",

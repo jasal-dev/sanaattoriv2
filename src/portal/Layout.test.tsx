@@ -60,4 +60,15 @@ describe('Layout', () => {
     renderWithRoutes(path)
     expect(screen.getByRole('button', { name: 'Tilastot' })).toBeInTheDocument()
   })
+
+  it('shows an exit button linking back to the portal home while in a game', () => {
+    renderWithRoutes('/sanuri')
+    expect(screen.getByRole('link', { name: 'Lopeta peli' })).toHaveAttribute('href', '/')
+  })
+
+  it('does not show a Stats or exit button on the home page', () => {
+    renderWithRoutes('/')
+    expect(screen.queryByRole('button', { name: 'Tilastot' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Lopeta peli' })).not.toBeInTheDocument()
+  })
 })

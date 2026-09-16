@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useI18n } from '../../i18n/I18nProvider'
+import { rowRevealDurationMs } from './animation'
 import { Board } from './components/Board'
 import { GameOverModal } from './components/GameOverModal'
 import { Keyboard } from './components/Keyboard'
@@ -22,6 +23,25 @@ export function SanuriGame({ wordLength = 5, variant = 'pro' }: SanuriGameProps)
   )
   const wrapperRef = useRef<HTMLDivElement>(null)
   const previousStatusRef = useRef(state.status)
+  const [prevGameStatus, setPrevGameStatus] = useState(state.status)
+  const [showGameOverModal, setShowGameOverModal] = useState(false)
+
+  // Hold off on the win/loss modal until the final row's tiles have finished
+  // flipping, so the result is revealed before it's announced. Reset is
+  // adjusted directly during render (React's sanctioned way to derive state
+  // from a prop change) so the modal disappears immediately once the status
+  // changes, rather than in the effect below, which only fires the delayed
+  // reveal itself.
+  if (state.status !== prevGameStatus) {
+    setPrevGameStatus(state.status)
+    setShowGameOverModal(false)
+  }
+
+  useEffect(() => {
+    if (state.status !== 'won' && state.status !== 'lost') return
+    const timer = setTimeout(() => setShowGameOverModal(true), rowRevealDurationMs(wordLength))
+    return () => clearTimeout(timer)
+  }, [state.status, wordLength])
 
   const errorMessages: Record<string, string> = {
     'too-short': t('sanuri.errorTooShort'),
@@ -107,7 +127,7 @@ export function SanuriGame({ wordLength = 5, variant = 'pro' }: SanuriGameProps)
         letterStatuses={letterStatuses}
         disabled={!state.ready || state.status !== 'playing'}
       />
-      {(state.status === 'won' || state.status === 'lost') && (
+      {showGameOverModal && (state.status === 'won' || state.status === 'lost') && (
         <GameOverModal
           status={state.status}
           answer={state.answer}

@@ -21,6 +21,8 @@
   "sanuri.currentStreak": "Current streak:",
   "sanuri.streakEnded": "Streak ended:",
   "sanuri.playAgain": "Play again",
+  "sanuri.quit": "Quit",
+  "sanuri.exitGame": "Quit game",
   "sanuri.status.correct": "correct",
   "sanuri.status.present": "wrong spot",
   "sanuri.status.absent": "not in word",

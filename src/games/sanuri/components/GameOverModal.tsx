@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { useI18n } from '../../../i18n/I18nProvider'
 
 export interface GameOverModalProps {
@@ -52,13 +53,21 @@ export function GameOverModal({
             {t('sanuri.streakEnded')} <strong className="text-ink-900">{endedStreak}</strong>
           </p>
         )}
-        <button
-          type="button"
-          onClick={onPlayAgain}
-          className="rounded bg-ink-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-ink-900"
-        >
-          {t('sanuri.playAgain')}
-        </button>
+        <div className="flex gap-3">
+          <Link
+            to="/"
+            className="rounded border border-ink-700 px-4 py-2 font-semibold text-ink-700 transition-colors hover:bg-ink-100"
+          >
+            {t('sanuri.quit')}
+          </Link>
+          <button
+            type="button"
+            onClick={onPlayAgain}
+            className="rounded bg-ink-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-ink-900"
+          >
+            {t('sanuri.playAgain')}
+          </button>
+        </div>
       </div>
     </div>
   )

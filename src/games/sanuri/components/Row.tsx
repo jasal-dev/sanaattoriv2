@@ -1,3 +1,4 @@
+import { REVEAL_STAGGER_MS } from '../animation'
 import type { LetterStatus } from '../logic/evaluateGuess'
 import { Tile, type TileStatus } from './Tile'
 
@@ -6,8 +7,6 @@ export interface RowProps {
   guess: string
   evaluation?: LetterStatus[]
 }
-
-const REVEAL_STAGGER_MS = 200
 
 export function Row({ wordLength, guess, evaluation }: RowProps) {
   return (
