@@ -63,6 +63,23 @@ export function buildWordListsByLength(tsvText, lengths) {
 }
 
 /**
+ * Builds the full set of acceptable words (any length, uppercased, deduped,
+ * sorted) from the raw TSV text. Unlike `buildWordListsByLength`, this isn't
+ * bucketed by a fixed list of lengths — generators that mine compounds or
+ * hidden substrings need the whole dictionary, since a compound's two halves
+ * and the compound itself can each be any length.
+ */
+export function buildFullWordList(tsvText) {
+  const rows = parseTsv(tsvText)
+  const words = new Set()
+  for (const { word, wordClassField } of rows) {
+    if (!isAcceptableWord(word) || !hasAcceptableWordClass(wordClassField)) continue
+    words.add(word.toUpperCase())
+  }
+  return [...words].sort((a, b) => a.localeCompare(b, 'fi'))
+}
+
+/**
  * Parses a hermitdave/FrequencyWords-style corpus frequency file — lines of
  * "word count", most frequent first — into a Map from uppercased word to its
  * frequency rank (0 = most frequent). Only the first (most frequent)

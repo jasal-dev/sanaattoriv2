@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest'
 import {
+  buildFullWordList,
   buildWordListsByLength,
   hasAcceptableWordClass,
   isAcceptableWord,
@@ -102,6 +103,22 @@ describe('buildWordListsByLength', () => {
   it('only includes the requested lengths', () => {
     expect(result[4]).toEqual([])
     expect(Object.keys(result).map(Number).sort()).toEqual([4, 5, 6, 7])
+  })
+})
+
+describe('buildFullWordList', () => {
+  const tsv = [
+    'Hakusana\tHomonymia\tSanaluokka\tTaivutustiedot',
+    '3D-tulostin\t\tsubstantiivi\t', // rejected: digits/hyphen
+    'aah\t\tinterjektio\t99', // rejected: word class
+    'yö\t\tsubstantiivi\t9', // 2 letters, still included: no length bucketing
+    'auto\t\tsubstantiivi\t9',
+    'auto\t2\tsubstantiivi\t9', // duplicate headword, deduped
+    'säämiskänvärinen\t\tadjektiivi\t9', // long word, still included
+  ].join('\n')
+
+  it('includes words of any length, uppercased, deduped, and sorted', () => {
+    expect(buildFullWordList(tsv)).toEqual(['AUTO', 'SÄÄMISKÄNVÄRINEN', 'YÖ'])
   })
 })
 

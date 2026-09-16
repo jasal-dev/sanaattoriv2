@@ -14,7 +14,10 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "preview": "vite preview",
-    "build:wordlists": "node scripts/build-wordlists.mjs"
+    "build:wordlists": "node scripts/build-wordlists.mjs",
+    "build:sanapyramidi-compound-families": "node scripts/build-sanapyramidi-compound-families.mjs",
+    "build:sanapyramidi-hidden-word-families": "node scripts/build-sanapyramidi-hidden-word-families.mjs",
+    "build:sanapyramidi-palindromes": "node scripts/build-sanapyramidi-palindromes.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
