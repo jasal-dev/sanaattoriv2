@@ -36,9 +36,7 @@ describe('findHardModeViolation', () => {
   })
 
   it('checks position violations before missing-letter violations', () => {
-    const evaluations: LetterStatus[][] = [
-      ['correct', 'present', 'absent', 'absent', 'absent'],
-    ]
+    const evaluations: LetterStatus[][] = [['correct', 'present', 'absent', 'absent', 'absent']]
     // Drops both the correct K (pos 0) and the present U — position wins.
     const violation = findHardModeViolation('AALTO', ['KUKKA'], evaluations)
     expect(violation).toEqual({ type: 'position', position: 0, letter: 'K' })
@@ -50,9 +48,7 @@ describe('findHardModeViolation', () => {
       ['absent', 'present', 'absent', 'absent', 'absent'],
     ]
     // Must keep K in position 0 (from guess 1) and still include U (from guess 2).
-    expect(
-      findHardModeViolation('KAULA', ['KUKKA', 'AUTOA'], evaluations),
-    ).toBeNull()
+    expect(findHardModeViolation('KAULA', ['KUKKA', 'AUTOA'], evaluations)).toBeNull()
     const violation = findHardModeViolation('KAATA', ['KUKKA', 'AUTOA'], evaluations)
     expect(violation).toEqual({ type: 'missing-letter', letter: 'U' })
   })

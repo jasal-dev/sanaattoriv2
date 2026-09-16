@@ -49,7 +49,7 @@ describe('Layout', () => {
 
   // /sanuri-pro also starts with "/sanuri", so a naive prefix match would
   // wrongly treat it as the plain Sanuri game and show the wrong title.
-  it("shows the Sanuri Pro title on /sanuri-pro, not the plain Sanuri title", () => {
+  it('shows the Sanuri Pro title on /sanuri-pro, not the plain Sanuri title', () => {
     renderWithRoutes('/sanuri-pro')
     expect(screen.getByText('Sanuri Pro content')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Sanuri Pro' })).toBeInTheDocument()

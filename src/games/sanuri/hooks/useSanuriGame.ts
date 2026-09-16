@@ -7,10 +7,7 @@ import { pickWord } from '../logic/pickWord'
 import { getAnswerWordList, getWordList, type GameVariant, type WordLength } from '../wordLists'
 
 export type GuessError =
-  | 'too-short'
-  | 'not-in-word-list'
-  | 'hard-mode-position'
-  | 'hard-mode-missing-letter'
+  'too-short' | 'not-in-word-list' | 'hard-mode-position' | 'hard-mode-missing-letter'
 
 const STATUS_PRIORITY: Record<LetterStatus, number> = { absent: 0, present: 1, correct: 2 }
 

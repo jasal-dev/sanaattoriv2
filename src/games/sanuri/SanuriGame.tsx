@@ -16,8 +16,10 @@ export interface SanuriGameProps {
 
 export function SanuriGame({ wordLength = 5, variant = 'pro' }: SanuriGameProps) {
   const { t } = useI18n()
-  const { state, letterStatuses, addLetter, removeLetter, submitGuess, newGame } =
-    useSanuriGame(wordLength, variant)
+  const { state, letterStatuses, addLetter, removeLetter, submitGuess, newGame } = useSanuriGame(
+    wordLength,
+    variant,
+  )
   const wrapperRef = useRef<HTMLDivElement>(null)
   const previousStatusRef = useRef(state.status)
 

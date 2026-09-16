@@ -50,7 +50,7 @@ already optimized for a bandwidth-limited host:
   shell alone for the home page, plus the game chunk and exactly one word list once they start
   playing.
 - **`public/.htaccess`** enables gzip compression and long-lived caching (`Cache-Control:
-  immutable`) for the hashed, fingerprinted JS/CSS files Vite outputs — safe because a new
+immutable`) for the hashed, fingerprinted JS/CSS files Vite outputs — safe because a new
   deploy always gets new filenames — while keeping `index.html` itself always revalidated so a
   new deploy is picked up right away. It also rewrites unknown paths to `index.html` so
   client-side routes like `/sanuri` work on a direct visit or a page reload, not just via
