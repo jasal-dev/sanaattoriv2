@@ -33,14 +33,14 @@ the new and hard part is **generating valid puzzles**, which gets its own detail
 
 Reuse everything already established for Sanuri — no new infra needed:
 
-| Concern | Choice |
-| --- | --- |
-| Framework/build | React 19 + TypeScript + Vite (existing) |
-| Routing | `react-router-dom`, new `/sanapyramidi` route, `React.lazy`-loaded like Sanuri |
-| Styling | Tailwind (existing) |
-| Persistence | `localStorage` — recent-puzzle history (repeat avoidance) and aggregate stats |
-| i18n | Existing hand-rolled `I18nProvider`; new flat keys under a `sanapyramidi.` prefix |
-| Tests | Vitest + React Testing Library (unit/component), Playwright (e2e) — same conventions |
+| Concern         | Choice                                                                               |
+| --------------- | ------------------------------------------------------------------------------------ |
+| Framework/build | React 19 + TypeScript + Vite (existing)                                              |
+| Routing         | `react-router-dom`, new `/sanapyramidi` route, `React.lazy`-loaded like Sanuri       |
+| Styling         | Tailwind (existing)                                                                  |
+| Persistence     | `localStorage` — recent-puzzle history (repeat avoidance) and aggregate stats        |
+| i18n            | Existing hand-rolled `I18nProvider`; new flat keys under a `sanapyramidi.` prefix    |
+| Tests           | Vitest + React Testing Library (unit/component), Playwright (e2e) — same conventions |
 
 ## The hard part: generating word groups
 
@@ -55,7 +55,7 @@ Yle's real puzzles mix two kinds of groups that require different tooling:
   "streets/roads") — these require world knowledge that isn't derivable from a dictionary. They
   have to be **hand-curated**, the same way NYT Connections categories are editor-written.
 - **Wordplay categories built from real dictionary words** (e.g. `SANASSA KASVI`: RUISKU,
-  MAKUUSIJA, PUJOTTELU, TUPAJUMI, TUOMIO — each *contains* a plant name as a substring: RUIS,
+  MAKUUSIJA, PUJOTTELU, TUPAJUMI, TUOMIO — each _contains_ a plant name as a substring: RUIS,
   KUUSI, PUJO, PAJU, TUOMI) — these **can** be generated automatically from the same Kotus word
   list already committed at `src/data/words-*.json`, plus small curated seed lists of category
   words (plants, colors, animals, etc. — a few dozen words each, much cheaper to curate than
@@ -109,7 +109,7 @@ URHEILU → HINAUSAUTO, SÄHKÖAUTO, URHEILUAUTO all real words):
    (not a real suffix) or splits where the "prefix" isn't a real word/morpheme (Finnish compounds
    commonly use a genitive/stem form, e.g. `LASTEN-` from `LAPSI`, so exact substring match
    before the suffix will miss or wrongly accept things). Two mitigations, cheapest first:
-   - Require the prefix part to *also* be a full dictionary word on its own (as in the `AUTO`
+   - Require the prefix part to _also_ be a full dictionary word on its own (as in the `AUTO`
      example) — this alone reproduces the observed Yle style and is easy to check.
    - Treat stem alternations as a stretch goal (v2), not v1: Finnish consonant gradation and
      genitive forms would need a small suffix-stripping table (e.g. try prefix, prefix+"I",
@@ -121,7 +121,7 @@ URHEILU → HINAUSAUTO, SÄHKÖAUTO, URHEILUAUTO all real words):
 
 **B2 — Compound-prefix families** — the mirror image (e.g. `-KELLO`: PÖYTÄ, SEINÄ, RANNE,
 HÄLYTYS → PÖYTÄKELLO, SEINÄKELLO, RANNEKELLO, HÄLYTYSKELLO). Same algorithm with prefix/suffix
-swapped: fix a common *second half* is B1, fix a common *first half* is B2 — implement both from
+swapped: fix a common _second half_ is B1, fix a common _first half_ is B2 — implement both from
 one shared `findCompoundFamilies(words, { anchor: 'prefix' | 'suffix' })` function.
 
 **B3 — Hidden-category-word families** (reproduces `SANASSA KASVI` exactly):
@@ -138,7 +138,7 @@ one shared `findCompoundFamilies(words, { anchor: 'prefix' | 'suffix' })` functi
    substantially longer than the seed, or nearly every 4-letter word "hides" some 3-letter seed
    trivially).
 3. Reject a host word if it contains **more than one** seed word from the category (ambiguous
-   which one is "the" hidden word) or if it also matches a seed from a *different* seed category
+   which one is "the" hidden word) or if it also matches a seed from a _different_ seed category
    used in the same candidate pool (cross-category collision risk when assembling a puzzle).
 4. Group by seed word; same ≥5-candidate-family threshold and manual spot-check step as B1.
 
@@ -176,7 +176,7 @@ source. This single dataset supports two distinct generators:
   categories, or a stricter length margin (`len(H) >= len(S) + 4`) to bias toward less trivial
   hosts.
 - **Name/word homonyms** — a new, simpler-to-validate mechanism: Finnish first names are very
-  often *also* ordinary dictionary words with an unrelated meaning (`AURA` = plow, `SATU` =
+  often _also_ ordinary dictionary words with an unrelated meaning (`AURA` = plow, `SATU` =
   fairy tale, `ONNI` = happiness/luck, `TOIVO` = hope, `LAINE` = wave, `PILVI` = cloud). The
   generator is just a set intersection — `namesLowercased ∩ dictionaryWords` — with no substring
   heuristics or split-validity judgment calls needed at all, which makes it easier to fully
@@ -187,6 +187,7 @@ source. This single dataset supports two distinct generators:
   built first.
 
 Practical notes on the data source itself:
+
 - Scraping a third-party site is the same class of build-time, not-shipped-at-runtime step as
   the existing Kotus/frequency-corpus fetches, so it fits the established pattern — but check
   `info.paivyri.fi`'s terms of use/robots.txt and note attribution requirements (if any) the same
@@ -210,8 +211,8 @@ seed list, no split-validity judgment call, no cross-category collision logic be
 dedupe: just filter the full dictionary and group every match into one "palindromit" family.
 Two things worth calling out:
 
-- Almost no manual review is needed for *correctness* (the rule is definitionally true), but a
-  quick skim is still worth it for *recognizability* — a technically-correct but obscure
+- Almost no manual review is needed for _correctness_ (the rule is definitionally true), but a
+  quick skim is still worth it for _recognizability_ — a technically-correct but obscure
   palindrome makes for an unsatisfying "aha" compared to a common word players actually know.
 - Unlike the compound/hidden-word families, this is a **closed, small set** for a given
   dictionary (Finnish palindromic words of reasonable length are rare), so it likely yields only
@@ -234,7 +235,7 @@ of curated categories (A) and generated families (B1-B5), plus 1 apex word, then
 automated **uniqueness/collision check** before the puzzle is accepted:
 
 - No word appears in more than one of the 5 selections (4 groups + apex) — trivial dedupe.
-- For every *generated* (B1-B5) group actually used, re-run that family's own rule against the
+- For every _generated_ (B1-B5) group actually used, re-run that family's own rule against the
   apex word and against every other chosen group's words, rejecting the puzzle if the apex word
   or an unrelated group's word also happens to satisfy that rule (e.g. don't let the apex word
   be some other `-AUTO` word by coincidence). This is the main defense against an accidentally
@@ -255,10 +256,11 @@ Puzzle shape (`id` replaces the date-keyed scheme a daily puzzle would use):
     "groups": [
       { "size": 4, "label": "SORSAT", "words": ["RIKI", "HEIKKI", "REPE", "KALEVI"] },
       // ...
-    ]
-  }
+    ],
+  },
 ]
 ```
+
 (Illustrative only — `apex` must not also appear in a `words` array; the real generator enforces
 that.)
 
@@ -423,7 +425,7 @@ check.
 9. **E2E suite**: Playwright specs per the testing plan above, wired into CI.
 10. **Content cadence**: decide and document an ongoing process for growing the pool over time
     (this doesn't "finish" like the other phases — flag it to whoever owns content going
-    forward). Unlike a daily puzzle's fixed cadence, the pressure here is pool *size* relative to
+    forward). Unlike a daily puzzle's fixed cadence, the pressure here is pool _size_ relative to
     expected play volume, not a publishing schedule.
 
 ## Open decisions to confirm
