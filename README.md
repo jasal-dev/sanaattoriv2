@@ -20,8 +20,11 @@ full implementation plan.
 - `npm run build:wordlists` — regenerate `src/data/words-{4,5,6,7}[-easy].json` from the Kotus
   and frequency sources
 - `npm run build:sanapyramidi-compound-families`, `build:sanapyramidi-hidden-word-families`,
-  `build:sanapyramidi-palindromes` — regenerate the candidate Sanapyramidi word-group files under
-  `scripts/data/`, mined from the full Kotus dictionary (see below)
+  `build:sanapyramidi-hidden-names`, `build:sanapyramidi-palindromes` — regenerate the candidate
+  Sanapyramidi word-group files under `scripts/data/`, mined from the full Kotus dictionary (see
+  below)
+- `npm run build:name-lists` — regenerate `scripts/data/seed-categories/etunimet-{miehet,naiset}.json`
+  from info.paivyri.fi's first-name statistics (see below)
 
 ## Word list data
 
@@ -64,18 +67,30 @@ for the full design. Puzzles are built from two sources that share one JSON shap
   A third generator, hidden-category-word families (B3, `scripts/lib/hiddenWordFamilies.mjs`'s
   `findHiddenWordFamilies(words, seedCategories)`), works from small hand-typed seed word lists
   under `scripts/data/seed-categories/*.json` (colors, animals, numbers, body parts so far —
-  plants/birds/names need a scraped source per the implementation plan and aren't built yet) and
-  finds every dictionary word that contains one of those seed words as a substring anywhere —
-  prefix, suffix, or mid-word — and is markedly longer than it (e.g. seed `KUUSI` inside
-  `MAKUUSIJA`). A host matching more than one seed word, whether from the same or a different
-  category, is dropped entirely as ambiguous. Run `npm run build:sanapyramidi-hidden-word-families`
-  to refresh `scripts/data/sanapyramidi-hidden-word-families.json`. **This one is noisier than
-  B1/B2** and needs a more careful manual pass: short, common seed words (e.g. `SUU`, `PÄÄ`,
-  `KANA`) rack up hundreds of substring hits that are real dictionary words but not meaningfully
-  "about" the seed at all (e.g. `SATA` matches inside the loanword verb `FAKSATA`, `SUU` matches
-  inside the `-uus`/`-suus` abstract-noun suffix in `AASIALAISUUS`) — this is an inherent
-  limitation of plain substring matching, not a bug, and is exactly why this file is unreviewed
-  output rather than puzzle-ready data.
+  plants/birds need a scraped source per the implementation plan and aren't built yet) and finds
+  every dictionary word that contains one of those seed words as a substring anywhere — prefix,
+  suffix, or mid-word — and is markedly longer than it (e.g. seed `KUUSI` inside `MAKUUSIJA`). A
+  host matching more than one seed word, whether from the same or a different category, is dropped
+  entirely as ambiguous. Run `npm run build:sanapyramidi-hidden-word-families` to refresh
+  `scripts/data/sanapyramidi-hidden-word-families.json`. **This one is noisier than B1/B2** and
+  needs a more careful manual pass: short, common seed words (e.g. `SUU`, `PÄÄ`, `KANA`) rack up
+  hundreds of substring hits that are real dictionary words but not meaningfully "about" the seed
+  at all (e.g. `SATA` matches inside the loanword verb `FAKSATA`, `SUU` matches inside the
+  `-uus`/`-suus` abstract-noun suffix in `AASIALAISUUS`) — this is an inherent limitation of plain
+  substring matching, not a bug, and is exactly why this file is unreviewed output rather than
+  puzzle-ready data.
+
+  A fourth, hidden-name-substrings (B4), is the same `findHiddenWordFamilies` mechanism again, run
+  separately (`scripts/build-sanapyramidi-hidden-names.mjs`) against the two name seed lists
+  described below with a stricter minimum seed length and length margin (4 instead of B3's 3 for
+  both). Run `npm run build:sanapyramidi-hidden-names` to refresh
+  `scripts/data/sanapyramidi-hidden-name-families.json`. **This one needs the heaviest manual pass
+  of all the B-generators**: names are shorter and more phonetically generic than the other seed
+  categories, so even with the stricter settings some (e.g. `ELLI`, `ELLA`, `OLLI`, `ASTA`) still
+  produce hundreds of hosts that merely happen to contain that letter sequence as ordinary Finnish
+  inflectional morphology (`-elli`/`-ella`/`-olli`/`-asta` endings), rather than genuinely reading
+  as "hides the name X" — expect to skip large swaths of some families' candidates and lean on the
+  smaller, cleaner ones (e.g. `AKSELI`, `ARTTU`, `JUSSI`, `KIMMO`, `PEKKA`) instead.
 
   The simplest generator is palindromes (B5, `scripts/lib/palindromes.mjs`'s
   `findPalindromes(words)`): a plain filter for words that read the same forwards and backwards
@@ -85,6 +100,18 @@ for the full design. Puzzles are built from two sources that share one JSON shap
   small set (20 words against the current Kotus list) rather than a combinatorially large pool —
   still worth a quick recognizability skim, but there's little correctness risk since the rule is
   definitionally true.
+
+### Name data (B4 seed lists)
+
+`scripts/data/seed-categories/etunimet-miehet.json` and `etunimet-naiset.json` (the top ~200 most
+common Finnish male/female first names, by registered count) are scraped from
+[info.paivyri.fi/nimitilastot](https://info.paivyri.fi/nimitilastot) by
+`scripts/build-name-lists.mjs`, run via `npm run build:name-lists`. That page states its
+underlying data is name statistics shared by Finland's Population Information System
+(_Väestötietojärjestelmä_), but neither the page nor the rest of the site displays a copyright
+notice or terms of use for the name data itself — unlike Kotus and the frequency corpus above,
+there's no explicit license to cite here. `robots.txt` was checked before scraping and doesn't
+disallow the page. Revisit this if info.paivyri.fi publishes formal terms later.
 
 Both kinds of groups land in the same array, in `src/data/sanapyramidi-puzzles.json`, which stays
 hand-editable regardless of a puzzle's origin — see the file for a worked example combining a
