@@ -26,7 +26,7 @@ export function Layout() {
   const outletContext: SanuriRouteContext = { wordLength }
 
   return (
-    <main className="flex h-svh justify-center bg-slate-50 px-4 py-[clamp(0.5rem,2dvh,2rem)]">
+    <main className="flex h-svh justify-center bg-slate-50 px-2 py-[clamp(0.5rem,2dvh,2rem)] sm:px-4">
       <div className="flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-2xl shadow-lg">
         <header className="flex shrink-0 flex-row items-center justify-between gap-4 bg-ink-900 px-5 py-[clamp(0.6rem,3dvh,1.5rem)] sm:px-8">
           <div className="text-left">
@@ -94,7 +94,7 @@ export function Layout() {
             )}
           </div>
         </header>
-        <div className="flex min-h-0 flex-1 flex-col items-center gap-[clamp(0.5rem,1.5dvh,1.5rem)] overflow-y-auto bg-ink-100 px-4 py-[clamp(0.5rem,2dvh,1.5rem)] sm:px-8">
+        <div className="flex min-h-0 flex-1 flex-col items-center gap-[clamp(0.5rem,1.5dvh,1.5rem)] overflow-y-auto bg-ink-100 px-2 py-[clamp(0.5rem,2dvh,1.5rem)] sm:px-8">
           <Outlet context={outletContext} />
         </div>
       </div>

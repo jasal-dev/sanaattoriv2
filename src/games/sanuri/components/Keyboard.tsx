@@ -32,7 +32,7 @@ export function Keyboard({ onKey, letterStatuses, disabled = false }: KeyboardPr
   }
 
   return (
-    <div className="w-full max-w-xl shrink-0 rounded-xl border border-slate-200 bg-white p-3 sm:p-4">
+    <div className="w-full max-w-xl shrink-0 rounded-xl border border-slate-200 bg-white px-1 py-3 sm:p-4">
       <div className="flex flex-col gap-1.5">
         {ROWS.map((row, i) => (
           <div key={i} className="flex gap-1.5">
