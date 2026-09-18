@@ -1,2 +1,5 @@
-/** How long a solved/revealed tile's color transition takes to settle before the game-over modal appears -- a little past Tailwind's default 150ms `transition-colors` duration. */
-export const ROW_LOCK_DURATION_MS = 200
+/** How long a tile's position/color transition takes -- must match FunnelTile's `duration-500` class. */
+export const TILE_MOVE_DURATION_MS = 500
+
+/** How long a solved/revealed tile takes to settle into its row before the game-over modal appears. */
+export const GAME_OVER_MODAL_DELAY_MS = TILE_MOVE_DURATION_MS + 100

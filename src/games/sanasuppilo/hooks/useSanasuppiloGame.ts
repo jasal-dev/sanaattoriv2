@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { loadSanasuppiloStats, recordSanasuppiloResult } from '../../../storage/sanasuppiloStats'
 import { checkSelection } from '../logic/checkSelection'
+import { reorderTilesForSolvedGroup } from '../logic/funnelLayout'
 import { MAX_HINTS, nextHint } from '../logic/hint'
 import { loadRecentPuzzleIds, recordPlayedPuzzle } from '../logic/puzzleHistory'
 import {
@@ -23,7 +24,14 @@ export interface SanasuppiloGameState {
   puzzle: SanasuppiloPuzzle | null
   /** False until the first puzzle has finished loading — the game isn't playable yet. */
   ready: boolean
-  /** All 15 words in one fixed shuffle order for the whole game -- positions never change, only a tile's solved styling does. */
+  /**
+   * All 15 words, one per fixed board slot (see logic/funnelLayout.ts).
+   * Shuffled once at puzzle load; a solved group's words then swap into
+   * their row's slots (displacing whatever was there), so array order
+   * changes over the course of a game even though each word's *content*
+   * association with a slot only ever moves via an explicit, animatable
+   * swap -- never a silent reshuffle.
+   */
   tiles: SanasuppiloTile[]
   /** The puzzle's 4 groups plus a synthetic 1-word group for the apex -- just as selectable and checkable as any other group, at any time. */
   allGroups: SanasuppiloGroup[]
@@ -168,6 +176,7 @@ export function useSanasuppiloGame(): UseSanasuppiloGame {
 
     if (match) {
       const nextSolvedGroups = [...solvedGroups, match]
+      setTiles((prev) => reorderTilesForSolvedGroup(prev, match))
       setSolvedGroups(nextSolvedGroups)
       setSelectedIds(new Set())
       setLastResult('correct')
@@ -185,6 +194,12 @@ export function useSanasuppiloGame(): UseSanasuppiloGame {
     setLives(nextLives)
     if (nextLives === 0) {
       setStatus('lost')
+      // Every remaining group gets revealed in its row too (the same move
+      // a correct guess makes), so a loss doesn't leave some groups tidily
+      // assembled and others still scattered across the board.
+      setTiles((prev) =>
+        unsolvedGroups.reduce((acc, group) => reorderTilesForSolvedGroup(acc, group), prev),
+      )
       const streakBeforeResult = loadSanasuppiloStats().currentStreak
       recordPlayedPuzzle(puzzle.id)
       recordSanasuppiloResult(false)

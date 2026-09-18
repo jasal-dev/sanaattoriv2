@@ -1,5 +1,6 @@
 import { act, renderHook, waitFor, type RenderHookResult } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { slotRangeForSize } from '../logic/funnelLayout'
 import type { SanasuppiloPuzzle } from '../puzzles'
 import { useSanasuppiloGame, type UseSanasuppiloGame } from './useSanasuppiloGame'
 
@@ -82,13 +83,17 @@ describe('useSanasuppiloGame', () => {
     expect(result.current.state.selectedIds.has(id)).toBe(false)
   })
 
-  it('does not move tiles when a group is solved -- they stay in place', async () => {
+  it('moves a solved group into its row slots, wherever its words were shuffled to', async () => {
     const { result } = await renderGame()
     const wordsBefore = result.current.state.tiles.map((tile) => tile.word)
     selectWords(result, ['A1', 'A2'])
     act(() => result.current.submitCheck())
+
     const wordsAfter = result.current.state.tiles.map((tile) => tile.word)
-    expect(wordsAfter).toEqual(wordsBefore)
+    const [start, end] = slotRangeForSize(2)
+    expect(new Set(wordsAfter.slice(start, end))).toEqual(new Set(['A1', 'A2']))
+    // Every word is still on the board exactly once -- nothing lost or duplicated by the swap.
+    expect(wordsAfter.slice().sort()).toEqual(wordsBefore.slice().sort())
   })
 
   it('locks a group in on a correct selection and clears the selection', async () => {
@@ -132,7 +137,7 @@ describe('useSanasuppiloGame', () => {
     expect(result.current.state.lastResult).toBe('incorrect')
   })
 
-  it('ends the game as lost after 4 wrong guesses', async () => {
+  it('ends the game as lost after 4 wrong guesses, moving every remaining group into its row too', async () => {
     const { result } = await renderGame()
     for (let i = 0; i < 4; i++) {
       selectWords(result, ['A1', 'B1'])
@@ -140,6 +145,15 @@ describe('useSanasuppiloGame', () => {
     }
     expect(result.current.state.lives).toBe(0)
     expect(result.current.state.status).toBe('lost')
+
+    const words = result.current.state.tiles.map((tile) => tile.word)
+    expect(new Set(words.slice(...slotRangeForSize(2)))).toEqual(new Set(['A1', 'A2']))
+    expect(new Set(words.slice(...slotRangeForSize(3)))).toEqual(new Set(['B1', 'B2', 'B3']))
+    expect(new Set(words.slice(...slotRangeForSize(4)))).toEqual(new Set(['C1', 'C2', 'C3', 'C4']))
+    expect(new Set(words.slice(...slotRangeForSize(5)))).toEqual(
+      new Set(['D1', 'D2', 'D3', 'D4', 'D5']),
+    )
+    expect(words.slice(...slotRangeForSize(1))).toEqual(['APEX'])
   })
 
   it('wins and records a streak once all 5 groups (including the apex) are solved', async () => {

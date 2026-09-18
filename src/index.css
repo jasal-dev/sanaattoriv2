@@ -20,6 +20,21 @@
   --color-row-5: #fb7185;
 }
 
+:root {
+  /* Sanasuppilo funnel tile geometry -- read from JS/inline styles (see
+     funnelLayout.ts) to position each tile absolutely by simple tile-unit
+     arithmetic, entirely in CSS, so the responsive size change below (and
+     any tile-move animation) needs no JS measurement or resize listener. */
+  --tile-size: 3.5rem;
+  --tile-gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --tile-size: 4rem;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .tile-reveal {
     animation: tile-reveal 0.5s ease both;

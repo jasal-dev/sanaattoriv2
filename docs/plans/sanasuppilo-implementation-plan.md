@@ -16,8 +16,10 @@ section below.
   way (1 at the top, widening to 5 at the base). All 15 words are visible and identically styled
   from the very first render; word-to-position placement within the funnel is shuffled and
   unrelated to actual group membership, so the shape itself never gives away which words belong
-  together, and words never move again once placed — a solved group's tiles recolor in place
-  rather than being pulled out into a row of their own.
+  together. Once a group is solved, its words animate into that group's own row (5-wide row for a
+  5-word group, and so on) — swapping places with whatever still-unsolved words happened to be
+  occupying those slots, which slide into the vacated positions in the same motion — rather than
+  either staying scattered or being pulled out into a separate row of their own.
 - The apex is a group of exactly one word: it's selectable and checkable exactly like any of the
   other 4 groups, and can be solved at any point (not only last) — it just happens to have no
   shared "reason" with any other word, since by construction it fits none of the other 4 groups'
@@ -26,17 +28,17 @@ section below.
   category, e.g. "men's first names," or wordplay, e.g. "all these words become a new word when a
   category word is inserted/appended").
 - Player clicks words to select them, then clicks "Tarkista" (Check) once the selection count
-  matches an unsolved group's size. A correct guess recolors those specific tiles in place (they
-  do not move) and adds the group's label to a small legend below the board; a wrong guess costs
-  one of 4 lives.
+  matches an unsolved group's size. A correct guess recolors those specific tiles and animates
+  them into the group's row (see "Board shape" above), and adds the group's label to a small
+  legend below the board; a wrong guess costs one of 4 lives.
 - Groups can be solved in any order.
 - "Vihje" (Hint) reveals the first word of the smallest still-unsolved group **among the 3-, 4-,
   and 5-word groups only** (never the 2-word group or the 1-word apex). The revealed word still
   has to be clicked to count as selected. The hint button in the reference UI shows a badge of
   `3` — i.e. at most one hint per eligible group (3/4/5), 3 hints total per puzzle.
 - Game ends after 4 wrong guesses or after all 5 groups (the 4 real ones plus the apex) are
-  solved; on end, every unsolved group's tiles are revealed in place (recolored, same as a normal
-  solve) with its label added to the legend.
+  solved; on end, every unsolved group's tiles are revealed the same way a normal solve works
+  (recolored and animated into their row) with its label added to the legend.
 - **Unlike Yle's original** (and unlike the "Pelaa eilinen peli" button in the reference
   screenshot), Sanasuppilo is **not a daily puzzle**: plays are unlimited per day, matching
   Sanuri's unlimited-play model. A "New game" action just produces another fresh puzzle. This is
@@ -337,10 +339,10 @@ sanaattoriv2/
       SanasuppiloGame.tsx              # top-level component (selection, lives, hints, modal)
       SanasuppiloRoute.tsx             # thin route wrapper (requests a fresh puzzle on mount/new game)
       puzzles.ts                        # getRandomPuzzle() — lazy import of the JSON pool, like wordLists.ts
-      animation.ts                      # row-lock/reveal animation timing, mirrors sanuri/animation.ts
+      animation.ts                      # game-over modal delay timing, mirrors sanuri/animation.ts
       components/
         Funnel.tsx                      # lays out the fixed 5/4/3/2/1 funnel shape, all 15 tiles
-        FunnelTile.tsx                  # single word tile (selectable / hinted / solved-in-place states)
+        FunnelTile.tsx                  # single word tile, absolutely positioned so a slot change animates
         SolvedGroupChip.tsx             # small colored legend entry naming a solved/revealed group
         LivesIndicator.tsx              # 4-dot life tracker
         GameOverModal.tsx               # reused pattern from sanuri's GameOverModal, offers "New game"
@@ -350,6 +352,7 @@ sanaattoriv2/
         checkSelection.ts               # does the current selection exactly match an unsolved group?
         hint.ts                         # pick next hint: smallest unsolved row among sizes 3/4/5
         puzzleHistory.ts                # recently-served puzzle ids (localStorage ring buffer) -> exclusion set
+        funnelLayout.ts                 # the 15 fixed board slots + reorderTilesForSolvedGroup() (swap a solved group into its row)
       *.test.ts / *.test.tsx for each of the above
 ```
 
@@ -363,19 +366,22 @@ React), one orchestrating hook, presentational `components/`, thin `*Route.tsx`.
   again deselects it, matching the stated instructions.
 - **Check**: enabled once `selection.size` equals the size of at least one unsolved group. On
   submit, `checkSelection(selection, unsolvedGroups)` returns the matching group (if the exact
-  word set equals one of the unsolved groups) or `null`. A match marks the group solved (its
-  tiles recolor in place, wherever they happen to sit in the shuffled funnel, and its label is
-  added to a small legend below the board; nothing moves), and clears the selection; a non-match
-  decrements lives.
+  word set equals one of the unsolved groups) or `null`. A match marks the group solved: its
+  tiles recolor and `reorderTilesForSolvedGroup` (in `logic/funnelLayout.ts`) swaps them into
+  that group's row slots, swapping whatever still-unsolved words were sitting there into the
+  group's old (now vacated) slots -- animated via each tile's `top`/`left` CSS transition, not a
+  remount, since every tile is one long-lived absolutely-positioned DOM node whose position just
+  changes. The group's label is added to a small legend below the board, and the selection
+  clears; a non-match decrements lives.
 - **Hints**: `nextHint(unsolvedGroups, revealedHints)` — from unsolved groups of size 3, 4, or 5
   (skip the 2-word group and the 1-word apex), pick the smallest remaining one, return its first
   not-yet-selected word. Cap enforced by a hint budget of 3 (or `min(3, number of eligible
 unsolved groups)`).
 - **Game over**: after the 4th wrong guess, or once all 5 groups (the 4 real ones plus the apex)
-  are solved. On loss, reveal every still-unsolved group's tiles in place (recolored, same as a
-  normal solve) with its label added to the legend; on win, every group is already solved the
-  same way. Both cases offer a "New game" action that draws another puzzle from the pool (via
-  `puzzleHistory.ts`'s exclusion set).
+  are solved. On loss, every still-unsolved group is revealed the same way a normal solve works
+  (recolored and animated into its row) with its label added to the legend; on win, every group
+  is already solved the same way. Both cases offer a "New game" action that draws another puzzle
+  from the pool (via `puzzleHistory.ts`'s exclusion set).
 - **Stats**: unlike Sanuri there's no natural per-mode axis (word length) to bucket by, since
   every game draws from the same pool — simplest v1 is an aggregate running total (played, won,
   current streak, max streak), mirroring `storage/stats.ts`'s schema-versioned localStorage

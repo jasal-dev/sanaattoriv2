@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '../../i18n/I18nProvider'
-import { ROW_LOCK_DURATION_MS } from './animation'
+import { GAME_OVER_MODAL_DELAY_MS } from './animation'
 import { Funnel } from './components/Funnel'
 import { GameOverModal } from './components/GameOverModal'
 import { LivesIndicator } from './components/LivesIndicator'
@@ -25,7 +25,7 @@ export function SanasuppiloGame() {
 
   useEffect(() => {
     if (state.status !== 'won' && state.status !== 'lost') return
-    const timer = setTimeout(() => setShowGameOverModal(true), ROW_LOCK_DURATION_MS)
+    const timer = setTimeout(() => setShowGameOverModal(true), GAME_OVER_MODAL_DELAY_MS)
     return () => clearTimeout(timer)
   }, [state.status])
 

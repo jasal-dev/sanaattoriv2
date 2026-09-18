@@ -36,7 +36,7 @@ export function SanasuppiloStatsModal({ stats, onClose }: SanasuppiloStatsModalP
     <div
       ref={dialogRef}
       tabIndex={-1}
-      className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 focus:outline-none"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 focus:outline-none"
       role="dialog"
       aria-modal="true"
       aria-label={t('stats.title')}
