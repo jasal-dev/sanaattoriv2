@@ -1,6 +1,6 @@
-# Sanapyramidi clone — implementation plan
+# Sanasuppilo — implementation plan
 
-Implementation plan for a second game in the Sanaattori portal: a clone of Yle's
+Implementation plan for a second game in the Sanaattori portal, Sanasuppilo: a clone of Yle's
 "Sanapyramidi" (word pyramid). Reuses the portal/i18n/testing infrastructure built for Sanuri;
 the new and hard part is **generating valid puzzles**, which gets its own detailed section below.
 
@@ -36,10 +36,10 @@ Reuse everything already established for Sanuri — no new infra needed:
 | Concern         | Choice                                                                               |
 | --------------- | ------------------------------------------------------------------------------------ |
 | Framework/build | React 19 + TypeScript + Vite (existing)                                              |
-| Routing         | `react-router-dom`, new `/sanapyramidi` route, `React.lazy`-loaded like Sanuri       |
+| Routing         | `react-router-dom`, new `/sanasuppilo` route, `React.lazy`-loaded like Sanuri        |
 | Styling         | Tailwind (existing)                                                                  |
 | Persistence     | `localStorage` — recent-puzzle history (repeat avoidance) and aggregate stats        |
-| i18n            | Existing hand-rolled `I18nProvider`; new flat keys under a `sanapyramidi.` prefix    |
+| i18n            | Existing hand-rolled `I18nProvider`; new flat keys under a `sanasuppilo.` prefix     |
 | Tests           | Vitest + React Testing Library (unit/component), Playwright (e2e) — same conventions |
 
 ## The hard part: generating word groups
@@ -71,7 +71,7 @@ group size so the assembler can rotate through different subsets across puzzles 
 repeating the same exact group:
 
 ```jsonc
-// scripts/data/sanapyramidi-categories.json
+// scripts/data/sanasuppilo-categories.json
 {
   "miesten_nimet": { "label": "Miesten nimiä", "words": ["MATTI", "TOIVO", "YRJÖ", "ERKKI", "HEIKKI", "ANSELMI", ...] },
   "kulkuvaylat": { "label": "Kulkuväyliä", "words": ["TIE", "KATU", "KUJA", "POLKU", "RAITTI", ...] },
@@ -248,7 +248,7 @@ automated **uniqueness/collision check** before the puzzle is accepted:
 Puzzle shape (`id` replaces the date-keyed scheme a daily puzzle would use):
 
 ```jsonc
-// src/data/sanapyramidi-puzzles.json
+// src/data/sanasuppilo-puzzles.json
 [
   {
     "id": "sorsat-kasvit-0001",
@@ -300,9 +300,9 @@ Revisit (2) only if real usage shows the pool cycling noticeably.
 ```
 sanaattoriv2/
   scripts/
-    build-sanapyramidi-puzzles.mjs      # assembler entry point, mirrors build-wordlists.mjs
+    build-sanasuppilo-puzzles.mjs      # assembler entry point, mirrors build-wordlists.mjs
     build-name-lists.mjs                # Approach B4: scrapes info.paivyri.fi/nimitilastot -> seed-categories/etunimet-*.json
-    data/sanapyramidi-categories.json   # Approach A: curated category bank
+    data/sanasuppilo-categories.json   # Approach A: curated category bank
     data/seed-categories/*.json         # Approach B3/B4: small seed word lists (plants, colors, names, ...)
     lib/
       compoundFamilies.mjs              # Approach B1/B2: findCompoundFamilies()
@@ -316,10 +316,10 @@ sanaattoriv2/
       palindromes.test.mjs
       puzzleAssembler.test.mjs
   src/
-    data/sanapyramidi-puzzles.json      # generated, committed output
-    games/sanapyramidi/
-      SanapyramidiGame.tsx              # top-level component (selection, lives, hints, modal)
-      SanapyramidiRoute.tsx             # thin route wrapper (requests a fresh puzzle on mount/new game)
+    data/sanasuppilo-puzzles.json      # generated, committed output
+    games/sanasuppilo/
+      SanasuppiloGame.tsx              # top-level component (selection, lives, hints, modal)
+      SanasuppiloRoute.tsx             # thin route wrapper (requests a fresh puzzle on mount/new game)
       puzzles.ts                        # getRandomPuzzle() — lazy import of the JSON pool, like wordLists.ts
       animation.ts                      # row-lock/reveal animation timing, mirrors sanuri/animation.ts
       components/
@@ -329,7 +329,7 @@ sanaattoriv2/
         LivesIndicator.tsx              # 4-dot life tracker
         GameOverModal.tsx               # reused pattern from sanuri's GameOverModal, offers "New game"
       hooks/
-        useSanapyramidiGame.ts          # selection state, check/submit, lives, hints, win/loss
+        useSanasuppiloGame.ts          # selection state, check/submit, lives, hints, win/loss
       logic/
         checkSelection.ts               # does the current selection exactly match an unsolved group?
         hint.ts                         # pick next hint: smallest unsolved row among sizes 3/4/5
@@ -367,18 +367,18 @@ a second game and should be generalized first, as a small prep step rather than 
 
 - `src/portal/games.ts`'s `GameDefinition.variant` is typed to Sanuri's `GameVariant` — widen
   this (e.g. a discriminated union or a generic `settings`/`meta` field per game) so a
-  Sanapyramidi entry doesn't have to fake a Sanuri variant.
+  Sanasuppilo entry doesn't have to fake a Sanuri variant.
 - `src/portal/Layout.tsx` currently hardcodes Sanuri's word-length selector and stats-modal
   wiring directly in the header, keyed off `location.pathname`. It needs a generic per-game
   extension point (e.g. each `GameDefinition` optionally supplies a header-controls component,
-  or `outletContext` becomes a per-game union) so Sanapyramidi can plug in its own header bits
+  or `outletContext` becomes a per-game union) so Sanasuppilo can plug in its own header bits
   (e.g. a stats button) without Layout special-casing two games by name.
 
 ## i18n
 
-New flat keys under a `sanapyramidi.` prefix in both `en.json`/`fi.json` (instructions text,
+New flat keys under a `sanasuppilo.` prefix in both `en.json`/`fi.json` (instructions text,
 row-check/hint/lives labels, win/loss messages, "New game" button), plus a
-`games.sanapyramidi.title`/`.description` pair for the portal card — same flat-dictionary,
+`games.sanasuppilo.title`/`.description` pair for the portal card — same flat-dictionary,
 dot-prefixed convention as Sanuri, enforced by the existing `dictionaries.test.ts` key-parity
 check.
 
@@ -395,7 +395,7 @@ check.
   modal content for win vs. loss.
 - **E2E (Playwright)**: full win playthrough, full loss playthrough (4 wrong guesses), using all
   3 hints, "New game" producing a different puzzle, portal navigation — following the existing
-  one-spec-per-scenario convention (`sanapyramidi-win.spec.ts`, `sanapyramidi-loss.spec.ts`, etc.).
+  one-spec-per-scenario convention (`sanasuppilo-win.spec.ts`, `sanasuppilo-loss.spec.ts`, etc.).
 
 ## Phased build plan
 
@@ -413,12 +413,12 @@ check.
    full Kotus word list, each with thorough unit tests and a manual-review output step (B5's
    review is a light recognizability skim, not a correctness check).
 4. **Assembler**: `puzzleAssembler.mjs` — drawing, uniqueness/collision validation, JSON output;
-   generate and commit an initial `sanapyramidi-puzzles.json` pool sized in the low thousands so
+   generate and commit an initial `sanasuppilo-puzzles.json` pool sized in the low thousands so
    unlimited play doesn't cycle noticeably.
 5. **Core game logic (no UI)**: `checkSelection`, `nextHint`, `puzzleHistory`, full unit coverage.
 6. **UI**: `Pyramid`/`PyramidTile`/`SolvedRow`/`LivesIndicator`/`GameOverModal`, wired through
-   `useSanapyramidiGame`, component tests for every state.
-7. **Route & portal registration**: `SanapyramidiRoute.tsx`, lazy route in `App.tsx`, portal
+   `useSanasuppiloGame`, component tests for every state.
+7. **Route & portal registration**: `SanasuppiloRoute.tsx`, lazy route in `App.tsx`, portal
    card entry, i18n strings.
 8. **Polish**: row-lock/reveal animations (mirroring `sanuri/animation.ts`), responsive pyramid
    layout for narrow screens, accessibility (aria-live on check results, keyboard selection).

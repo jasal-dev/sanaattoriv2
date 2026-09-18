@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import type { SanapyramidiPuzzle } from '../games/sanapyramidi/puzzles'
-import puzzles from './sanapyramidi-puzzles.json'
+import type { SanasuppiloPuzzle } from '../games/sanasuppilo/puzzles'
+import puzzles from './sanasuppilo-puzzles.json'
 
-const typedPuzzles = puzzles as SanapyramidiPuzzle[]
+const typedPuzzles = puzzles as SanasuppiloPuzzle[]
 
-describe('sanapyramidi-puzzles.json', () => {
+describe('sanasuppilo-puzzles.json', () => {
   it('has at least one puzzle', () => {
     expect(typedPuzzles.length).toBeGreaterThan(0)
   })

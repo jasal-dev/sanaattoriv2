@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { SanasuppiloStatsModal } from '../games/sanasuppilo/components/SanasuppiloStatsModal'
 import { StatsModal } from '../games/sanuri/components/StatsModal'
 import type { SanuriRouteContext } from '../games/sanuri/SanuriRoute'
 import { loadWordLength, saveWordLength } from '../games/sanuri/settings'
 import type { WordLength } from '../games/sanuri/wordLists'
 import { useI18n } from '../i18n/I18nProvider'
+import { loadSanasuppiloStats, type SanasuppiloStats } from '../storage/sanasuppiloStats'
 import { loadStats, type SanuriStats } from '../storage/stats'
 import { GAMES } from './games'
 import { SettingsMenu } from './SettingsMenu'
@@ -16,7 +18,8 @@ export function Layout() {
   const headerTitle = activeGame ? t(activeGame.titleKey) : t('app.title')
 
   const [wordLength, setWordLength] = useState<WordLength>(() => loadWordLength())
-  const [stats, setStats] = useState<SanuriStats | null>(null)
+  const [sanuriStats, setSanuriStats] = useState<SanuriStats | null>(null)
+  const [sanasuppiloStats, setSanasuppiloStats] = useState<SanasuppiloStats | null>(null)
 
   function handleWordLengthChange(length: WordLength) {
     setWordLength(length)
@@ -43,8 +46,14 @@ export function Layout() {
             {activeGame && (
               <button
                 type="button"
-                onClick={() => setStats(loadStats(activeGame.variant))}
-                aria-label={t('sanuri.statsButton')}
+                onClick={() =>
+                  activeGame.kind === 'sanuri'
+                    ? setSanuriStats(loadStats(activeGame.variant))
+                    : setSanasuppiloStats(loadSanasuppiloStats())
+                }
+                aria-label={t(
+                  activeGame.kind === 'sanuri' ? 'sanuri.statsButton' : 'sanasuppilo.statsButton',
+                )}
                 className="flex h-9 w-9 items-center justify-center rounded text-ink-100 transition-colors hover:bg-white/10"
               >
                 <svg
@@ -66,13 +75,17 @@ export function Layout() {
               </button>
             )}
             <SettingsMenu
-              wordLength={activeGame ? wordLength : undefined}
-              onWordLengthChange={activeGame ? handleWordLengthChange : undefined}
+              wordLength={activeGame?.kind === 'sanuri' ? wordLength : undefined}
+              onWordLengthChange={
+                activeGame?.kind === 'sanuri' ? handleWordLengthChange : undefined
+              }
             />
             {activeGame && (
               <Link
                 to="/"
-                aria-label={t('sanuri.exitGame')}
+                aria-label={t(
+                  activeGame.kind === 'sanuri' ? 'sanuri.exitGame' : 'sanasuppilo.exitGame',
+                )}
                 className="flex h-9 w-9 items-center justify-center rounded text-ink-100 transition-colors hover:bg-white/10"
               >
                 <svg
@@ -98,7 +111,10 @@ export function Layout() {
           <Outlet context={outletContext} />
         </div>
       </div>
-      {stats && <StatsModal stats={stats} onClose={() => setStats(null)} />}
+      {sanuriStats && <StatsModal stats={sanuriStats} onClose={() => setSanuriStats(null)} />}
+      {sanasuppiloStats && (
+        <SanasuppiloStatsModal stats={sanasuppiloStats} onClose={() => setSanasuppiloStats(null)} />
+      )}
     </main>
   )
 }

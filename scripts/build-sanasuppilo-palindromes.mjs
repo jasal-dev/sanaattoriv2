@@ -13,7 +13,7 @@ const MIN_LENGTH = 4
 const MIN_PALINDROMES = 5
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
-const outPath = join(rootDir, 'scripts', 'data', 'sanapyramidi-palindromes.json')
+const outPath = join(rootDir, 'scripts', 'data', 'sanasuppilo-palindromes.json')
 
 async function fetchText(url) {
   console.log(`Fetching ${url} ...`)

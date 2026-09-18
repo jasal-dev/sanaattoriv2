@@ -10,6 +10,11 @@ import { Layout } from './portal/Layout'
 const SanuriRoute = lazy(() =>
   import('./games/sanuri/SanuriRoute').then((module) => ({ default: module.SanuriRoute })),
 )
+const SanasuppiloRoute = lazy(() =>
+  import('./games/sanasuppilo/SanasuppiloRoute').then((module) => ({
+    default: module.SanasuppiloRoute,
+  })),
+)
 
 function App() {
   return (
@@ -31,6 +36,14 @@ function App() {
               element={
                 <Suspense fallback={null}>
                   <SanuriRoute variant="pro" />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/sanasuppilo"
+              element={
+                <Suspense fallback={null}>
+                  <SanasuppiloRoute />
                 </Suspense>
               }
             />

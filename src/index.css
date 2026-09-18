@@ -9,6 +9,15 @@
   --color-ink-100: #eef2f6;
   --color-present: #bfdbfe;
   --color-absent: #e5e7eb;
+
+  /* Sanasuppilo group colors, one per group size (1/2/3/4/5, 1 being the
+     apex) so a solved tile's color always reflects which group it belongs
+     to, independent of where it happened to land in the shuffled board. */
+  --color-row-1: #a78bfa;
+  --color-row-2: #fbbf24;
+  --color-row-3: #34d399;
+  --color-row-4: #38bdf8;
+  --color-row-5: #fb7185;
 }
 
 @media (prefers-reduced-motion: no-preference) {

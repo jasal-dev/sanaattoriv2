@@ -20,7 +20,7 @@ const MIN_FAMILIES = 5
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
 const seedCategoriesDir = join(rootDir, 'scripts', 'data', 'seed-categories')
-const outPath = join(rootDir, 'scripts', 'data', 'sanapyramidi-hidden-name-families.json')
+const outPath = join(rootDir, 'scripts', 'data', 'sanasuppilo-hidden-name-families.json')
 
 const NAME_SEED_FILES = ['etunimet-miehet.json', 'etunimet-naiset.json']
 

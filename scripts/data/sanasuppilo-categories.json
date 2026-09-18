@@ -1,0 +1,52 @@
+{
+  "kuukaudet": {
+    "label": "Kuukausia",
+    "words": [
+      "TAMMIKUU",
+      "HELMIKUU",
+      "MAALISKUU",
+      "HUHTIKUU",
+      "TOUKOKUU",
+      "KESÄKUU",
+      "HEINÄKUU",
+      "ELOKUU",
+      "SYYSKUU",
+      "LOKAKUU",
+      "MARRASKUU",
+      "JOULUKUU"
+    ]
+  },
+  "viikonpaivat": {
+    "label": "Viikonpäiviä",
+    "words": [
+      "MAANANTAI",
+      "TIISTAI",
+      "KESKIVIIKKO",
+      "TORSTAI",
+      "PERJANTAI",
+      "LAUANTAI",
+      "SUNNUNTAI"
+    ]
+  },
+  "planeetat": {
+    "label": "Planeettoja",
+    "words": [
+      "MERKURIUS",
+      "VENUS",
+      "MAA",
+      "MARS",
+      "JUPITER",
+      "SATURNUS",
+      "URANUS",
+      "NEPTUNUS"
+    ]
+  },
+  "metallit": {
+    "label": "Metalleja",
+    "words": ["RAUTA", "KUPARI", "HOPEA", "KULTA", "TINA", "SINKKI", "LYIJY", "ALUMIINI"]
+  },
+  "shakkinappulat": {
+    "label": "Shakkinappuloita",
+    "words": ["KUNINGAS", "KUNINGATAR", "TORNI", "LÄHETTI", "RATSU", "SOTILAS"]
+  }
+}

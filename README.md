@@ -19,9 +19,9 @@ full implementation plan.
 - `npm run test:e2e` — end-to-end tests (Playwright)
 - `npm run build:wordlists` — regenerate `src/data/words-{4,5,6,7}[-easy].json` from the Kotus
   and frequency sources
-- `npm run build:sanapyramidi-compound-families`, `build:sanapyramidi-hidden-word-families`,
-  `build:sanapyramidi-hidden-names`, `build:sanapyramidi-palindromes` — regenerate the candidate
-  Sanapyramidi word-group files under `scripts/data/`, mined from the full Kotus dictionary (see
+- `npm run build:sanasuppilo-compound-families`, `build:sanasuppilo-hidden-word-families`,
+  `build:sanasuppilo-hidden-names`, `build:sanasuppilo-palindromes` — regenerate the candidate
+  Sanasuppilo word-group files under `scripts/data/`, mined from the full Kotus dictionary (see
   below)
 - `npm run build:name-lists` — regenerate `scripts/data/seed-categories/etunimet-{miehet,naiset}.json`
   from info.paivyri.fi's first-name statistics (see below)
@@ -43,11 +43,11 @@ use as Sanuri answers via `getEasyWordList()`.
 These files are committed to the repo rather than fetched at runtime, so the app doesn't depend
 on kaino.kotus.fi or GitHub being reachable. Re-run `npm run build:wordlists` to refresh them.
 
-## Sanapyramidi puzzle data
+## Sanasuppilo puzzle data
 
-See [docs/plans/sanapyramidi-implementation-plan.md](docs/plans/sanapyramidi-implementation-plan.md)
+See [docs/plans/sanasuppilo-implementation-plan.md](docs/plans/sanasuppilo-implementation-plan.md)
 for the full design. Puzzles are built from two sources that share one JSON shape (see
-`src/games/sanapyramidi/puzzles.ts` for the type definitions):
+`src/games/sanasuppilo/puzzles.ts` for the type definitions):
 
 - **Curated (Approach A)**: hand-written categories with a human-checkable "reason" a word
   belongs (e.g. named ducks, streets). No tooling needed — add an entry directly.
@@ -57,9 +57,9 @@ for the full design. Puzzles are built from two sources that share one JSON shap
   compound. `anchor: 'suffix'` is B1 (e.g. `AUTO` groups `HINAUS`, `SÄHKÖ`, ... because
   `HINAUSAUTO`, `SÄHKÖAUTO`, ... are all real words); `anchor: 'prefix'` is B2, the mirror image
   (e.g. `KELLO` groups `SEPPÄ`, `TORNI`, ... because `KELLOSEPPÄ`, `KELLOTORNI`, ... are all real
-  words). Run `npm run build:sanapyramidi-compound-families` to refresh
-  `scripts/data/sanapyramidi-compound-families.json` (B1) and
-  `scripts/data/sanapyramidi-compound-prefix-families.json` (B2) — candidate lists awaiting manual
+  words). Run `npm run build:sanasuppilo-compound-families` to refresh
+  `scripts/data/sanasuppilo-compound-families.json` (B1) and
+  `scripts/data/sanasuppilo-compound-prefix-families.json` (B2) — candidate lists awaiting manual
   spot-check (some technically-valid splits read unnaturally) before their word groups are used in
   a puzzle. These candidate files are build-time authoring artifacts only — they aren't shipped to
   the app.
@@ -71,8 +71,8 @@ for the full design. Puzzles are built from two sources that share one JSON shap
   every dictionary word that contains one of those seed words as a substring anywhere — prefix,
   suffix, or mid-word — and is markedly longer than it (e.g. seed `KUUSI` inside `MAKUUSIJA`). A
   host matching more than one seed word, whether from the same or a different category, is dropped
-  entirely as ambiguous. Run `npm run build:sanapyramidi-hidden-word-families` to refresh
-  `scripts/data/sanapyramidi-hidden-word-families.json`. **This one is noisier than B1/B2** and
+  entirely as ambiguous. Run `npm run build:sanasuppilo-hidden-word-families` to refresh
+  `scripts/data/sanasuppilo-hidden-word-families.json`. **This one is noisier than B1/B2** and
   needs a more careful manual pass: short, common seed words (e.g. `SUU`, `PÄÄ`, `KANA`) rack up
   hundreds of substring hits that are real dictionary words but not meaningfully "about" the seed
   at all (e.g. `SATA` matches inside the loanword verb `FAKSATA`, `SUU` matches inside the
@@ -81,10 +81,10 @@ for the full design. Puzzles are built from two sources that share one JSON shap
   puzzle-ready data.
 
   A fourth, hidden-name-substrings (B4), is the same `findHiddenWordFamilies` mechanism again, run
-  separately (`scripts/build-sanapyramidi-hidden-names.mjs`) against the two name seed lists
+  separately (`scripts/build-sanasuppilo-hidden-names.mjs`) against the two name seed lists
   described below with a stricter minimum seed length and length margin (4 instead of B3's 3 for
-  both). Run `npm run build:sanapyramidi-hidden-names` to refresh
-  `scripts/data/sanapyramidi-hidden-name-families.json`. **This one needs the heaviest manual pass
+  both). Run `npm run build:sanasuppilo-hidden-names` to refresh
+  `scripts/data/sanasuppilo-hidden-name-families.json`. **This one needs the heaviest manual pass
   of all the B-generators**: names are shorter and more phonetically generic than the other seed
   categories, so even with the stricter settings some (e.g. `ELLI`, `ELLA`, `OLLI`, `ASTA`) still
   produce hundreds of hosts that merely happen to contain that letter sequence as ordinary Finnish
@@ -95,7 +95,7 @@ for the full design. Puzzles are built from two sources that share one JSON shap
   The simplest generator is palindromes (B5, `scripts/lib/palindromes.mjs`'s
   `findPalindromes(words)`): a plain filter for words that read the same forwards and backwards
   (e.g. `ALLA`, `NIIN`, `OTTO`), no seed list or split-validity judgment call involved. Run
-  `npm run build:sanapyramidi-palindromes` to refresh `scripts/data/sanapyramidi-palindromes.json`.
+  `npm run build:sanasuppilo-palindromes` to refresh `scripts/data/sanasuppilo-palindromes.json`.
   Finnish palindromic words of reasonable length are rare, so unlike the others this is a closed,
   small set (20 words against the current Kotus list) rather than a combinatorially large pool —
   still worth a quick recognizability skim, but there's little correctness risk since the rule is
@@ -113,11 +113,12 @@ notice or terms of use for the name data itself — unlike Kotus and the frequen
 there's no explicit license to cite here. `robots.txt` was checked before scraping and doesn't
 disallow the page. Revisit this if info.paivyri.fi publishes formal terms later.
 
-Both kinds of groups land in the same array, in `src/data/sanapyramidi-puzzles.json`, which stays
-hand-editable regardless of a puzzle's origin — see the file for a worked example combining a
-generated group with curated ones. There's no assembler yet (planned: draws groups automatically
-and validates no other group/the apex word accidentally also matches a generated group's rule);
-for now, puzzles are added to that file by hand.
+Both kinds of groups land in the same array, in `src/data/sanasuppilo-puzzles.json`, which stays
+hand-editable regardless of a puzzle's origin. `scripts/lib/puzzleAssembler.mjs`, run via
+`npm run build:sanasuppilo-puzzles`, draws the pool automatically — one group from each of the
+curated/compound/hidden-word/hidden-name-or-palindrome family pools, plus an apex word — and
+rejects a draw if the apex or another chosen group accidentally also matches a generated group's
+own rule. Puzzles can still be added or edited by hand in that file regardless.
 
 ## Deployment
 

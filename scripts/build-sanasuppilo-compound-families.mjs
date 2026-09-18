@@ -25,14 +25,14 @@ const TARGETS = [
     label: 'compound-suffix (B1)',
     // e.g. "AUTO" grouping HINAUS/SÄHKÖ/URHEILU because HINAUSAUTO/
     // SÄHKÖAUTO/URHEILUAUTO are all real words.
-    outPath: join(outDir, 'sanapyramidi-compound-families.json'),
+    outPath: join(outDir, 'sanasuppilo-compound-families.json'),
   },
   {
     anchor: 'prefix',
     label: 'compound-prefix (B2)',
     // e.g. "KELLO" grouping SEPPÄ/TORNI/PELI because KELLOSEPPÄ/
     // KELLOTORNI/KELLOPELI are all real words.
-    outPath: join(outDir, 'sanapyramidi-compound-prefix-families.json'),
+    outPath: join(outDir, 'sanasuppilo-compound-prefix-families.json'),
   },
 ]
 

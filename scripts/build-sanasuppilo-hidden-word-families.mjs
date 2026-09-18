@@ -17,7 +17,7 @@ const MIN_FAMILIES = 5
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
 const seedCategoriesDir = join(rootDir, 'scripts', 'data', 'seed-categories')
-const outPath = join(rootDir, 'scripts', 'data', 'sanapyramidi-hidden-word-families.json')
+const outPath = join(rootDir, 'scripts', 'data', 'sanasuppilo-hidden-word-families.json')
 
 async function fetchText(url) {
   console.log(`Fetching ${url} ...`)
@@ -32,7 +32,7 @@ async function fetchText(url) {
  * Loads every scripts/data/seed-categories/*.json file into
  * { [categoryId]: words[] }, keyed by filename (without extension) --
  * except the etunimet-*.json (first name) categories, which need a
- * stricter length margin than the rest (see build-sanapyramidi-hidden-names.mjs).
+ * stricter length margin than the rest (see build-sanasuppilo-hidden-names.mjs).
  */
 async function loadSeedCategories() {
   const fileNames = (await readdir(seedCategoriesDir)).filter(
