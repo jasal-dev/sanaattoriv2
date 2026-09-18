@@ -48,30 +48,51 @@ export function normalizeCompoundFamilies(families) {
   }))
 }
 
+/**
+ * Merges the per-seed families the B3/B4 generators produce (one family per
+ * exact seed word, e.g. a "contains ANKKA" family and a separate "contains
+ * KISSA" family) into one family per category (e.g. all of "elaimet"
+ * combined), so a puzzle group drawn from it can mix hosts of *different*
+ * seeds -- matching Yle's reference examples, where each host hides a
+ * different animal/color/name, not the same one repeated. `seedByWord`
+ * records which seed each host came from, which `assemblePuzzle` uses to
+ * sample words with distinct seeds instead of just any words from the pool.
+ */
+function groupFamiliesByCategory(families, labelFor, generator) {
+  const byCategory = new Map()
+  for (const family of families) {
+    let entry = byCategory.get(family.category)
+    if (!entry) {
+      entry = {
+        label: labelFor(family.category),
+        words: [],
+        seedByWord: new Map(),
+        source: { type: 'generated', generator, category: family.category },
+      }
+      byCategory.set(family.category, entry)
+    }
+    for (const host of family.hosts) {
+      entry.words.push(host)
+      entry.seedByWord.set(host, family.seed)
+    }
+  }
+  return [...byCategory.values()]
+}
+
 export function normalizeHiddenWordFamilies(families) {
-  return families.map((family) => ({
-    label: HIDDEN_WORD_LABELS[family.category] ?? `Sisältää sanan "${family.category}"`,
-    words: [...family.hosts],
-    source: {
-      type: 'generated',
-      generator: 'hidden-word',
-      anchor: family.seed,
-      category: family.category,
-    },
-  }))
+  return groupFamiliesByCategory(
+    families,
+    (category) => HIDDEN_WORD_LABELS[category] ?? `Sisältää sanan "${category}"`,
+    'hidden-word',
+  )
 }
 
 export function normalizeHiddenNameFamilies(families) {
-  return families.map((family) => ({
-    label: HIDDEN_NAME_LABELS[family.category] ?? 'Sisältää etunimen',
-    words: [...family.hosts],
-    source: {
-      type: 'generated',
-      generator: 'hidden-name',
-      anchor: family.seed,
-      category: family.category,
-    },
-  }))
+  return groupFamiliesByCategory(
+    families,
+    (category) => HIDDEN_NAME_LABELS[category] ?? 'Sisältää etunimen',
+    'hidden-name',
+  )
 }
 
 export function normalizePalindromeFamilies(families) {
@@ -97,6 +118,33 @@ function sample(pool, count, random) {
     arr.pop()
   }
   return picked
+}
+
+/**
+ * Draws `size` words from `family`. When the family carries `seedByWord`
+ * (the hidden-word/hidden-name families -- see `groupFamiliesByCategory`),
+ * picks words from `size` distinct seeds so a group never repeats the same
+ * hidden color/animal/name across its words; returns `null` if the family
+ * doesn't have that many distinct seeds. Other families (curated, compound,
+ * palindrome) have no such per-word provenance, so they're sampled plainly.
+ */
+function sampleFamilyWords(family, size, random) {
+  if (!family.seedByWord) return sample(family.words, size, random)
+
+  const wordsBySeed = new Map()
+  for (const word of family.words) {
+    const seed = family.seedByWord.get(word)
+    let words = wordsBySeed.get(seed)
+    if (!words) {
+      words = []
+      wordsBySeed.set(seed, words)
+    }
+    words.push(word)
+  }
+
+  const seeds = sample([...wordsBySeed.keys()], size, random)
+  if (seeds.length < size) return null
+  return seeds.map((seed) => pickOne(wordsBySeed.get(seed), random))
 }
 
 /**
@@ -129,8 +177,8 @@ export function assemblePuzzle({
 
     let picked = null
     for (let attempt = 0; attempt < 10; attempt++) {
-      const candidate = sample(family.words, size, random)
-      if (candidate.every((word) => !usedWords.has(word))) {
+      const candidate = sampleFamilyWords(family, size, random)
+      if (candidate && candidate.every((word) => !usedWords.has(word))) {
         picked = candidate
         break
       }
@@ -138,7 +186,10 @@ export function assemblePuzzle({
     if (!picked) return null
 
     for (const word of picked) usedWords.add(word)
-    groups.push({ size, label: family.label, words: picked, source: family.source })
+    const source = family.seedByWord
+      ? { ...family.source, seeds: [...new Set(picked.map((word) => family.seedByWord.get(word)))] }
+      : family.source
+    groups.push({ size, label: family.label, words: picked, source })
   }
 
   // Reject if any chosen group's word also happens to satisfy a *different*

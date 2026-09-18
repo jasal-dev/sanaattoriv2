@@ -73,18 +73,28 @@ describe('normalizeCompoundFamilies', () => {
 })
 
 describe('normalizeHiddenWordFamilies', () => {
-  it('maps a known category to a Finnish label and uses the hosts as words', () => {
+  it('merges same-category seed families into one, tracking each word\'s seed', () => {
     const [family] = normalizeHiddenWordFamilies([
       { category: 'elaimet', seed: 'ANKKA', hosts: ['ANKKALAMMIKKO', 'UUTISANKKA'] },
+      { category: 'elaimet', seed: 'KISSA', hosts: ['KISSANPENTU'] },
     ])
     expect(family.label).toBe('Sisältää eläimen nimen')
-    expect(family.words).toEqual(['ANKKALAMMIKKO', 'UUTISANKKA'])
+    expect(family.words).toEqual(['ANKKALAMMIKKO', 'UUTISANKKA', 'KISSANPENTU'])
+    expect(family.seedByWord.get('ANKKALAMMIKKO')).toBe('ANKKA')
+    expect(family.seedByWord.get('KISSANPENTU')).toBe('KISSA')
     expect(family.source).toEqual({
       type: 'generated',
       generator: 'hidden-word',
-      anchor: 'ANKKA',
       category: 'elaimet',
     })
+  })
+
+  it('keeps different categories as separate families', () => {
+    const families = normalizeHiddenWordFamilies([
+      { category: 'elaimet', seed: 'ANKKA', hosts: ['ANKKALAMMIKKO'] },
+      { category: 'varit', seed: 'HARMAA', hosts: ['HARMAAKIVI'] },
+    ])
+    expect(families).toHaveLength(2)
   })
 
   it('falls back to a generic label for an unmapped category', () => {
@@ -103,6 +113,16 @@ describe('normalizeHiddenNameFamilies', () => {
     ])
     expect(boys.label).toBe('Sisältää pojan nimen')
     expect(girls.label).toBe('Sisältää tytön nimen')
+  })
+
+  it('merges same-category seed families so a group can mix different names', () => {
+    const [family] = normalizeHiddenNameFamilies([
+      { category: 'etunimet-miehet', seed: 'AARO', hosts: ['HAAROITTAA'] },
+      { category: 'etunimet-miehet', seed: 'AKU', hosts: ['VAAKUNA'] },
+    ])
+    expect(family.words).toEqual(['HAAROITTAA', 'VAAKUNA'])
+    expect(family.seedByWord.get('HAAROITTAA')).toBe('AARO')
+    expect(family.seedByWord.get('VAAKUNA')).toBe('AKU')
   })
 })
 
@@ -137,20 +157,23 @@ const COMPOUND = normalizeCompoundFamilies([
     ],
   },
 ])
+// 5 distinct seeds (not just 5 hosts of one seed) so a size-5 group can be
+// sampled with every word hiding a *different* animal -- see
+// sampleFamilyWords's diversity requirement.
 const HIDDEN_WORD = normalizeHiddenWordFamilies([
-  {
-    category: 'elaimet',
-    seed: 'ANKKA',
-    hosts: ['ANKKALAMMIKKO', 'UUTISANKKA', 'VANKKARAKENTEINEN', 'TANKKAUS', 'RANKKASADE'],
-  },
+  { category: 'elaimet', seed: 'ANKKA', hosts: ['ANKKALAMMIKKO', 'UUTISANKKA'] },
+  { category: 'elaimet', seed: 'KISSA', hosts: ['KISSANPENTU'] },
+  { category: 'elaimet', seed: 'KOIRA', hosts: ['KOIRANPENTU'] },
+  { category: 'elaimet', seed: 'HEVONEN', hosts: ['HEVOSENKENKÄ'] },
+  { category: 'elaimet', seed: 'LEHMÄ', hosts: ['LEHMÄNKELLO'] },
 ])
 const NAME_OR_PALINDROME = [
   ...normalizeHiddenNameFamilies([
-    {
-      category: 'etunimet-miehet',
-      seed: 'AARO',
-      hosts: ['HAAROITTAA', 'HAAROITTUA', 'HAAROITUS', 'HAAROVÄLI', 'VAPAAPOTKU'],
-    },
+    { category: 'etunimet-miehet', seed: 'AARO', hosts: ['HAAROITTAA', 'HAAROITTUA'] },
+    { category: 'etunimet-miehet', seed: 'AKU', hosts: ['VAAKUNA'] },
+    { category: 'etunimet-miehet', seed: 'ESA', hosts: ['MESAANI'] },
+    { category: 'etunimet-miehet', seed: 'ILA', hosts: ['SIILAKKA'] },
+    { category: 'etunimet-miehet', seed: 'OIVA', hosts: ['VAROIVASTI'] },
   ]),
   ...normalizePalindromeFamilies([
     { category: 'palindromit', words: ['ALLA', 'NIIN', 'SEES', 'SIIS', 'AKKA'] },

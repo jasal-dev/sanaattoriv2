@@ -41,9 +41,13 @@ export interface SanasuppiloGroup {
 /**
  * Where a group's words came from. Curated groups may optionally reference
  * the Approach A category bank entry they were drawn from; generated groups
- * record enough (which generator, which anchor) to let the assembler re-run
- * that family's own membership rule later -- e.g. to check that the apex
- * word or another chosen group doesn't accidentally also satisfy it.
+ * record enough (which generator, which anchor/seed(s)) to let the assembler
+ * re-run that family's own membership rule later -- e.g. to check that the
+ * apex word or another chosen group doesn't accidentally also satisfy it. A
+ * hidden-word/hidden-name group's `seeds` lists the distinct seed words
+ * (e.g. different colors or names) its words hide -- it's a list, not a
+ * single `anchor`, because such a group is deliberately assembled from
+ * multiple different seeds so it doesn't just repeat the same one.
  */
 export type SanasuppiloGroupSource =
   | { type: 'curated'; categoryId?: string }
@@ -51,7 +55,7 @@ export type SanasuppiloGroupSource =
   | {
       type: 'generated'
       generator: 'hidden-word' | 'hidden-name'
-      anchor: string
+      seeds: string[]
       category: string
     }
   | { type: 'generated'; generator: 'palindrome' }
