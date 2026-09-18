@@ -95,13 +95,18 @@ describe('SanuriGame', () => {
     for (const letter of answer) {
       fireEvent.keyDown(window, { key: letter })
     }
-    vi.useFakeTimers()
+    // Every letter must have landed before Enter, so a failure below can only
+    // mean the submit itself went wrong, not that typing was dropped.
+    expect(container.querySelectorAll('[data-status="filled"]')).toHaveLength(wordLength)
     fireEvent.keyDown(window, { key: 'Enter' })
-    act(() => {
-      vi.runAllTimers()
-    })
+    // A tile's data-status flips to its result the moment the guess is
+    // evaluated (only the flip *animation* is timer-driven), so no fake
+    // timers are needed -- waiting on the DOM avoids depending on when
+    // the reveal timeouts get scheduled relative to the clock swap.
     const board = container.querySelector('[role="grid"]')
-    expect(board?.querySelectorAll('[data-status="correct"]')).toHaveLength(wordLength)
+    await waitFor(() =>
+      expect(board?.querySelectorAll('[data-status="correct"]')).toHaveLength(wordLength),
+    )
   })
 
   it('shows the win modal on a correct guess and resets on play again', async () => {
