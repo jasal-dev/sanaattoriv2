@@ -173,22 +173,31 @@ describe('useSanasuppiloGame', () => {
     expect(result.current.state.currentStreak).toBe(1)
   })
 
-  it('never offers a hint for the 2-word row or the 1-word apex, and caps at 3 hints total', async () => {
+  it('offers a single hint that highlights two words of one group, never the apex', async () => {
     const { result } = await renderGame()
     expect(result.current.canHint).toBe(true)
 
     act(() => result.current.useHint())
-    expect(result.current.state.hintedWords.has('B1')).toBe(true)
+    const hinted = [...result.current.state.hintedWords]
+    expect(hinted).toHaveLength(2)
+    expect(hinted).not.toContain('APEX')
+    const group = PUZZLE.groups.find((g) => g.words.includes(hinted[0]))!
+    expect(group.words).toContain(hinted[1])
 
-    act(() => result.current.useHint())
-    act(() => result.current.useHint())
-    expect(result.current.state.hintedSizes.size).toBe(3)
+    expect(result.current.state.hintsUsed).toBe(1)
     expect(result.current.canHint).toBe(false)
-    expect(result.current.state.hintedWords.has('A1')).toBe(false)
-    expect(result.current.state.hintedWords.has('APEX')).toBe(false)
 
     act(() => result.current.useHint())
-    expect(result.current.state.hintedSizes.size).toBe(3)
+    expect(result.current.state.hintedWords).toEqual(new Set(hinted))
+  })
+
+  it('hinted tiles can be selected like any other tile', async () => {
+    const { result } = await renderGame()
+    act(() => result.current.useHint())
+    const [word] = [...result.current.state.hintedWords]
+    const [id] = idsFor(result, [word])
+    act(() => result.current.toggleTile(id))
+    expect(result.current.state.selectedIds.has(id)).toBe(true)
   })
 
   it('a hinted word still has to be clicked -- the hint does not select it', async () => {

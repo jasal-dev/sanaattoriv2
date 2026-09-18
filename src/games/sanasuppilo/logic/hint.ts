@@ -1,24 +1,28 @@
-import type { SanasuppiloGroup, SanasuppiloGroupSize } from '../puzzles'
+import type { SanasuppiloGroup } from '../puzzles'
 
-/** Hints are only ever offered for the 3-, 4-, and 5-word rows -- never the 2-word row or the apex. */
-const HINT_ELIGIBLE_SIZES: readonly SanasuppiloGroupSize[] = [3, 4, 5]
+/** A game offers a single hint. */
+export const MAX_HINTS = 1
 
-export const MAX_HINTS = HINT_ELIGIBLE_SIZES.length
+/** How many words of the hinted group get highlighted. */
+export const HINT_WORD_COUNT = 2
 
 /**
- * Picks the next hint: the first word of the smallest still-unsolved row
- * among sizes 3/4/5, skipping any row already hinted. Returns `null` once
- * every eligible unsolved row has had its hint (or none are eligible), which
- * combined with the caller only calling this while `hintedSizes.size <
- * MAX_HINTS` naturally caps hints at one per eligible row.
+ * Picks a random unsolved group with at least two words (so never the
+ * 1-word apex) and returns two random words from it, or `null` if no such
+ * group remains. `random` is injectable for deterministic tests.
  */
-export function nextHint(
+export function pickHint(
   unsolvedGroups: readonly SanasuppiloGroup[],
-  hintedSizes: ReadonlySet<SanasuppiloGroupSize>,
-): string | null {
-  const eligible = unsolvedGroups
-    .filter((group) => HINT_ELIGIBLE_SIZES.includes(group.size) && !hintedSizes.has(group.size))
-    .sort((a, b) => a.size - b.size)
+  random: () => number = Math.random,
+): string[] | null {
+  const eligible = unsolvedGroups.filter((group) => group.words.length >= HINT_WORD_COUNT)
+  if (eligible.length === 0) return null
 
-  return eligible[0]?.words[0] ?? null
+  const group = eligible[Math.floor(random() * eligible.length)]
+  const words = [...group.words]
+  for (let i = words.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1))
+    ;[words[i], words[j]] = [words[j], words[i]]
+  }
+  return words.slice(0, HINT_WORD_COUNT)
 }

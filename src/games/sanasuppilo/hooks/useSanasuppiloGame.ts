@@ -2,14 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { loadSanasuppiloStats, recordSanasuppiloResult } from '../../../storage/sanasuppiloStats'
 import { checkSelection } from '../logic/checkSelection'
 import { reorderTilesForSolvedGroup } from '../logic/funnelLayout'
-import { MAX_HINTS, nextHint } from '../logic/hint'
+import { HINT_WORD_COUNT, MAX_HINTS, pickHint } from '../logic/hint'
 import { loadRecentPuzzleIds, recordPlayedPuzzle } from '../logic/puzzleHistory'
-import {
-  getRandomPuzzle,
-  type SanasuppiloGroup,
-  type SanasuppiloGroupSize,
-  type SanasuppiloPuzzle,
-} from '../puzzles'
+import { getRandomPuzzle, type SanasuppiloGroup, type SanasuppiloPuzzle } from '../puzzles'
 
 export const MAX_LIVES = 4
 
@@ -38,7 +33,7 @@ export interface SanasuppiloGameState {
   selectedIds: ReadonlySet<number>
   solvedGroups: SanasuppiloGroup[]
   lives: number
-  hintedSizes: ReadonlySet<SanasuppiloGroupSize>
+  hintsUsed: number
   hintedWords: ReadonlySet<string>
   status: SanasuppiloStatus
   lastResult: 'correct' | 'incorrect' | null
@@ -90,7 +85,7 @@ export function useSanasuppiloGame(): UseSanasuppiloGame {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
   const [solvedGroups, setSolvedGroups] = useState<SanasuppiloGroup[]>([])
   const [lives, setLives] = useState(MAX_LIVES)
-  const [hintedSizes, setHintedSizes] = useState<Set<SanasuppiloGroupSize>>(new Set())
+  const [hintsUsed, setHintsUsed] = useState(0)
   const [hintedWords, setHintedWords] = useState<Set<string>>(new Set())
   const [status, setStatus] = useState<SanasuppiloStatus>('playing')
   const [lastResult, setLastResult] = useState<'correct' | 'incorrect' | null>(null)
@@ -114,7 +109,7 @@ export function useSanasuppiloGame(): UseSanasuppiloGame {
     setSelectedIds(new Set())
     setSolvedGroups([])
     setLives(MAX_LIVES)
-    setHintedSizes(new Set())
+    setHintsUsed(0)
     setHintedWords(new Set())
     setStatus('playing')
     setLastResult(null)
@@ -210,20 +205,18 @@ export function useSanasuppiloGame(): UseSanasuppiloGame {
   const canHint = useMemo(
     () =>
       status === 'playing' &&
-      hintedSizes.size < MAX_HINTS &&
-      nextHint(unsolvedGroups, hintedSizes) !== null,
-    [status, hintedSizes, unsolvedGroups],
+      hintsUsed < MAX_HINTS &&
+      unsolvedGroups.some((group) => group.words.length >= HINT_WORD_COUNT),
+    [status, hintsUsed, unsolvedGroups],
   )
 
   const useHint = useCallback(() => {
     if (!canHint) return
-    const word = nextHint(unsolvedGroups, hintedSizes)
-    if (!word) return
-    const group = unsolvedGroups.find((candidate) => candidate.words.includes(word))
-    if (!group) return
-    setHintedSizes((prev) => new Set(prev).add(group.size))
-    setHintedWords((prev) => new Set(prev).add(word))
-  }, [canHint, unsolvedGroups, hintedSizes])
+    const words = pickHint(unsolvedGroups)
+    if (!words) return
+    setHintsUsed((prev) => prev + 1)
+    setHintedWords(new Set(words))
+  }, [canHint, unsolvedGroups])
 
   const newGame = useCallback(() => {
     if (!ready) return
@@ -239,7 +232,7 @@ export function useSanasuppiloGame(): UseSanasuppiloGame {
       selectedIds,
       solvedGroups,
       lives,
-      hintedSizes,
+      hintsUsed,
       hintedWords,
       status,
       lastResult,

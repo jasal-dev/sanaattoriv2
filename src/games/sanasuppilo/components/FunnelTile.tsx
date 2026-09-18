@@ -34,9 +34,9 @@ export function FunnelTile({
   const style = solvedColorClassName
     ? `cursor-default border-transparent text-ink-900 ${solvedColorClassName}`
     : selected
-      ? 'border-ink-700 bg-ink-700 text-white'
+      ? `border-ink-700 bg-ink-700 text-white ${hinted ? 'ring-2 ring-amber-400' : ''}`
       : hinted
-        ? 'border-ink-400 bg-ink-100 text-ink-900'
+        ? 'border-amber-400 bg-amber-100 text-ink-900 hover:border-ink-700'
         : 'border-slate-300 bg-white text-ink-900 hover:border-ink-400'
 
   return (

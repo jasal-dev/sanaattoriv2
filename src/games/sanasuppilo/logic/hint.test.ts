@@ -1,34 +1,34 @@
 import { describe, expect, it } from 'vitest'
 import type { SanasuppiloGroup } from '../puzzles'
-import { MAX_HINTS, nextHint } from './hint'
+import { MAX_HINTS, pickHint } from './hint'
 
+const GROUP_1: SanasuppiloGroup = { size: 1, label: '', words: ['APEX'] }
 const GROUP_2: SanasuppiloGroup = { size: 2, label: 'Kaksi', words: ['AAMU', 'ILTA'] }
-const GROUP_3: SanasuppiloGroup = { size: 3, label: 'Kolme', words: ['YKSI', 'KAKSI', 'KOLME'] }
 const GROUP_4: SanasuppiloGroup = { size: 4, label: 'Neljä', words: ['A', 'B', 'C', 'D'] }
-const GROUP_5: SanasuppiloGroup = { size: 5, label: 'Viisi', words: ['E', 'F', 'G', 'H', 'I'] }
 
-describe('nextHint', () => {
-  it('never offers a hint for the 2-word row', () => {
-    expect(nextHint([GROUP_2], new Set())).toBeNull()
+describe('pickHint', () => {
+  it('allows a single hint per game', () => {
+    expect(MAX_HINTS).toBe(1)
   })
 
-  it('picks the first word of the smallest eligible unsolved row', () => {
-    expect(nextHint([GROUP_5, GROUP_3, GROUP_4], new Set())).toBe('YKSI')
+  it('returns two distinct words from one group', () => {
+    const hint = pickHint([GROUP_4], () => 0.3)!
+    expect(hint).toHaveLength(2)
+    expect(new Set(hint).size).toBe(2)
+    expect(hint.every((word) => GROUP_4.words.includes(word))).toBe(true)
   })
 
-  it('skips a row that has already been hinted', () => {
-    expect(nextHint([GROUP_3, GROUP_4], new Set([3]))).toBe('A')
+  it('picks the group at random', () => {
+    expect(pickHint([GROUP_2, GROUP_4], () => 0)!.every((w) => GROUP_2.words.includes(w))).toBe(
+      true,
+    )
+    expect(pickHint([GROUP_2, GROUP_4], () => 0.99)!.every((w) => GROUP_4.words.includes(w))).toBe(
+      true,
+    )
   })
 
-  it('returns null once every eligible unsolved row has been hinted', () => {
-    expect(nextHint([GROUP_3, GROUP_4, GROUP_5], new Set([3, 4, 5]))).toBeNull()
-  })
-
-  it('ignores the 2-word row even when it is the only unsolved one left', () => {
-    expect(nextHint([GROUP_2, GROUP_4], new Set([4]))).toBeNull()
-  })
-
-  it('caps at 3 eligible sizes total', () => {
-    expect(MAX_HINTS).toBe(3)
+  it('never hints the 1-word apex', () => {
+    expect(pickHint([GROUP_1])).toBeNull()
+    expect(pickHint([])).toBeNull()
   })
 })

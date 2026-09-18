@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useI18n } from '../../i18n/I18nProvider'
 import { GAME_OVER_MODAL_DELAY_MS } from './animation'
 import { Funnel } from './components/Funnel'
@@ -58,6 +59,23 @@ export function SanasuppiloGame() {
         onToggleTile={toggleTile}
         disabled={state.status !== 'playing'}
       />
+      {state.status === 'lost' && (
+        <div className="flex shrink-0 gap-3">
+          <Link
+            to="/"
+            className="rounded border border-ink-700 px-4 py-2 font-semibold text-ink-700 transition-colors hover:bg-ink-100"
+          >
+            {t('sanasuppilo.quit')}
+          </Link>
+          <button
+            type="button"
+            onClick={newGame}
+            className="rounded bg-ink-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-ink-900"
+          >
+            {t('sanasuppilo.playAgain')}
+          </button>
+        </div>
+      )}
       {state.status === 'playing' && (
         <div className="flex shrink-0 gap-3">
           <button
@@ -66,7 +84,7 @@ export function SanasuppiloGame() {
             disabled={!canHint}
             className="rounded border border-ink-700 px-4 py-2 font-semibold text-ink-700 transition-colors hover:bg-ink-100 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {t('sanasuppilo.hintButton')} ({MAX_HINTS - state.hintedSizes.size})
+            {t('sanasuppilo.hintButton')} ({MAX_HINTS - state.hintsUsed})
           </button>
           <button
             type="button"
@@ -84,6 +102,7 @@ export function SanasuppiloGame() {
           currentStreak={state.currentStreak}
           endedStreak={state.endedStreak}
           onPlayAgain={newGame}
+          onClose={() => setShowGameOverModal(false)}
         />
       )}
     </div>
