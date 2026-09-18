@@ -4,10 +4,24 @@ const VOWELS = 'aeiouyäö'
 
 /** Vowel pairs that stay in one syllable (long vowels -- a doubled vowel -- are handled separately). */
 const DIPHTHONGS = new Set([
-  'ai', 'ei', 'oi', 'ui', 'yi', 'äi', 'öi',
-  'au', 'eu', 'iu', 'ou',
-  'ey', 'äy', 'öy', 'iy',
-  'ie', 'uo', 'yö',
+  'ai',
+  'ei',
+  'oi',
+  'ui',
+  'yi',
+  'äi',
+  'öi',
+  'au',
+  'eu',
+  'iu',
+  'ou',
+  'ey',
+  'äy',
+  'öy',
+  'iy',
+  'ie',
+  'uo',
+  'yö',
 ])
 
 /** Never leave fewer than this many letters stranded at either end of the word. */
@@ -35,7 +49,11 @@ function syllableStarts(word: string): number[] {
     if (!isVowel(prev)) {
       if (i - 1 > 0 && /[a-zäöå]/.test(prev)) {
         let runStart = i - 1
-        while (runStart > 0 && !isVowel(lower[runStart - 1]) && /[a-zäöå]/.test(lower[runStart - 1])) {
+        while (
+          runStart > 0 &&
+          !isVowel(lower[runStart - 1]) &&
+          /[a-zäöå]/.test(lower[runStart - 1])
+        ) {
           runStart--
         }
         if (runStart > 0 && isVowel(lower[runStart - 1])) starts.push(i - 1)
