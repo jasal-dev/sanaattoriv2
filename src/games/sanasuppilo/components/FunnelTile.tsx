@@ -1,6 +1,6 @@
 import { TILE_SIZE_CLASSES, tileFontSizeRem } from './tileSize'
 
-export interface PyramidTileProps {
+export interface FunnelTileProps {
   word: string
   selected: boolean
   hinted: boolean
@@ -10,14 +10,14 @@ export interface PyramidTileProps {
   onClick: () => void
 }
 
-export function PyramidTile({
+export function FunnelTile({
   word,
   selected,
   hinted,
   disabled,
   solvedColorClassName,
   onClick,
-}: PyramidTileProps) {
+}: FunnelTileProps) {
   const style = solvedColorClassName
     ? `cursor-default border-transparent text-ink-900 ${solvedColorClassName}`
     : selected

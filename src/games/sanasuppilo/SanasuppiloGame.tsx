@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { ROW_LOCK_DURATION_MS } from './animation'
+import { Funnel } from './components/Funnel'
 import { GameOverModal } from './components/GameOverModal'
 import { LivesIndicator } from './components/LivesIndicator'
-import { Pyramid } from './components/Pyramid'
 import { useSanasuppiloGame } from './hooks/useSanasuppiloGame'
 import { MAX_HINTS } from './logic/hint'
 
@@ -49,7 +49,7 @@ export function SanasuppiloGame() {
           {feedbackMessage}
         </p>
       </div>
-      <Pyramid
+      <Funnel
         tiles={state.tiles}
         solvedGroups={state.solvedGroups}
         revealedGroups={revealedGroups}

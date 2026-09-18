@@ -2,19 +2,21 @@ import { useI18n } from '../../../i18n/I18nProvider'
 import type { SanasuppiloTile } from '../hooks/useSanasuppiloGame'
 import type { SanasuppiloGroup, SanasuppiloGroupSize } from '../puzzles'
 import { ROW_COLOR_BY_SIZE } from './colors'
-import { PyramidTile } from './PyramidTile'
+import { FunnelTile } from './FunnelTile'
 import { SolvedGroupChip } from './SolvedGroupChip'
 
 /**
- * Fixed decorative row shape, top to bottom (1 word, then 2, 3, 4, 5),
- * matching Yle's reference pyramid -- this is purely a layout shape and has
- * nothing to do with which words actually belong together. All 15 tiles are
- * shuffled once into these slots and never move again; a group's words can
- * end up scattered across several rows.
+ * Fixed decorative row shape, top to bottom: 5 words, then 4, 3, 2, and the
+ * 1-word apex as the point at the bottom -- a funnel, deliberately the
+ * mirror image of Yle's Sanapyramidi (which tapers the other way, apex at
+ * the top). This is purely a layout shape and has nothing to do with which
+ * words actually belong together. All 15 tiles are shuffled once into these
+ * slots and never move again; a group's words can end up scattered across
+ * several rows.
  */
-const ROW_SIZES: readonly SanasuppiloGroupSize[] = [1, 2, 3, 4, 5]
+const ROW_SIZES: readonly SanasuppiloGroupSize[] = [5, 4, 3, 2, 1]
 
-export interface PyramidProps {
+export interface FunnelProps {
   /** All 15 words in one fixed order for the whole game -- see useSanasuppiloGame's `tiles`. */
   tiles: SanasuppiloTile[]
   solvedGroups: SanasuppiloGroup[]
@@ -26,7 +28,7 @@ export interface PyramidProps {
   disabled: boolean
 }
 
-export function Pyramid({
+export function Funnel({
   tiles,
   solvedGroups,
   revealedGroups,
@@ -34,7 +36,7 @@ export function Pyramid({
   hintedWords,
   onToggleTile,
   disabled,
-}: PyramidProps) {
+}: FunnelProps) {
   const { t } = useI18n()
   const lockedGroups = [...solvedGroups, ...revealedGroups]
   const groupByWord = new Map<string, SanasuppiloGroup>()
@@ -57,7 +59,7 @@ export function Pyramid({
           {rowTiles.map((tile) => {
             const group = groupByWord.get(tile.word)
             return (
-              <PyramidTile
+              <FunnelTile
                 key={tile.id}
                 word={tile.word}
                 selected={selectedIds.has(tile.id)}

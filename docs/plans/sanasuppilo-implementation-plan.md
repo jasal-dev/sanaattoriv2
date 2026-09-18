@@ -1,28 +1,44 @@
 # Sanasuppilo — implementation plan
 
-Implementation plan for a second game in the Sanaattori portal, Sanasuppilo: a clone of Yle's
-"Sanapyramidi" (word pyramid). Reuses the portal/i18n/testing infrastructure built for Sanuri;
-the new and hard part is **generating valid puzzles**, which gets its own detailed section below.
+Implementation plan for a second game in the Sanaattori portal, Sanasuppilo ("word funnel"):
+inspired by the word-grouping mechanic of Yle's "Sanapyramidi" (word pyramid), but a distinct
+product, not a literal clone — its board is deliberately the mirror image of Yle's (a funnel
+tapering to a point at the bottom, rather than a pyramid widening to a base at the bottom; see
+"Board shape" below) and several mechanics were corrected during implementation to differ from
+early assumptions about Yle's game. Reuses the portal/i18n/testing infrastructure built for
+Sanuri; the new and hard part is **generating valid puzzles**, which gets its own detailed
+section below.
 
-## Game rules (from Yle's instructions + reference screenshots)
+## Game rules (from Yle's instructions + reference screenshots, adapted for Sanasuppilo)
 
-- A pyramid of 15 words arranged in 5 rows: 1 (apex) + 2 + 3 + 4 + 5 (base).
-- The apex word belongs to no group — it's the one genuine "odd one out."
-- Each of the other 4 rows is a group of 2, 3, 4, or 5 words sharing some connecting idea
-  (semantic category, e.g. "men's first names," or wordplay, e.g. "all these words become a new
-  word when a category word is inserted/appended").
+- **Board shape**: 15 words arranged in 5 rows forming a funnel — 5 (top) + 4 + 3 + 2 + 1 (the
+  apex, the point at the bottom) — the mirror image of Yle's Sanapyramidi, which tapers the other
+  way (1 at the top, widening to 5 at the base). All 15 words are visible and identically styled
+  from the very first render; word-to-position placement within the funnel is shuffled and
+  unrelated to actual group membership, so the shape itself never gives away which words belong
+  together, and words never move again once placed — a solved group's tiles recolor in place
+  rather than being pulled out into a row of their own.
+- The apex is a group of exactly one word: it's selectable and checkable exactly like any of the
+  other 4 groups, and can be solved at any point (not only last) — it just happens to have no
+  shared "reason" with any other word, since by construction it fits none of the other 4 groups'
+  criteria.
+- Each of the other 4 groups has 2, 3, 4, or 5 words sharing some connecting idea (semantic
+  category, e.g. "men's first names," or wordplay, e.g. "all these words become a new word when a
+  category word is inserted/appended").
 - Player clicks words to select them, then clicks "Tarkista" (Check) once the selection count
-  matches an unsolved row's size. A correct guess locks that row into its final pyramid position
-  with a color; a wrong guess costs one of 4 lives.
+  matches an unsolved group's size. A correct guess recolors those specific tiles in place (they
+  do not move) and adds the group's label to a small legend below the board; a wrong guess costs
+  one of 4 lives.
 - Groups can be solved in any order.
-- "Vihje" (Hint) reveals the first word of the smallest still-unsolved row **among the 3-, 4-,
-  and 5-word rows only** (never the 2-word row or the apex). The revealed word still has to be
-  clicked to count as selected. The hint button in the reference UI shows a badge of `3` —
-  i.e. at most one hint per eligible row (3/4/5), 3 hints total per puzzle.
-- Game ends after 4 wrong guesses or after all 4 groups are solved; on end, every unsolved row is
-  revealed in place with its label and members.
+- "Vihje" (Hint) reveals the first word of the smallest still-unsolved group **among the 3-, 4-,
+  and 5-word groups only** (never the 2-word group or the 1-word apex). The revealed word still
+  has to be clicked to count as selected. The hint button in the reference UI shows a badge of
+  `3` — i.e. at most one hint per eligible group (3/4/5), 3 hints total per puzzle.
+- Game ends after 4 wrong guesses or after all 5 groups (the 4 real ones plus the apex) are
+  solved; on end, every unsolved group's tiles are revealed in place (recolored, same as a normal
+  solve) with its label added to the legend.
 - **Unlike Yle's original** (and unlike the "Pelaa eilinen peli" button in the reference
-  screenshot), this clone is **not a daily puzzle**: plays are unlimited per day, matching
+  screenshot), Sanasuppilo is **not a daily puzzle**: plays are unlimited per day, matching
   Sanuri's unlimited-play model. A "New game" action just produces another fresh puzzle. This is
   exactly why automated generation is required rather than optional — a hand-curated pool sized
   for "one puzzle a day" would be exhausted within a single sitting of unlimited play, whereas an
@@ -323,9 +339,9 @@ sanaattoriv2/
       puzzles.ts                        # getRandomPuzzle() — lazy import of the JSON pool, like wordLists.ts
       animation.ts                      # row-lock/reveal animation timing, mirrors sanuri/animation.ts
       components/
-        Pyramid.tsx                     # lays out apex + 4 rows
-        PyramidTile.tsx                 # single word tile (selectable / locked / revealed states)
-        SolvedRow.tsx                   # colored, labeled row once solved or revealed at game end
+        Funnel.tsx                      # lays out the fixed 5/4/3/2/1 funnel shape, all 15 tiles
+        FunnelTile.tsx                  # single word tile (selectable / hinted / solved-in-place states)
+        SolvedGroupChip.tsx             # small colored legend entry naming a solved/revealed group
         LivesIndicator.tsx              # 4-dot life tracker
         GameOverModal.tsx               # reused pattern from sanuri's GameOverModal, offers "New game"
       hooks/
@@ -347,14 +363,19 @@ React), one orchestrating hook, presentational `components/`, thin `*Route.tsx`.
   again deselects it, matching the stated instructions.
 - **Check**: enabled once `selection.size` equals the size of at least one unsolved group. On
   submit, `checkSelection(selection, unsolvedGroups)` returns the matching group (if the exact
-  word set equals one of the unsolved groups) or `null`. A match locks that row (marks it solved,
-  clears selection, triggers the lock animation); a non-match decrements lives.
+  word set equals one of the unsolved groups) or `null`. A match marks the group solved (its
+  tiles recolor in place, wherever they happen to sit in the shuffled funnel, and its label is
+  added to a small legend below the board; nothing moves), and clears the selection; a non-match
+  decrements lives.
 - **Hints**: `nextHint(unsolvedGroups, revealedHints)` — from unsolved groups of size 3, 4, or 5
-  (skip 2-word and apex), pick the smallest remaining one, return its first not-yet-selected
-  word. Cap enforced by a hint budget of 3 (or `min(3, number of eligible unsolved rows)`).
-- **Game over**: after the 4th wrong guess, or once 4 groups are solved. On loss, reveal all
-  unsolved rows with labels; on win, show the completed pyramid. Both cases offer a "New game"
-  action that draws another puzzle from the pool (via `puzzleHistory.ts`'s exclusion set).
+  (skip the 2-word group and the 1-word apex), pick the smallest remaining one, return its first
+  not-yet-selected word. Cap enforced by a hint budget of 3 (or `min(3, number of eligible
+unsolved groups)`).
+- **Game over**: after the 4th wrong guess, or once all 5 groups (the 4 real ones plus the apex)
+  are solved. On loss, reveal every still-unsolved group's tiles in place (recolored, same as a
+  normal solve) with its label added to the legend; on win, every group is already solved the
+  same way. Both cases offer a "New game" action that draws another puzzle from the pool (via
+  `puzzleHistory.ts`'s exclusion set).
 - **Stats**: unlike Sanuri there's no natural per-mode axis (word length) to bucket by, since
   every game draws from the same pool — simplest v1 is an aggregate running total (played, won,
   current streak, max streak), mirroring `storage/stats.ts`'s schema-versioned localStorage
@@ -390,8 +411,8 @@ check.
 - **Unit (game logic)**: `checkSelection`, `nextHint`, `puzzleHistory`'s exclusion-set/ring-buffer
   logic, including edge cases (selecting the exact right words in a different click order,
   re-selecting after a wrong guess, hint exhaustion, history buffer covering the whole pool).
-- **Component**: Pyramid rendering per state (unsolved/selected/locked/revealed), lives
-  indicator, hint button disabling per rules (never offers a hint for the 2-word row), game-over
+- **Component**: Funnel rendering per state (unsolved/selected/hinted/solved-in-place), lives
+  indicator, hint button disabling per rules (never offers a hint for the 2-word group), game-over
   modal content for win vs. loss.
 - **E2E (Playwright)**: full win playthrough, full loss playthrough (4 wrong guesses), using all
   3 hints, "New game" producing a different puzzle, portal navigation — following the existing
@@ -416,11 +437,11 @@ check.
    generate and commit an initial `sanasuppilo-puzzles.json` pool sized in the low thousands so
    unlimited play doesn't cycle noticeably.
 5. **Core game logic (no UI)**: `checkSelection`, `nextHint`, `puzzleHistory`, full unit coverage.
-6. **UI**: `Pyramid`/`PyramidTile`/`SolvedRow`/`LivesIndicator`/`GameOverModal`, wired through
+6. **UI**: `Funnel`/`FunnelTile`/`SolvedGroupChip`/`LivesIndicator`/`GameOverModal`, wired through
    `useSanasuppiloGame`, component tests for every state.
 7. **Route & portal registration**: `SanasuppiloRoute.tsx`, lazy route in `App.tsx`, portal
    card entry, i18n strings.
-8. **Polish**: row-lock/reveal animations (mirroring `sanuri/animation.ts`), responsive pyramid
+8. **Polish**: tile color-transition timing (mirroring `sanuri/animation.ts`), responsive funnel
    layout for narrow screens, accessibility (aria-live on check results, keyboard selection).
 9. **E2E suite**: Playwright specs per the testing plan above, wired into CI.
 10. **Content cadence**: decide and document an ongoing process for growing the pool over time
