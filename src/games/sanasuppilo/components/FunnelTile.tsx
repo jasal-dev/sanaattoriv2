@@ -1,4 +1,5 @@
 import type { FunnelSlot } from '../logic/funnelLayout'
+import { hyphenate } from '../logic/hyphenate'
 import { TILE_SIZE_CLASSES, tileFontSizeRem } from './tileSize'
 
 export interface FunnelTileProps {
@@ -44,6 +45,7 @@ export function FunnelTile({
       type="button"
       onClick={onClick}
       disabled={disabled}
+      aria-label={word}
       aria-pressed={selected}
       style={{
         top: `calc(${slot.row} * (var(--tile-size) + var(--tile-gap)))`,
@@ -58,7 +60,7 @@ export function FunnelTile({
         style={{ fontSize: `${tileFontSizeRem(word)}rem` }}
         className="w-full min-w-0 text-center leading-tight break-words"
       >
-        {word}
+        {hyphenate(word)}
       </span>
     </button>
   )

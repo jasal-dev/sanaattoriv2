@@ -25,12 +25,16 @@
      funnelLayout.ts) to position each tile absolutely by simple tile-unit
      arithmetic, entirely in CSS, so the responsive size change below (and
      any tile-move animation) needs no JS measurement or resize listener. */
-  --tile-size: 3.5rem;
-  --tile-gap: 0.5rem;
+  --tile-gap: 0.25rem;
+  /* Below 640px, the largest tile that lets 5 fit across the viewport (minus
+     the ~2rem of page side padding from Layout.tsx and a little slack for a
+     scrollbar), capped at the desktop size -- bigger tiles = bigger text. */
+  --tile-size: min(4rem, calc((100vw - 2.25rem - 4 * var(--tile-gap)) / 5));
 }
 
 @media (min-width: 640px) {
   :root {
+    --tile-gap: 0.5rem;
     --tile-size: 4rem;
   }
 }

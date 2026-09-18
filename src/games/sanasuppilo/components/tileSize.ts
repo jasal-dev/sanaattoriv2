@@ -11,22 +11,20 @@ export const TILE_SIZE_CLASSES = 'h-[var(--tile-size)] w-[var(--tile-size)]'
 
 /**
  * Font size (rem) that keeps a word readable inside the fixed-size tile --
- * longer words shrink and wrap instead of growing the tile. Thresholds are
- * measured (not estimated) against the smallest tile size the board ever
- * renders at (the sub-640px `--tile-size`, 56px, minus padding): every
- * length up to 12 -- e.g. "KELTAVIHREÄ" -- fits on a single line at its
- * bucket's size, and 13+ deliberately uses a *larger* size than the
- * strict single-line minimum would need, since wrapping to two lines is
- * expected and welcome there -- two lines roughly doubles the usable
- * width budget, so a size that would force a single-line word to wrap
- * still comfortably fits a much longer word across two lines instead of
- * needing to shrink further.
+ * longer words shrink and wrap (at syllable boundaries, see hyphenate.ts)
+ * instead of growing the tile. Sized for the smallest tile the board renders
+ * at (~61px on a 360px-wide phone, ~50px of usable text width after padding):
+ * up to 6 letters stay on one line, and longer words are allowed to wrap onto
+ * two (7-9 letters) or three (10+) lines, which is why the steps are much
+ * gentler than a one-line-only fit would need -- a word that wraps cleanly at
+ * a syllable can stay large. Never below 0.5rem (8px).
  */
 export function tileFontSizeRem(word: string): number {
   const length = word.length
   if (length <= 5) return 0.875
-  if (length <= 7) return 0.75
-  if (length <= 9) return 0.475
-  if (length <= 12) return 0.375
-  return 0.45
+  if (length <= 6) return 0.75
+  if (length <= 9) return 0.6875
+  if (length <= 12) return 0.625
+  if (length <= 16) return 0.5625
+  return 0.5
 }
