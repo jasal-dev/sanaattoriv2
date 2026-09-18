@@ -8,6 +8,7 @@ import {
   normalizeHiddenNameFamilies,
   normalizeHiddenWordFamilies,
   normalizePalindromeFamilies,
+  weightedBucketPlan,
 } from './puzzleAssembler.mjs'
 
 /** Deterministic, seedable stand-in for Math.random so tests don't flake. */
@@ -73,7 +74,7 @@ describe('normalizeCompoundFamilies', () => {
 })
 
 describe('normalizeHiddenWordFamilies', () => {
-  it('merges same-category seed families into one, tracking each word\'s seed', () => {
+  it("merges same-category seed families into one, tracking each word's seed", () => {
     const [family] = normalizeHiddenWordFamilies([
       { category: 'elaimet', seed: 'ANKKA', hosts: ['ANKKALAMMIKKO', 'UUTISANKKA'] },
       { category: 'elaimet', seed: 'KISSA', hosts: ['KISSANPENTU'] },
@@ -228,6 +229,55 @@ describe('assemblePuzzle', () => {
       random: makeRandom(3),
     })
     expect(puzzle).toBeNull()
+  })
+})
+
+describe('weightedBucketPlan', () => {
+  const COMPOUND_PAIR = [
+    ...COMPOUND,
+    ...normalizeCompoundFamilies([
+      {
+        anchor: 'KELLO',
+        anchorType: 'suffix',
+        members: [
+          { part: 'HERÄTYS', compound: 'HERÄTYSKELLO' },
+          { part: 'OVI', compound: 'OVIKELLO' },
+          { part: 'KIRKKO', compound: 'KIRKKOKELLO' },
+          { part: 'TAULU', compound: 'TAULUKELLO' },
+          { part: 'KÄSI', compound: 'KÄSIKELLO' },
+        ],
+      },
+    ]),
+  ]
+
+  it('yields 2-3 compound groups per puzzle, never repeating a family', () => {
+    const puzzles = buildPuzzlePool({
+      buckets: [CURATED, COMPOUND_PAIR, HIDDEN_WORD, NAME_OR_PALINDROME],
+      apexPool: APEX_POOL,
+      count: 20,
+      random: makeRandom(5),
+      planBucketIndexes: weightedBucketPlan(1),
+    })
+
+    expect(puzzles.length).toBeGreaterThan(0)
+    for (const puzzle of puzzles) {
+      const compoundGroups = puzzle.groups.filter((g) => g.source.generator?.startsWith('compound'))
+      expect(compoundGroups.length).toBe(2)
+      expect(new Set(compoundGroups.map((g) => g.label)).size).toBe(compoundGroups.length)
+    }
+  })
+
+  it('plans the requested share of the heavy bucket', () => {
+    const plan = weightedBucketPlan(1)
+    const random = makeRandom(9)
+    for (let i = 0; i < 50; i++) {
+      const indexes = plan(4, random)
+      const heavy = indexes.filter((index) => index === 1).length
+      expect(indexes).toHaveLength(4)
+      expect([2, 3]).toContain(heavy)
+      const others = indexes.filter((index) => index !== 1)
+      expect(new Set(others).size).toBe(others.length)
+    }
   })
 })
 

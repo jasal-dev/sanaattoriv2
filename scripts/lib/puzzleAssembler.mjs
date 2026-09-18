@@ -147,10 +147,34 @@ function sampleFamilyWords(family, size, random) {
   return seeds.map((seed) => pickOne(wordsBySeed.get(seed), random))
 }
 
+/** One group from each bucket -- the plan used when no weighting is requested. */
+function defaultBucketPlan(bucketCount) {
+  return Array.from({ length: bucketCount }, (_, index) => index)
+}
+
 /**
- * Assembles one candidate puzzle: one family drawn from each of the 4
- * `buckets` (so every puzzle mixes one curated category, one compound
- * family, one hidden-word family, and one hidden-name/palindrome family),
+ * Builds a bucket plan that over-represents one bucket: each puzzle gets
+ * a number of groups from `heavyIndex` (chosen uniformly from `heavyCounts`),
+ * and the remaining groups come from distinct other buckets, chosen at
+ * random. With 4 groups and `heavyCounts = [2, 3]` that is 50%-75% of a
+ * puzzle's groups (avg ~62%).
+ */
+export function weightedBucketPlan(heavyIndex, heavyCounts = [2, 3]) {
+  return (bucketCount, random) => {
+    const heavyCount = pickOne(heavyCounts, random)
+    const others = []
+    for (let i = 0; i < bucketCount; i++) if (i !== heavyIndex) others.push(i)
+    const lightIndexes = sample(others, SIZES.length - heavyCount, random)
+    return [...Array(heavyCount).fill(heavyIndex), ...lightIndexes]
+  }
+}
+
+/**
+ * Assembles one candidate puzzle: 4 families drawn according to
+ * `planBucketIndexes` (by default one from each of the 4 `buckets`, so every
+ * puzzle mixes one curated category, one compound family, one hidden-word
+ * family, and one hidden-name/palindrome family; the build script instead
+ * passes a `weightedBucketPlan` that favors compound families),
  * assigned to the 4 row sizes in random order, plus an apex word drawn from
  * `apexPool` that satisfies none of the 4 chosen families' rules.
  *
@@ -164,8 +188,16 @@ export function assemblePuzzle({
   id,
   random = Math.random,
   maxApexAttempts = 50,
+  planBucketIndexes = defaultBucketPlan,
 }) {
-  const families = buckets.map((bucket) => pickOne(bucket, random))
+  const families = []
+  for (const bucketIndex of planBucketIndexes(buckets.length, random)) {
+    // Skip families already chosen so a bucket that's drawn from more than
+    // once (see `weightedBucketPlan`) never yields the same family twice.
+    const candidates = buckets[bucketIndex].filter((family) => !families.includes(family))
+    if (candidates.length === 0) return null
+    families.push(pickOne(candidates, random))
+  }
   const sizes = sample(SIZES, SIZES.length, random)
 
   const groups = []
@@ -229,6 +261,7 @@ export function buildPuzzlePool({
   idPrefix = 'sp',
   random = Math.random,
   maxTotalAttempts = count * 500,
+  planBucketIndexes,
 }) {
   const puzzles = []
   let nextIndex = 1
@@ -237,7 +270,7 @@ export function buildPuzzlePool({
   while (puzzles.length < count && totalAttempts < maxTotalAttempts) {
     totalAttempts++
     const id = `${idPrefix}-${String(nextIndex).padStart(5, '0')}`
-    const puzzle = assemblePuzzle({ buckets, apexPool, id, random })
+    const puzzle = assemblePuzzle({ buckets, apexPool, id, random, planBucketIndexes })
     if (puzzle) {
       puzzles.push(puzzle)
       nextIndex++

@@ -9,7 +9,11 @@ import {
   normalizeHiddenNameFamilies,
   normalizeHiddenWordFamilies,
   normalizePalindromeFamilies,
+  weightedBucketPlan,
 } from './lib/puzzleAssembler.mjs'
+
+// Position of the compound-word bucket in `buckets` (built in `main`).
+const COMPOUND_BUCKET_INDEX = 1
 
 const POOL_SIZE = 500
 // Sanity floor so a data regression (an empty family file, an exhausted
@@ -82,9 +86,10 @@ async function main() {
     loadApexPool(),
   ])
 
-  // Every puzzle draws one group from each of these 4 buckets, so each
-  // puzzle naturally mixes a curated trivia/semantic group, a compound-word
-  // group, a hidden-word group, and a hidden-name-or-palindrome group.
+  // Puzzles mix groups from these 4 buckets: curated trivia/semantic,
+  // compound-word, hidden-word, and hidden-name-or-palindrome. Compound
+  // groups are drawn 2-3 times per puzzle (50-75% of its 4 groups) -- see
+  // `weightedBucketPlan` -- and the other buckets fill the remainder.
   const buckets = [
     normalizeCuratedCategories(curatedCategories),
     [
@@ -104,7 +109,13 @@ async function main() {
   console.log(`  hidden-name/palindrome families: ${buckets[3].length}`)
   console.log(`  apex candidate pool: ${apexPool.length} words`)
 
-  const puzzles = buildPuzzlePool({ buckets, apexPool, count: POOL_SIZE, idPrefix: 'ss' })
+  const puzzles = buildPuzzlePool({
+    buckets,
+    apexPool,
+    count: POOL_SIZE,
+    idPrefix: 'ss',
+    planBucketIndexes: weightedBucketPlan(COMPOUND_BUCKET_INDEX),
+  })
   console.log(`  assembled ${puzzles.length} puzzles`)
 
   if (puzzles.length < MIN_POOL_SIZE) {
