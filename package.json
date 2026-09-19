@@ -15,6 +15,7 @@
     "test:e2e": "playwright test",
     "preview": "vite preview",
     "build:wordlists": "node scripts/build-wordlists.mjs",
+    "build:sanajahti-words": "node scripts/build-sanajahti-words.mjs",
     "build:sanasuppilo-compound-families": "node scripts/build-sanasuppilo-compound-families.mjs",
     "build:sanasuppilo-hidden-word-families": "node scripts/build-sanasuppilo-hidden-word-families.mjs",
     "build:sanasuppilo-palindromes": "node scripts/build-sanasuppilo-palindromes.mjs",

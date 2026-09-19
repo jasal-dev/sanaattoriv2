@@ -12,7 +12,7 @@ no daily lock). The board is a plain square grid, so it has nothing to do with S
 - **Grid**: 10 × 10 letters (A–Z plus Ä, Ö; the word lists contain no Å).
 - **Words**: a word is a path of letters where each step goes to one of the 8 neighbours
   (horizontal, vertical, diagonal), and the path may bend freely — left, then up, then left again.
-  A cell can be used **at most once per word**. Any word from the full Sanuri lists (4–7 letters)
+  A cell can be used **at most once per word**. Any Kotus dictionary word of 4 or more letters
   is valid; a puzzle hides at least 10 words but usually contains many more, and all of them
   count.
 - **Scoring**: 1 point per letter, so a 6-letter word is 6 points. Each distinct word scores once;
@@ -197,14 +197,23 @@ Modelled on [sanapiiloStats.ts](../../src/storage/sanapiiloStats.ts):
 4. **Stats and portal integration**, README/AGENTS updates.
 5. **Polish**: mobile sizing, diagonal hit-circle tuning, keyboard/a11y, e2e specs, full CI run.
 
+## Word list update
+
+Sanajahti no longer uses the Sanuri lists for validation. `src/data/sanajahti-words.json` (built by
+`npm run build:sanajahti-words`) holds all ~101k Kotus words of 4+ letters, any length (up to 30)
+and any word class; a word of any such length now scores. Consequences:
+
+- `Dictionary` is `{ hasWord, hasPrefix, maxLength }`. Prefixes are found by binary search on the
+  sorted array instead of a prefix `Set`, which would hold hundreds of thousands of strings.
+- The solver's depth limit is the dictionary's `maxLength`, not 7.
+- The ten planted words still come from the Sanuri easy lists, all of which are in the new list.
+- The file is lazy-loaded with the Sanajahti chunk (about 1.4 MB raw JSON).
+
 ## Decisions made
 
-1. **Word length**: 4–7 letters only, because those are the lists we have. Three-letter words and
-   8+-letter words don't count, even though the latter exist in Finnish. This is the main
-   trade-off; adding longer lists later would be a data change, not a logic change (the solver
-   cap is one constant).
-2. **Dictionary**: always the full Sanuri lists; no easy/all toggle. The easy pool is only used
-   to choose the ten guaranteed planted words.
+1. **Word length**: 4+ letters, any length (see "Word list update"; originally 4–7).
+2. **Dictionary**: all Kotus words of 4+ letters (`sanajahti-words.json`); no easy/all toggle. The
+   easy Sanuri pool is only used to choose the ten guaranteed planted words.
 3. **Tap submission**: tap the last letter again (no submit button), because prefixes such as
    KALA/KALAT rule out auto-checking.
 4. **Timer starts immediately** when the grid appears; no pause.

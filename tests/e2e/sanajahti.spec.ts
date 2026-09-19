@@ -9,9 +9,7 @@ interface Point {
 }
 
 const dictionary = buildDictionary(
-  [4, 5, 6, 7].flatMap(
-    (length) => JSON.parse(readFileSync(`src/data/words-${length}.json`, 'utf-8')) as string[],
-  ),
+  JSON.parse(readFileSync('src/data/sanajahti-words.json', 'utf-8')) as string[],
 )
 
 async function openGame(page: Page) {

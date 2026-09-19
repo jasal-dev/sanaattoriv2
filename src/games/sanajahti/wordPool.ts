@@ -1,11 +1,13 @@
-import { loadPool, loadValidWords } from '../sanapiilo/wordPool'
+import { loadPool } from '../sanapiilo/wordPool'
 import { buildDictionary, type Dictionary } from './logic/dictionary'
 
 let dictionaryPromise: Promise<Dictionary> | null = null
 
-/** Every valid word, with prefixes for pruning the search. Built once per session. */
+/** Every Kotus word of 4+ letters (see scripts/build-sanajahti-words.mjs), separate from the Sanuri lists. Built once per session. */
 export function loadDictionary(): Promise<Dictionary> {
-  dictionaryPromise ??= loadValidWords().then((words) => buildDictionary(words))
+  dictionaryPromise ??= import('../../data/sanajahti-words.json').then((module) =>
+    buildDictionary(module.default),
+  )
   return dictionaryPromise
 }
 

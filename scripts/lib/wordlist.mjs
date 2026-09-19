@@ -80,6 +80,21 @@ export function buildFullWordList(tsvText) {
 }
 
 /**
+ * Builds the Sanajahti dictionary: every headword of `minLength` or more
+ * letters made solely of lowercase Finnish letters, whatever its word class
+ * (pronouns, conjunctions, interjections and so on all count, unlike the
+ * Sanuri lists), uppercased, deduped and sorted by plain code-unit order so
+ * the app can binary-search it for prefixes.
+ */
+export function buildAllWordsList(tsvText, minLength) {
+  const words = new Set()
+  for (const { word } of parseTsv(tsvText)) {
+    if (isAcceptableWord(word) && word.length >= minLength) words.add(word.toUpperCase())
+  }
+  return [...words].sort()
+}
+
+/**
  * Parses a hermitdave/FrequencyWords-style corpus frequency file — lines of
  * "word count", most frequent first — into a Map from uppercased word to its
  * frequency rank (0 = most frequent). Only the first (most frequent)

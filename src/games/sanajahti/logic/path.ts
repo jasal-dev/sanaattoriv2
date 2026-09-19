@@ -1,9 +1,8 @@
 import { cellsEqual, type Cell } from '../../sanapiilo/logic/types'
 import type { Dictionary } from './dictionary'
 
-/** The word lists only hold 4-7 letter words, so nothing outside that range can score. */
+/** Shorter words don't score; the dictionary holds nothing under this length either. */
 export const MIN_WORD_LENGTH = 4
-export const MAX_WORD_LENGTH = 7
 
 /** Whether two cells touch horizontally, vertically or diagonally. */
 export function isNeighbour(a: Cell, b: Cell): boolean {
@@ -61,8 +60,7 @@ export function scorePath(
   found: ReadonlySet<string>,
 ): ScoreResult {
   const word = pathToWord(path, grid)
-  if (word.length < MIN_WORD_LENGTH || word.length > MAX_WORD_LENGTH || !dictionary.words.has(word))
-    return { kind: 'invalid', word }
+  if (word.length < MIN_WORD_LENGTH || !dictionary.hasWord(word)) return { kind: 'invalid', word }
   if (found.has(word)) return { kind: 'duplicate', word }
   return { kind: 'score', word, points: word.length }
 }

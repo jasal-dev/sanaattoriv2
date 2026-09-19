@@ -1,6 +1,6 @@
 import type { Cell } from '../../sanapiilo/logic/types'
 import type { Dictionary } from './dictionary'
-import { MAX_WORD_LENGTH, MIN_WORD_LENGTH } from './path'
+import { MIN_WORD_LENGTH } from './path'
 
 export const STEPS: readonly (readonly [number, number])[] = [-1, 0, 1].flatMap((dRow) =>
   [-1, 0, 1].filter((dCol) => dRow !== 0 || dCol !== 0).map((dCol) => [dRow, dCol] as const),
@@ -17,13 +17,13 @@ export function findAllWords(
 
   function visit(row: number, col: number, prefix: string) {
     const text = prefix + grid[row][col]
-    if (!dictionary.prefixes.has(text)) return
+    if (!dictionary.hasPrefix(text)) return
     used[row][col] = true
     path.push({ row, col })
-    if (text.length >= MIN_WORD_LENGTH && dictionary.words.has(text) && !found.has(text)) {
+    if (text.length >= MIN_WORD_LENGTH && dictionary.hasWord(text) && !found.has(text)) {
       found.set(text, [...path])
     }
-    if (text.length < MAX_WORD_LENGTH) {
+    if (text.length < dictionary.maxLength) {
       for (const [dRow, dCol] of STEPS) {
         const nextRow = row + dRow
         const nextCol = col + dCol
