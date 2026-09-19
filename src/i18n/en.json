@@ -1,6 +1,7 @@
 {
   "app.title": "Sanaattori",
   "app.subtitle": "A portal for Finnish word games",
+  "app.beta": "Beta",
   "portal.gamesHeading": "Games",
   "games.sanuri.title": "Sanuri",
   "games.sanuri.description": "Guess a common Finnish word in a limited number of tries",

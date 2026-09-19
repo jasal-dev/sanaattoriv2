@@ -39,9 +39,14 @@ export function Layout() {
       <div className="flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-2xl shadow-lg">
         <header className="flex shrink-0 flex-row items-center justify-between gap-4 bg-ink-900 px-5 py-[clamp(0.6rem,3dvh,1.5rem)] sm:px-8">
           <div className="text-left">
-            <h1 className="font-display text-2xl font-bold tracking-wide text-white uppercase sm:text-3xl md:text-4xl">
-              <Link to="/">{headerTitle}</Link>
-            </h1>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <h1 className="font-display text-2xl font-bold tracking-wide text-white uppercase sm:text-3xl md:text-4xl">
+                <Link to="/">{headerTitle}</Link>
+              </h1>
+              <span className="font-display rounded-full border border-white/30 px-2 py-0.5 text-[0.6rem] font-semibold tracking-widest text-ink-100 uppercase sm:text-xs">
+                {t('app.beta')}
+              </span>
+            </div>
             {!activeGame && (
               <p className="font-display mt-1 text-[0.65rem] font-medium tracking-widest text-ink-400 uppercase sm:text-xs md:text-sm">
                 {t('app.subtitle')}

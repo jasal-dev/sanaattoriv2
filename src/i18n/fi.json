@@ -1,6 +1,7 @@
 {
   "app.title": "Sanaattori",
   "app.subtitle": "Suomenkielisten sanapelien portaali",
+  "app.beta": "Beta",
   "portal.gamesHeading": "Pelit",
   "games.sanuri.title": "Sanuri",
   "games.sanuri.description": "Löydä oikea sana. Yleisimmät sanat, arvata saa vapaasti.",
