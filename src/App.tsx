@@ -15,6 +15,11 @@ const SanasuppiloRoute = lazy(() =>
     default: module.SanasuppiloRoute,
   })),
 )
+const SanapiiloRoute = lazy(() =>
+  import('./games/sanapiilo/SanapiiloRoute').then((module) => ({
+    default: module.SanapiiloRoute,
+  })),
+)
 
 function App() {
   return (
@@ -44,6 +49,14 @@ function App() {
               element={
                 <Suspense fallback={null}>
                   <SanasuppiloRoute />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/sanapiilo"
+              element={
+                <Suspense fallback={null}>
+                  <SanapiiloRoute />
                 </Suspense>
               }
             />

@@ -8,7 +8,7 @@ interface GameDefinitionBase {
 }
 
 /**
- * A discriminated union rather than one shared shape, since the two games'
+ * A discriminated union rather than one shared shape, since the games'
  * header needs genuinely differ (Sanuri's word-length selector and
  * per-length stats vs. Sanasuppilo's own aggregate stats) -- `kind` is what
  * Layout switches on to decide which header controls and stats modal apply,
@@ -17,6 +17,7 @@ interface GameDefinitionBase {
 export type GameDefinition =
   | (GameDefinitionBase & { kind: 'sanuri'; variant: GameVariant })
   | (GameDefinitionBase & { kind: 'sanasuppilo' })
+  | (GameDefinitionBase & { kind: 'sanapiilo' })
 
 export const GAMES: GameDefinition[] = [
   {
@@ -38,5 +39,11 @@ export const GAMES: GameDefinition[] = [
     titleKey: 'games.sanasuppilo.title',
     descriptionKey: 'games.sanasuppilo.description',
     kind: 'sanasuppilo',
+  },
+  {
+    path: '/sanapiilo',
+    titleKey: 'games.sanapiilo.title',
+    descriptionKey: 'games.sanapiilo.description',
+    kind: 'sanapiilo',
   },
 ]
