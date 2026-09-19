@@ -68,5 +68,21 @@
   "sanapiilo.quit": "Lopeta",
   "sanapiilo.exitGame": "Lopeta peli",
   "sanapiilo.statsButton": "Tilastot",
-  "stats.solved": "Ratkaistut"
+  "stats.solved": "Ratkaistut",
+  "stats.highScore": "Paras tulos",
+  "games.sanajahti.title": "Sanajahti",
+  "games.sanajahti.description": "Metsästä sanoja kirjainruudukosta ennen kuin kaksi minuuttia on kulunut",
+  "sanajahti.grid": "Kirjainruudukko",
+  "sanajahti.timeLeft": "Aikaa jäljellä",
+  "sanajahti.score": "Pisteet",
+  "sanajahti.foundWords": "Löydetyt sanat",
+  "sanajahti.alreadyFound": "jo löydetty",
+  "sanajahti.notAWord": "ei sana",
+  "sanajahti.timeUp": "Aika loppui!",
+  "sanajahti.finalScore": "Pisteet",
+  "sanajahti.newHighScore": "Uusi ennätys!",
+  "sanajahti.playAgain": "Uusi peli",
+  "sanajahti.quit": "Lopeta",
+  "sanajahti.exitGame": "Lopeta peli",
+  "sanajahti.statsButton": "Tilastot"
 }

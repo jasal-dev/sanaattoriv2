@@ -8,6 +8,9 @@ The portal also hosts Sanuri Pro (the full dictionary), Sanasuppilo (a word-grou
 Sanapiilo, a 10 × 10 word search hiding 10 words drawn from the Sanuri 4–7 letter lists (easy
 list or all words). Sanapiilo's puzzles are generated in the browser on every new game; see
 [docs/plans/sanapiilo-implementation-plan.md](docs/plans/sanapiilo-implementation-plan.md).
+Sanajahti is a two-minute word hunt on a 10 × 10 grid: trace paths of neighbouring letters (any
+direction, bending freely), one point per letter of every valid word; see
+[docs/plans/sanajahti-implementation-plan.md](docs/plans/sanajahti-implementation-plan.md).
 
 See [docs/plans/sanuri-implementation-plan.md](docs/plans/sanuri-implementation-plan.md) for the
 full implementation plan.

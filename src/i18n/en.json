@@ -68,5 +68,21 @@
   "sanapiilo.quit": "Quit",
   "sanapiilo.exitGame": "Quit game",
   "sanapiilo.statsButton": "Stats",
-  "stats.solved": "Solved"
+  "stats.solved": "Solved",
+  "stats.highScore": "High score",
+  "games.sanajahti.title": "Sanajahti",
+  "games.sanajahti.description": "Hunt for words in the letter grid before two minutes run out",
+  "sanajahti.grid": "Letter grid",
+  "sanajahti.timeLeft": "Time left",
+  "sanajahti.score": "Points",
+  "sanajahti.foundWords": "Found words",
+  "sanajahti.alreadyFound": "already found",
+  "sanajahti.notAWord": "not a word",
+  "sanajahti.timeUp": "Time is up!",
+  "sanajahti.finalScore": "Points",
+  "sanajahti.newHighScore": "New high score!",
+  "sanajahti.playAgain": "New game",
+  "sanajahti.quit": "Quit",
+  "sanajahti.exitGame": "Quit game",
+  "sanajahti.statsButton": "Stats"
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { SanajahtiStatsModal } from '../games/sanajahti/components/SanajahtiStatsModal'
 import { SanapiiloStatsModal } from '../games/sanapiilo/components/SanapiiloStatsModal'
 import { SanasuppiloStatsModal } from '../games/sanasuppilo/components/SanasuppiloStatsModal'
 import { StatsModal } from '../games/sanuri/components/StatsModal'
@@ -7,6 +8,7 @@ import type { SanuriRouteContext } from '../games/sanuri/SanuriRoute'
 import { loadWordLength, saveWordLength } from '../games/sanuri/settings'
 import type { WordLength } from '../games/sanuri/wordLists'
 import { useI18n } from '../i18n/I18nProvider'
+import { loadSanajahtiStats, type SanajahtiStats } from '../storage/sanajahtiStats'
 import { loadSanapiiloStats, type SanapiiloStats } from '../storage/sanapiiloStats'
 import { loadSanasuppiloStats, type SanasuppiloStats } from '../storage/sanasuppiloStats'
 import { loadStats, type SanuriStats } from '../storage/stats'
@@ -23,6 +25,7 @@ export function Layout() {
   const [sanuriStats, setSanuriStats] = useState<SanuriStats | null>(null)
   const [sanasuppiloStats, setSanasuppiloStats] = useState<SanasuppiloStats | null>(null)
   const [sanapiiloStats, setSanapiiloStats] = useState<SanapiiloStats | null>(null)
+  const [sanajahtiStats, setSanajahtiStats] = useState<SanajahtiStats | null>(null)
 
   function handleWordLengthChange(length: WordLength) {
     setWordLength(length)
@@ -53,7 +56,8 @@ export function Layout() {
                   if (activeGame.kind === 'sanuri') setSanuriStats(loadStats(activeGame.variant))
                   else if (activeGame.kind === 'sanasuppilo')
                     setSanasuppiloStats(loadSanasuppiloStats())
-                  else setSanapiiloStats(loadSanapiiloStats())
+                  else if (activeGame.kind === 'sanapiilo') setSanapiiloStats(loadSanapiiloStats())
+                  else setSanajahtiStats(loadSanajahtiStats())
                 }}
                 aria-label={t(`${activeGame.kind}.statsButton`)}
                 className="flex h-9 w-9 items-center justify-center rounded text-ink-100 transition-colors hover:bg-white/10"
@@ -117,6 +121,9 @@ export function Layout() {
       )}
       {sanapiiloStats && (
         <SanapiiloStatsModal stats={sanapiiloStats} onClose={() => setSanapiiloStats(null)} />
+      )}
+      {sanajahtiStats && (
+        <SanajahtiStatsModal stats={sanajahtiStats} onClose={() => setSanajahtiStats(null)} />
       )}
     </main>
   )
