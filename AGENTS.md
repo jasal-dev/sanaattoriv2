@@ -5,7 +5,7 @@ Instructions for AI coding agents working in this repository.
 ## Project
 
 Sanaattori is a frontend-only portal for Finnish word games (React + TypeScript + Vite +
-Tailwind), currently hosting Sanuri, Sanuri Pro, Sanasuppilo, Sanapiilo and Sanajahti. No backend — everything persists to
+Tailwind), currently hosting Sanuri, Sanuri Pro, Sanasuppilo, Sanapiilo, Sanajahti and Synonyymiristikko. No backend — everything persists to
 `localStorage`. See [README.md](README.md) for the full rundown and
 [docs/plans/sanuri-implementation-plan.md](docs/plans/sanuri-implementation-plan.md) for the
 original implementation plan.

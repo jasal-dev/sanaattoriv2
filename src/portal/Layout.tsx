@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import { SanajahtiStatsModal } from '../games/sanajahti/components/SanajahtiStatsModal'
 import { SanapiiloStatsModal } from '../games/sanapiilo/components/SanapiiloStatsModal'
 import { SanasuppiloStatsModal } from '../games/sanasuppilo/components/SanasuppiloStatsModal'
+import { SynonyymiristikkoStatsModal } from '../games/synonyymiristikko/components/SynonyymiristikkoStatsModal'
 import { StatsModal } from '../games/sanuri/components/StatsModal'
 import type { SanuriRouteContext } from '../games/sanuri/SanuriRoute'
 import { loadWordLength, saveWordLength } from '../games/sanuri/settings'
@@ -11,6 +12,10 @@ import { useI18n } from '../i18n/I18nProvider'
 import { loadSanajahtiStats, type SanajahtiStats } from '../storage/sanajahtiStats'
 import { loadSanapiiloStats, type SanapiiloStats } from '../storage/sanapiiloStats'
 import { loadSanasuppiloStats, type SanasuppiloStats } from '../storage/sanasuppiloStats'
+import {
+  loadSynonyymiristikkoStats,
+  type SynonyymiristikkoStats,
+} from '../storage/synonyymiristikkoStats'
 import { loadStats, type SanuriStats } from '../storage/stats'
 import { GAMES } from './games'
 import { SettingsMenu } from './SettingsMenu'
@@ -26,6 +31,8 @@ export function Layout() {
   const [sanasuppiloStats, setSanasuppiloStats] = useState<SanasuppiloStats | null>(null)
   const [sanapiiloStats, setSanapiiloStats] = useState<SanapiiloStats | null>(null)
   const [sanajahtiStats, setSanajahtiStats] = useState<SanajahtiStats | null>(null)
+  const [synonyymiristikkoStats, setSynonyymiristikkoStats] =
+    useState<SynonyymiristikkoStats | null>(null)
 
   function handleWordLengthChange(length: WordLength) {
     setWordLength(length)
@@ -62,7 +69,8 @@ export function Layout() {
                   else if (activeGame.kind === 'sanasuppilo')
                     setSanasuppiloStats(loadSanasuppiloStats())
                   else if (activeGame.kind === 'sanapiilo') setSanapiiloStats(loadSanapiiloStats())
-                  else setSanajahtiStats(loadSanajahtiStats())
+                  else if (activeGame.kind === 'sanajahti') setSanajahtiStats(loadSanajahtiStats())
+                  else setSynonyymiristikkoStats(loadSynonyymiristikkoStats())
                 }}
                 aria-label={t(`${activeGame.kind}.statsButton`)}
                 className="flex h-9 w-9 items-center justify-center rounded text-ink-100 transition-colors hover:bg-white/10"
@@ -129,6 +137,12 @@ export function Layout() {
       )}
       {sanajahtiStats && (
         <SanajahtiStatsModal stats={sanajahtiStats} onClose={() => setSanajahtiStats(null)} />
+      )}
+      {synonyymiristikkoStats && (
+        <SynonyymiristikkoStatsModal
+          stats={synonyymiristikkoStats}
+          onClose={() => setSynonyymiristikkoStats(null)}
+        />
       )}
     </main>
   )

@@ -19,6 +19,7 @@ export type GameDefinition =
   | (GameDefinitionBase & { kind: 'sanasuppilo' })
   | (GameDefinitionBase & { kind: 'sanapiilo' })
   | (GameDefinitionBase & { kind: 'sanajahti' })
+  | (GameDefinitionBase & { kind: 'synonyymiristikko' })
 
 export const GAMES: GameDefinition[] = [
   {
@@ -52,5 +53,11 @@ export const GAMES: GameDefinition[] = [
     titleKey: 'games.sanajahti.title',
     descriptionKey: 'games.sanajahti.description',
     kind: 'sanajahti',
+  },
+  {
+    path: '/synonyymiristikko',
+    titleKey: 'games.synonyymiristikko.title',
+    descriptionKey: 'games.synonyymiristikko.description',
+    kind: 'synonyymiristikko',
   },
 ]

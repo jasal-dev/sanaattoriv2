@@ -20,3 +20,11 @@ export function writeJson(key: string, value: unknown): void {
     // A lost preference isn't worth surfacing to the user.
   }
 }
+
+export function removeKey(key: string): void {
+  try {
+    localStorage.removeItem(key)
+  } catch {
+    // Nothing to clean up if storage is unavailable.
+  }
+}

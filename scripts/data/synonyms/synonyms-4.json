@@ -1,0 +1,2889 @@
+{
+ "AAMU": [
+  "HUOMEN",
+  "KOI",
+  "KOITTO",
+  "SARASTUS"
+ ],
+ "AASI": [
+  "TYHMYRI"
+ ],
+ "AATE": [
+  "PYRKIMYS",
+  "TAVOITE",
+  "IDEA",
+  "NERONLEIMAUS",
+  "AJATUS"
+ ],
+ "AAVE": [
+  "HAAMU",
+  "HENKIOLENTO",
+  "KUMMITUS",
+  "OLIO",
+  "MÖRKÖ",
+  "PÖPÖ",
+  "HENKI"
+ ],
+ "AFRO": [
+  "TUUHEA"
+ ],
+ "AHNE": [
+  "AHNAS",
+  "HANAKKA",
+  "HALUKAS",
+  "HIMOKAS",
+  "KIIHKEÄ",
+  "KÄRKÄS",
+  "PERSO",
+  "HILLITÖN",
+  "ITSEKÄS"
+ ],
+ "AIDS": [],
+ "AIHE": [
+  "PERUSTE",
+  "SYY",
+  "LÄHTÖKOHTA",
+  "MALLI",
+  "MOTIIVI",
+  "PÄÄAJATUS",
+  "TEEMA",
+  "ALKU",
+  "ITU",
+  "SIEMEN",
+  "TAIPUMUS",
+  "ALKEET",
+  "ALKUTIEDOT",
+  "JUONI"
+ ],
+ "AIKA": [
+  "AJALLISUUS",
+  "AJANKOHTA",
+  "HETKI",
+  "KOTVA",
+  "RUPEAMA",
+  "TIIMA",
+  "TOVI",
+  "TUOKIO",
+  "MÄÄRÄHETKI",
+  "JOKSEENKIN",
+  "KELPO",
+  "KOKO",
+  "MELKO",
+  "MELKOISEN",
+  "AIMO",
+  "AIKAMOINEN",
+  "KUNNON",
+  "MELKOMOINEN",
+  "KAUSI",
+  "KOKONAAN",
+  "SUHTEELLISEN",
+  "VARSIN",
+  "VERRATTAIN"
+ ],
+ "AIMO": [
+  "AIKA",
+  "OIVA",
+  "OIVALLINEN"
+ ],
+ "AINA": [
+  "ALATI",
+  "ALINOMAA",
+  "ALITUISESTI",
+  "AINIAAN",
+  "IANKAIKEN",
+  "IANKAIKKISESTI",
+  "IKUISESTI",
+  "IÄTI",
+  "LOPPUMATTOMIIN",
+  "LOPUTTOMIIN",
+  "LAKKAAMATTA",
+  "MYÖTÄÄNSÄ"
+ ],
+ "AINE": [
+  "MATERIA",
+  "SUBSTANSSI",
+  "LIHA",
+  "MAAILMALLISUUS",
+  "MAMMONA",
+  "VIINA",
+  "VÄKIJUOMAT",
+  "AINEISTO",
+  "MATERIAALI",
+  "OPETUSAINE",
+  "OPISKELUAINE",
+  "AINEKIRJOITUS",
+  "KIRJOITUSHARJOITELMA"
+ ],
+ "AINO": [],
+ "AITA": [],
+ "AITO": [
+  "ALKUPERÄINEN",
+  "OIKEA",
+  "TODELLINEN",
+  "LUONNOLLINEN",
+  "VILPITÖN",
+  "KORISTELEMATON",
+  "TOSI",
+  "VARSINAINEN",
+  "VÄLITÖN",
+  "VÄÄRENTÄMÄTÖN"
+ ],
+ "AIVO": [],
+ "AJAA": [
+  "HÄTYYTTÄÄ",
+  "KULJETTAA",
+  "LUODA",
+  "MATKUSTAA",
+  "MENNÄ",
+  "OHJATA",
+  "PAKAHTUA",
+  "SIIRTYÄ"
+ ],
+ "AKKA": [
+  "EUKKO",
+  "MUIJA",
+  "MUORI",
+  "ÄMMÄ",
+  "VAIMO",
+  "MUMMO"
+ ],
+ "AKKU": [
+  "SÄHKÖENERGIALAITE",
+  "AKKUMULAATTORI"
+ ],
+ "ALAS": [],
+ "ALBA": [
+  "MESSUPAITA",
+  "RIPPIASU",
+  "ASU"
+ ],
+ "ALFA": [
+  "ENSIMMÄINEN"
+ ],
+ "ALIN": [
+  "POHJIMMAINEN"
+ ],
+ "ALKU": [
+  "AIHE",
+  "ALKEET",
+  "ALKAMISAIKA",
+  "ALKAMISILMIÖ",
+  "ALKAMISAJANKOHTA",
+  "ALKUPÄÄ",
+  "ALKUTAPAHTUMA",
+  "SYNTY",
+  "AIHEUTTAJA",
+  "ALKUSYSÄYS",
+  "ALKUUNPANIJA",
+  "ALKUTIEDOT",
+  "JOHDATUS"
+ ],
+ "ALLA": [],
+ "ALLE": [],
+ "ALTA": [],
+ "ALUE": [
+  "PIIRI"
+ ],
+ "ALUN": [],
+ "ALUS": [
+  "ALUNEN",
+  "ALAPUOLI",
+  "HAAKSI",
+  "LAIVA",
+  "LAUTTA",
+  "VENE",
+  "PURSI",
+  "HELIKOPTERI",
+  "LENTOKONE",
+  "SUBJEKTI",
+  "ALUSTA",
+  "JAHTI",
+  "JUURI"
+ ],
+ "AMME": [
+  "SAMMIO"
+ ],
+ "AMMU": [],
+ "AMPU": [],
+ "ANOA": [
+  "PYYTÄÄ",
+  "RUKOILLA",
+  "HAKEA",
+  "PYRKIÄ",
+  "KERJÄTÄ",
+  "KYSYÄ",
+  "KÄRTTÄÄ",
+  "VEDOTA"
+ ],
+ "ANSA": [
+  "PYYDYS"
+ ],
+ "ANTI": [
+  "LAHJA"
+ ],
+ "APEA": [
+  "AHDISTUNUT",
+  "ANKEA",
+  "AHDISTUNEISUUS",
+  "ALAKULOINEN",
+  "HAIKEA",
+  "SURULLINEN",
+  "MASENTUNUT",
+  "HUONO",
+  "IKÄVÄ",
+  "MURHEELLINEN",
+  "PAHOILLAAN",
+  "SURKEA",
+  "SYNKEÄT"
+ ],
+ "ARKA": [
+  "PELOKAS",
+  "SÄIKKYVÄ",
+  "UJO",
+  "HERKKÄ",
+  "ARISTAVA",
+  "HELLÄ",
+  "KIPEÄ",
+  "EPÄVARMA",
+  "HILJAINEN",
+  "HÄVELIÄS",
+  "ÄÄNETÖN"
+ ],
+ "ARMO": [
+  "ARMAHDUS",
+  "LAUPEUS",
+  "ARMONANTO",
+  "SUOPEUS",
+  "RAKKAUS"
+ ],
+ "ARPA": [
+  "ARPANOPPA",
+  "ARPALIPPU",
+  "KOHTALO",
+  "RATKAISU",
+  "SALLIMUS"
+ ],
+ "ARPI": [],
+ "ARVO": [
+  "AARRE",
+  "KANTAVUUS",
+  "MERKITYS",
+  "ASEMA",
+  "HINTA",
+  "NUMERO",
+  "LUKU",
+  "SUURUUS",
+  "ARVOVALTA",
+  "KUNNIA",
+  "VALÖÖRI"
+ ],
+ "ASIA": [
+  "JUTTU",
+  "SEIKKA",
+  "TAPAUS",
+  "TEHTÄVÄ",
+  "KYSYMYS",
+  "ONGELMA",
+  "PULMA"
+ ],
+ "ASKI": [
+  "PAKETTI",
+  "PAKKAUS"
+ ],
+ "ASTE": [
+  "VIVAHDE"
+ ],
+ "ASTI": [
+  "HAMAAN",
+  "HAMASTA",
+  "SAAKKA",
+  "ETEENPÄIN"
+ ],
+ "ASUA": [
+  "ASUSTAA",
+  "ELELLÄ",
+  "ELÄÄ",
+  "MAJAILLA",
+  "OLEILLA",
+  "OLESKELLA"
+ ],
+ "AUKI": [
+  "HAJALLAAN",
+  "HARALLAAN",
+  "LEVÄLLÄÄN"
+ ],
+ "AULA": [
+  "ETEINEN",
+  "HALLI",
+  "VESTIBYYLI",
+  "KÄYTÄVÄ",
+  "JUHLASALI",
+  "TAMPUURI"
+ ],
+ "AURA": [
+  "KENTTÄ",
+  "VÄRIPILVI"
+ ],
+ "AUTO": [
+  "AJONEUVO"
+ ],
+ "BABA": [],
+ "BABY": [],
+ "BODY": [],
+ "CAMP": [],
+ "CASE": [],
+ "CITY": [
+  "KAUPUNKI",
+  "KESKUSTA"
+ ],
+ "COLA": [],
+ "COOL": [],
+ "DATA": [],
+ "DEMO": [],
+ "DESI": [
+  "DESILITRA"
+ ],
+ "DINO": [],
+ "EDES": [
+  "AINAKIN",
+  "KUMMINKIN",
+  "VÄHINTÄÄN",
+  "VÄHINTÄÄNKIN",
+  "KUITENKIN",
+  "KUISTI"
+ ],
+ "EEVA": [],
+ "EHJÄ": [
+  "EHYT",
+  "RIKKUMATON",
+  "KOKONAINEN",
+  "YHTENÄINEN",
+  "TIIVIS",
+  "SOPUSOINTUINEN",
+  "HARMONINEN",
+  "KOKONAAN"
+ ],
+ "EHKÄ": [
+  "MAHDOLLISESTI",
+  "KENTIES",
+  "KUKATIES",
+  "LUULTAVASTI",
+  "OLETETTAVASTI",
+  "OTAKSUTTAVASTI"
+ ],
+ "EHTA": [
+  "EHYT",
+  "ENSIKERTALAINEN"
+ ],
+ "EHTO": [
+  "EDELLYTYS",
+  "RAJOITUS",
+  "VAATIMUS",
+  "PYKÄLÄ",
+  "PREMISSI",
+  "VARAUS"
+ ],
+ "EKSÄ": [],
+ "ELIN": [],
+ "ELIÖ": [
+  "BAKTEERI"
+ ],
+ "ELÄÄ": [
+  "ASUA",
+  "OLLA",
+  "ELELLÄ",
+  "ANTAUTUA",
+  "OMISTAUTUA",
+  "LIIKEHTIÄ",
+  "ÄÄNNELLÄ",
+  "ASUSTAA",
+  "OLEILLA",
+  "HOITAA",
+  "VILJELLÄ",
+  "MAJAILLA"
+ ],
+ "ENNE": [
+  "ENNAKKOILMIÖ",
+  "ENNUSTUS",
+  "ENNUSMERKKI",
+  "MERKKI",
+  "OIRE",
+  "KUMMITUS"
+ ],
+ "ENSI": [
+  "LÄHI",
+  "SEURAAVA",
+  "TULEVA",
+  "ENSIMMÄINEN"
+ ],
+ "ENTÄ": [],
+ "ENÄÄ": [],
+ "ESTE": [
+  "VASTUS",
+  "PIDÄKE",
+  "HAITTA"
+ ],
+ "FANI": [],
+ "FISU": [],
+ "FUNK": [],
+ "GINI": [],
+ "GOLF": [],
+ "GRAY": [],
+ "GURU": [
+  "ASIANTUNTIJA",
+  "HUIPPUASIANTUNTIJA",
+  "PARAS"
+ ],
+ "HAJU": [
+  "AROMI",
+  "HAISU",
+  "LEMU",
+  "LÖYHKÄ",
+  "KATKU",
+  "KÄRY",
+  "TUOKSU",
+  "TUNTU",
+  "VAIKUTELMA"
+ ],
+ "HAKU": [],
+ "HALI": [],
+ "HALO": [],
+ "HALU": [
+  "HAAVE",
+  "MIELI",
+  "MIELITEKO",
+  "PYRKIMYS",
+  "TAHTO",
+  "TOIVE",
+  "TOIVOMUS",
+  "HEHKU",
+  "HIMO",
+  "INTOHIMO",
+  "KIIHKO",
+  "PALO",
+  "VIMMA",
+  "KUTSUMUS",
+  "LIBIDO",
+  "PYYNTÖ",
+  "TARVE",
+  "VAATIMUS"
+ ],
+ "HAME": [],
+ "HANA": [],
+ "HARA": [
+  "ÄES"
+ ],
+ "HERA": [],
+ "HETI": [
+  "ALUKSI",
+  "HETIMITEN",
+  "KOHTA",
+  "PAIKKAILLA",
+  "PIAN",
+  "PIAKKOIN",
+  "PIKAPUOLIIN",
+  "PIKIMITTEN",
+  "OITIS",
+  "VIIPYMÄTTÄ",
+  "OIKOPÄÄTÄ"
+ ],
+ "HIKI": [],
+ "HIMO": [
+  "HALU",
+  "HEHKU",
+  "INTOHIMO",
+  "KIIHKO",
+  "PALO",
+  "VIMMA"
+ ],
+ "HIOA": [
+  "SILOTTAA",
+  "TAHKOTA",
+  "TEROITTAA",
+  "HIENONTAA",
+  "KIILLOTTAA",
+  "TASOITTAA"
+ ],
+ "HIUS": [
+  "HAIHTUVA",
+  "HIUSKIEHKURA",
+  "KIEHKURA",
+  "KIHARA",
+  "KUTRI",
+  "SUORTUVA",
+  "KARVA"
+ ],
+ "HOKI": [],
+ "HOME": [],
+ "HOMO": [],
+ "HORO": [],
+ "HOVI": [
+  "LINNA"
+ ],
+ "HUHU": [
+  "MAINE"
+ ],
+ "HUPI": [
+  "AJANVIETE",
+  "HAUSKUUS",
+  "HUVI",
+  "HUVITUS",
+  "ILO",
+  "VIIHDE"
+ ],
+ "HUTI": [],
+ "HUVI": [
+  "HAUSKUUS",
+  "HILPEYS",
+  "HUPI",
+  "HUVITUS",
+  "ILO",
+  "ILONPITO",
+  "LYSTI",
+  "RATTO",
+  "RIEMU",
+  "KISA",
+  "LEIKKI"
+ ],
+ "HYMY": [],
+ "HYVE": [
+  "AVU"
+ ],
+ "HYVÄ": [
+  "EDULLINEN",
+  "HELLÄ",
+  "HERKULLINEN",
+  "HERTTAINEN",
+  "ENSILUOKKAINEN",
+  "ERINOMAINEN",
+  "KELPO",
+  "KELVOLLINEN",
+  "MAINIO",
+  "MOITTEETON",
+  "OIVALLINEN",
+  "TÄYDELLINEN",
+  "VERRATON",
+  "ANTELIAS",
+  "ARMELIAS",
+  "AUTTAVAINEN",
+  "AVULIAS",
+  "HYVÄSYDÄMINEN",
+  "JALO",
+  "JALOMIELINEN",
+  "KILTTI",
+  "KUNNOLLINEN",
+  "KUNNON",
+  "VIATON",
+  "KYVYKÄS",
+  "LAHJAKAS",
+  "HYÖDYLLINEN",
+  "ONNEKAS",
+  "OTOLLINEN",
+  "MAITTAVA",
+  "MAUKAS",
+  "TAITAVA",
+  "UUTTERA",
+  "KORKEA",
+  "KORKEALUOKKAINEN",
+  "KOVA",
+  "KULTAINEN",
+  "LEMPEÄ",
+  "MYÖNTEINEN",
+  "OIKEA",
+  "OIVA",
+  "ONNISTUNUT",
+  "POSITIIVINEN",
+  "RITARILLINEN",
+  "RAKAS",
+  "SOVELIAS",
+  "SYDÄMELLINEN",
+  "TÄSMÄLLINEN",
+  "YLEVÄ"
+ ],
+ "HÄLY": [
+  "HÄLINÄ",
+  "MELU",
+  "METELI",
+  "MÖKÄ",
+  "ÄÄNI"
+ ],
+ "HÄTÄ": [
+  "HUOLI",
+  "AHDINKO",
+  "KIIPELI",
+  "PINNE",
+  "PULMA",
+  "PULA",
+  "AHDISTUS",
+  "MURHE",
+  "PELKO",
+  "SURU",
+  "TUSKA",
+  "KIIRE",
+  "KÖYHYYS",
+  "PUUTE"
+ ],
+ "HÄÄT": [],
+ "HÖNÖ": [],
+ "HÖPÖ": [],
+ "IDEA": [
+  "AATE",
+  "AJATUS",
+  "MIELEENJOHTUMA",
+  "MIELENJUOLAHDUS",
+  "NERONLEIMAUS",
+  "PÄÄHÄNPISTO",
+  "PÄÄHÄNPÄLKÄHDYS",
+  "SUUNNITELMA",
+  "OIKKU"
+ ],
+ "IHAN": [
+  "AIVAN",
+  "HYVIN",
+  "ERITTÄIN",
+  "JUURI",
+  "KERRASSAAN",
+  "KOKONAAN",
+  "LOPEN",
+  "PERIN",
+  "SUORASTAAN",
+  "TARKALLEEN",
+  "TYKKÄNÄÄN",
+  "TYYSTIN",
+  "TYYTEN",
+  "TÄYSIN",
+  "VALLAN",
+  "PERÄKKÄIN",
+  "TÄSMÄLLEEN",
+  "YLEN"
+ ],
+ "IHKA": [],
+ "IHME": [],
+ "ILMA": [],
+ "ILME": [
+  "ELE"
+ ],
+ "ILMI": [
+  "JULKI"
+ ],
+ "ILTA": [],
+ "IMEÄ": [],
+ "INHA": [],
+ "INTO": [
+  "HEHKU",
+  "HOHDE",
+  "INTOHIMO",
+  "KIIHKO",
+  "PALO",
+  "PONSI",
+  "PUHTI",
+  "TARMO",
+  "VIMMA",
+  "VIREYS",
+  "VOIMA",
+  "KUUME",
+  "TULI"
+ ],
+ "IRTI": [
+  "ERILLÄÄN",
+  "EROSSA",
+  "ERIKSEEN",
+  "IRRALLAAN"
+ ],
+ "ISKU": [
+  "MUSIIKISSA"
+ ],
+ "ISKÄ": [],
+ "ITKU": [],
+ "ITSE": [],
+ "ITÄÄ": [
+  "ALKAA",
+  "ILMESTYÄ",
+  "HERÄTÄ",
+  "NOUSTA",
+  "ORASTAA",
+  "VERSOA"
+ ],
+ "IÄTI": [
+  "AINA",
+  "IKUINEN"
+ ],
+ "JADE": [],
+ "JAKO": [],
+ "JALO": [
+  "EPÄITSEKÄS",
+  "HARRAS",
+  "HIENO",
+  "HYVÄ",
+  "JALOMIELINEN",
+  "RITARILLINEN",
+  "YLEVÄ",
+  "ARVOKAS",
+  "KALLISARVOINEN",
+  "KORKEA",
+  "MAHTAVA",
+  "PYHÄ",
+  "PYYTEETÖN",
+  "SUURI",
+  "UHRAUTUVAINEN",
+  "YLHÄINEN",
+  "YLVÄS"
+ ],
+ "JANA": [
+  "VIIVA"
+ ],
+ "JANG": [],
+ "JAOS": [],
+ "JAZZ": [
+  "RYTMIMUSIIKKILAJI"
+ ],
+ "JEES": [],
+ "JODI": [],
+ "JOJO": [],
+ "JOKI": [
+  "KYMI",
+  "OJA",
+  "PURO",
+  "VIRTA"
+ ],
+ "JOKO": [],
+ "JONI": [],
+ "JONO": [
+  "JAKSO",
+  "LINJA",
+  "RIVI",
+  "SARJA"
+ ],
+ "JOPA": [
+  "PERÄKKÄIN",
+  "YKSIN"
+ ],
+ "JOTA": [],
+ "JUAN": [],
+ "JUJU": [],
+ "JUNA": [
+  "AJONEUVO"
+ ],
+ "JURY": [
+  "VALAMIEHISTÖ",
+  "TUOMARISTO"
+ ],
+ "JUST": [],
+ "JÄBÄ": [],
+ "JÄTE": [
+  "ROSKA",
+  "TÄHDE",
+  "JÄÄNNÖS",
+  "LOPPU",
+  "RIPE",
+  "MÄSKI"
+ ],
+ "JÖRÖ": [
+  "ERAKKOMAINEN",
+  "HAPAN",
+  "JURO",
+  "ÄREÄ"
+ ],
+ "KADE": [
+  "KATEELLINEN"
+ ],
+ "KALA": [
+  "PARKKI"
+ ],
+ "KALE": [],
+ "KALI": [],
+ "KALU": [
+  "ESINE",
+  "LAITE",
+  "TAVARA"
+ ],
+ "KAMA": [],
+ "KAMU": [],
+ "KANA": [],
+ "KANI": [
+  "JÄNIS"
+ ],
+ "KARA": [],
+ "KARI": [
+  "LUOTO",
+  "SAARI"
+ ],
+ "KARU": [
+  "ASIALLINEN",
+  "ALASTON",
+  "ANKARA",
+  "ARKINEN",
+  "BANAALI",
+  "HEDELMÄTÖN",
+  "JYLHÄ",
+  "KÖYHÄ",
+  "NIUKKAKASVUINEN",
+  "ASKEETTINEN",
+  "KOLKKKO",
+  "KORUTON",
+  "JURO",
+  "JÄYHÄ",
+  "KITSAS",
+  "KOLKKO",
+  "TAVALLINEN",
+  "YKSINKERTAINEN"
+ ],
+ "KASA": [
+  "LÄJÄ",
+  "RÖYKKIÖ",
+  "KIMPPU",
+  "PINKKA",
+  "KEKO",
+  "PINO",
+  "TAPULI",
+  "LATOMUS",
+  "JOUKKO",
+  "KOKO"
+ ],
+ "KATE": [
+  "PEITEKERROS",
+  "PÄÄLLYS",
+  "PEITE",
+  "VERHO",
+  "TAKUU",
+  "SUOJUS"
+ ],
+ "KATO": [],
+ "KATU": [
+  "TIE"
+ ],
+ "KEHO": [
+  "RUUMIS",
+  "VARTALO"
+ ],
+ "KEHU": [
+  "KIITOS",
+  "KIITTÄMINEN",
+  "YLISTYS",
+  "LEUHKIA",
+  "REHENNELLÄ",
+  "YLVÄSTELLÄ"
+ ],
+ "KEHÄ": [
+  "PIIRI",
+  "RENGAS",
+  "YMPYRÄ",
+  "KELA",
+  "RULLA",
+  "KEHIKKO",
+  "KEHYS"
+ ],
+ "KELA": [
+  "KEHÄ",
+  "RULLA",
+  "KEHIKKO",
+  "KEHYS",
+  "PIIRI",
+  "RENGAS",
+  "YMPYRÄ",
+  "PUOLA",
+  "TELA"
+ ],
+ "KELI": [],
+ "KESY": [
+  "LAUHKEA",
+  "MALTILLINEN",
+  "SOVINNOLLINEN",
+  "SÄVYISÄ",
+  "SÄYSEÄ"
+ ],
+ "KESÄ": [
+  "SUVI"
+ ],
+ "KIHO": [],
+ "KILO": [],
+ "KIPU": [
+  "JOMOTUS",
+  "KIVISTYS",
+  "KOLOTUS",
+  "PAKOTUS",
+  "POLTTO",
+  "SÄRKY",
+  "TUSKA",
+  "KÄRSIMYS",
+  "PIILOTTAA"
+ ],
+ "KISA": [
+  "HUVI",
+  "ILONPITO",
+  "KISAILU",
+  "LEIKKI",
+  "KARKELO",
+  "TANHU",
+  "TANSSI",
+  "KILPAILU",
+  "URHEILUKILPAILU"
+ ],
+ "KISU": [
+  "KISSA"
+ ],
+ "KITA": [
+  "KURKKU",
+  "NIELU",
+  "SUU"
+ ],
+ "KIVA": [
+  "HAUSKA",
+  "KIINTOISA",
+  "MIELENKIINTOINEN",
+  "MUKAVA",
+  "OIVA"
+ ],
+ "KIVI": [
+  "ZIRKONI"
+ ],
+ "KOHU": [
+  "HÄLINÄ",
+  "MELU",
+  "METELI",
+  "MÖKÄ"
+ ],
+ "KOKO": [
+  "AIKA",
+  "JAKAMATON",
+  "LAAJUUS",
+  "SUURUUS",
+  "KASA",
+  "KEKO",
+  "LÄJÄ",
+  "PINKKA",
+  "RÖYKKIÖ",
+  "KOKONAAN",
+  "TILAVUUS"
+ ],
+ "KOLO": [
+  "AUKKO",
+  "AVAUTUMA",
+  "KUOPPA",
+  "LOVI",
+  "SYVENNYS",
+  "REIKÄ",
+  "LÄPI",
+  "KOTI",
+  "LOKERO",
+  "LOMA",
+  "LOUKKO",
+  "ONKALO",
+  "ONTELO",
+  "RAKO",
+  "REIÄN",
+  "REIJÄSSÄ",
+  "REIJÄT",
+  "REIKIEN",
+  "REIKIÄ",
+  "SUU",
+  "VÄLI"
+ ],
+ "KONE": [
+  "INSTRUMENTTI"
+ ],
+ "KORI": [
+  "VASU",
+  "KOPPA",
+  "ROSKIS",
+  "PAPERIKORI",
+  "METALLIKORI",
+  "PÄREKORI"
+ ],
+ "KORU": [],
+ "KOTI": [
+  "ASUNTO",
+  "KONTU",
+  "KOTO",
+  "ASUMUS",
+  "KOLO",
+  "PESÄ",
+  "MAJA"
+ ],
+ "KOVA": [
+  "ANKARA",
+  "ARMOTON",
+  "JÄYKKÄ",
+  "KIIHKEÄ",
+  "KIIVAS",
+  "JÄHMEÄ",
+  "KIINTEÄ",
+  "LUJA",
+  "TIIVIS",
+  "VOIMAKAS",
+  "KOVAKOURAINEN",
+  "TIUKKA",
+  "JÄRKÄHTÄMÄTÖN",
+  "SÄÄLIMÄTÖN",
+  "TINKIMÄTÖN",
+  "VAATIVA",
+  "HELLITTÄMÄTÖN",
+  "HERPAANTUMATON",
+  "SUURI",
+  "VAHVA",
+  "VALTAVA",
+  "HALUKAS",
+  "HANAKKA",
+  "HYVÄ",
+  "INNOKAS",
+  "KYLMÄ",
+  "NAVAKKA",
+  "RAIVOISA",
+  "RANKKA",
+  "RASITTAVA",
+  "TUIMA",
+  "TYÖLÄS"
+ ],
+ "KUIN": [],
+ "KUJA": [
+  "KYLÄTIE",
+  "RAITTI",
+  "REITTI",
+  "PIKKUKATU",
+  "POLKU",
+  "SOLA",
+  "KÄYTÄVÄ",
+  "KUNNIAKUJA",
+  "TIE"
+ ],
+ "KULU": [
+  "KUSTANNUS",
+  "MENO"
+ ],
+ "KUMI": [],
+ "KUPU": [
+  "KOPPA",
+  "HATTU",
+  "KUUPPA",
+  "HOLVI",
+  "KUPOLI",
+  "KUPUHOLVI",
+  "KUMPARE",
+  "KUMPU",
+  "MAHA",
+  "VATSA"
+ ],
+ "KURI": [
+  "KOMENTO",
+  "JÄRJESTYS",
+  "KUULIAISUUS",
+  "TOTTELEVAISUUS",
+  "KURITUS",
+  "KURITTAMINEN",
+  "OJENNUS",
+  "RANGAISTUS",
+  "SELKÄSAUNA",
+  "KEPPONEN",
+  "KOLTTONEN",
+  "KUJE",
+  "KOIRUUS",
+  "METKU",
+  "TEMPPU"
+ ],
+ "KUSI": [],
+ "KUTI": [],
+ "KUVA": [
+  "KUVAJAINEN",
+  "MAALAUS",
+  "PIIRROS",
+  "TEOS",
+  "VALOKUVA",
+  "VEISTOS",
+  "TUNTU"
+ ],
+ "KYKY": [
+  "AVU",
+  "KELPOISUUS",
+  "KYKYISYYS",
+  "KYVYKKYYS",
+  "LAHJAKKUUS",
+  "PYSTYVYYS",
+  "TAITO",
+  "MESTARI",
+  "LAHJA",
+  "MAHTI",
+  "NERO",
+  "TAITURI",
+  "VIRE"
+ ],
+ "KYLÄ": [],
+ "KYNÄ": [],
+ "KYSE": [],
+ "KÄKI": [],
+ "KÄLY": [],
+ "KÄSI": [
+  "KOURA",
+  "KÄMMEN",
+  "PIVO",
+  "KÄSIVARSI",
+  "KÄPÄLÄ",
+  "TASSU"
+ ],
+ "LADY": [],
+ "LAHO": [
+  "HAURASTUNUT",
+  "MAATUNUT",
+  "MÄTÄ",
+  "PERSTAANTUNUT",
+  "PILAANTUNUT",
+  "RAPPEUTUNUT",
+  "RÄNSISTYNYT",
+  "TURMELTUNUT"
+ ],
+ "LAIN": [],
+ "LAJI": [
+  "HAARA",
+  "LUOKKA",
+  "KATEGORIA"
+ ],
+ "LAKI": [
+  "HARHA",
+  "HUIPPU",
+  "KATTO",
+  "SÄÄDÖS",
+  "SÄÄNTÖ",
+  "LAINSÄÄDÄNTÖ",
+  "LUONNONLAKI",
+  "NORMI",
+  "PERIAATE",
+  "LAIPIO",
+  "HARJA"
+ ],
+ "LAMA": [],
+ "LANA": [],
+ "LASI": [
+  "IKKUNA",
+  "MALJA"
+ ],
+ "LATO": [
+  "RAKENNUS"
+ ],
+ "LAVA": [
+  "KOROKE",
+  "PENKKI",
+  "SARKA"
+ ],
+ "LELU": [
+  "LEIKKIKALU"
+ ],
+ "LEMU": [
+  "HAJU",
+  "KATKU",
+  "HAISU",
+  "LÖYHKÄ",
+  "TUOKSU"
+ ],
+ "LEPO": [
+  "HENGÄHDYS",
+  "LEVÄHDYS",
+  "TAUKO",
+  "MIELENRAUHA",
+  "RAUHA",
+  "SOPUSOINTU",
+  "TASAPAINO",
+  "LEPOTILA"
+ ],
+ "LEVY": [],
+ "LIHA": [
+  "AINE"
+ ],
+ "LIKA": [
+  "EPÄPUHTAUS",
+  "KURA",
+  "LOKA",
+  "MUTA",
+  "RAPA",
+  "RYÖNÄ",
+  "SAASTA",
+  "SIIVOTTOMUUS",
+  "SOHJO",
+  "TÖRKY",
+  "ROSKA"
+ ],
+ "LIKI": [
+  "LIKELLÄ",
+  "LÄHELLÄ",
+  "LIKELLE",
+  "LÄHELLE",
+  "LIKIMAIN",
+  "LIKIMÄÄRIN",
+  "LIKIPITÄEN",
+  "LÄHIMAIN",
+  "LÄHES",
+  "MELKEIN",
+  "MILTEI",
+  "LUOKSE",
+  "PIAN"
+ ],
+ "LILA": [
+  "SINIPUNAINEN"
+ ],
+ "LIMA": [
+  "RÄKÄ"
+ ],
+ "LIME": [],
+ "LIMU": [],
+ "LISÄ": [
+  "EKSTRA",
+  "JATKE",
+  "YLIMÄÄRÄ",
+  "EXTRA",
+  "KARTTUU",
+  "KASVAA",
+  "SUURENEE"
+ ],
+ "LIVE": [],
+ "LOGO": [],
+ "LOHI": [],
+ "LOKI": [],
+ "LOMA": [
+  "LUPA",
+  "VAPAA",
+  "AUKKO",
+  "KOLO",
+  "RAKO",
+  "VÄLI"
+ ],
+ "LOOK": [],
+ "LUJA": [
+  "ANKARA",
+  "HERPAANTUMATON",
+  "HORJUMATON",
+  "JÄYKKÄ",
+  "KOVA",
+  "KOVAKOURAINEN",
+  "KUULUVA",
+  "KESTÄVÄ",
+  "MURTUMATON",
+  "VAHVA",
+  "VOIMAKAS",
+  "KARAISTUNUT",
+  "VASTUSTUSKYKYINEN",
+  "JÄHMEÄ",
+  "KIINTEÄ",
+  "TIIVIS",
+  "HELLITTÄMÄTÖN",
+  "SÄÄLIMÄTÖN",
+  "TIUKKA",
+  "JOUSTAMATON",
+  "JÄRKÄHTÄMÄTÖN",
+  "KYLMÄ",
+  "VASTAHAKOINEN",
+  "VÄKINÄINEN",
+  "KAIKUVA",
+  "KOVAÄÄNINEN",
+  "RAIKUVA",
+  "ÄÄNEKÄS",
+  "PONTEVA",
+  "SIEKAILEMATON",
+  "TAIPUMATON",
+  "TANAKKA",
+  "TINKIMÄTÖN",
+  "TUKEVA",
+  "VARMA"
+ ],
+ "LUKU": [
+  "ARVO",
+  "LOITSU"
+ ],
+ "LUMI": [],
+ "LUPA": [
+  "LOMA",
+  "OIKEUS",
+  "SUOSTUMUS",
+  "VALTA",
+  "VALTUUS",
+  "VAPAA"
+ ],
+ "LÄJÄ": [
+  "KASA",
+  "KOKO",
+  "KEKO",
+  "RYKELMÄ",
+  "RÖYKKIÖ"
+ ],
+ "LÄPI": [
+  "AUKKO",
+  "HALKI",
+  "KOLO",
+  "LÄVITSE",
+  "LOMITSE",
+  "VÄLISTÄ",
+  "KAUTTA",
+  "POIKKI",
+  "YLI",
+  "REIKÄ",
+  "REIÄN",
+  "REIJÄSSÄ",
+  "REIJÄT",
+  "REIKIEN",
+  "REIKIÄ"
+ ],
+ "MAAR": [],
+ "MADE": [],
+ "MAHA": [
+  "KUPU",
+  "VATSA",
+  "MAHALAUKKU",
+  "PÖTSI"
+ ],
+ "MAIN": [],
+ "MAJA": [
+  "HÖKKELI",
+  "MÖKKI",
+  "TÖLLI",
+  "TÖNÖ",
+  "VAJA",
+  "ASUINSUOJA",
+  "ASUMUS",
+  "ASUNTO",
+  "HUONE",
+  "KOTI",
+  "MAJAPAIKKA",
+  "PIRTTI",
+  "RAKENNUS",
+  "TALO",
+  "TUPA"
+ ],
+ "MAKU": [
+  "AISTI",
+  "MAKUAISTIMUS",
+  "MAKUAISTI",
+  "TUNTU",
+  "ARVOSTELUKYKY",
+  "TYYLITAJU",
+  "KIRPEÄ",
+  "PIRISTÄVÄ",
+  "PISTÄVÄ"
+ ],
+ "MANU": [],
+ "MARI": [],
+ "MATO": [],
+ "MAYA": [],
+ "MEHU": [],
+ "MELU": [
+  "ELÄMYS",
+  "HÄLINÄ",
+  "HÄLY",
+  "JYMINÄ",
+  "JYSKE",
+  "KALSKE",
+  "KOHU",
+  "MELSKE",
+  "METAKKA",
+  "METELI",
+  "PAUKE",
+  "MÖKÄ",
+  "ÄÄNI"
+ ],
+ "MENO": [
+  "KULKU",
+  "KUSTANNUS",
+  "LIIKE",
+  "MATKA",
+  "KULKEMINEN",
+  "LIIKENNE",
+  "VAELLUS",
+  "KULU",
+  "KULUNKI",
+  "MAKSU",
+  "JUHLALLISUUS",
+  "JUHLAMENO",
+  "RITUAALI",
+  "SEREMONIA",
+  "TAIVAL"
+ ],
+ "MENU": [
+  "VALIKKO",
+  "RUOKALISTA"
+ ],
+ "MERI": [],
+ "MIES": [
+  "AVIOMIES",
+  "AVIOPUOLISO",
+  "MIÄS",
+  "MIEHEKE",
+  "KOLLO",
+  "LOTJAKE",
+  "UKKO",
+  "ÄIJÄ",
+  "UROS",
+  "URHO",
+  "PUOLISO"
+ ],
+ "MINI": [],
+ "MINÄ": [
+  "EGO"
+ ],
+ "MISS": [],
+ "MISU": [],
+ "MITÄ": [],
+ "MOLO": [],
+ "MOPO": [
+  "MOOTTORIPOLKUPYÖRÄ",
+  "MOPEDI"
+ ],
+ "MORO": [],
+ "MUKA": [],
+ "MUKI": [],
+ "MUNA": [],
+ "MURU": [
+  "HITUNEN",
+  "KAPPALE",
+  "KIPENE",
+  "MUREN",
+  "MURUNEN",
+  "PALA",
+  "PALANEN",
+  "PIRSTALE",
+  "RAHTU",
+  "SIRPALE",
+  "SIRU",
+  "NOKARE",
+  "RAE",
+  "RAKAS"
+ ],
+ "MUSA": [],
+ "MUST": [],
+ "MUTA": [
+  "KURA",
+  "LIEJU",
+  "LIKA",
+  "LOKA",
+  "LOSKA",
+  "RAPA",
+  "SUHJU",
+  "SAKKA",
+  "SOHJO"
+ ],
+ "MYÖS": [
+  "EDELLEEN",
+  "LISÄKSI",
+  "SAMOIN",
+  "VIELÄ"
+ ],
+ "MÄKI": [
+  "KUKKULA",
+  "KUMPU",
+  "KUNNAS",
+  "KUMPARE",
+  "TÖYRY",
+  "TÖYRÄS",
+  "MYÖTÄMAA",
+  "MYÖTÄMÄKI",
+  "VASTALE",
+  "VASTAMÄKI",
+  "AHDE",
+  "TÖRMÄ",
+  "TÖRMÄNNE",
+  "TÖRMÄS",
+  "PENGER",
+  "RANTAPENGER",
+  "ÄYRÄMÄ",
+  "ÄYRÄNNE",
+  "ÄYRÄS",
+  "VAARA",
+  "VUORI"
+ ],
+ "MÄTÄ": [
+  "EPÄTERVE",
+  "LAHO",
+  "MAATUNUT",
+  "PILAANTUNUT",
+  "TURMELTUNUT",
+  "EPÄKELPO",
+  "JÄRJETÖN",
+  "KEHNO",
+  "KURJA",
+  "RAPPEUTUNUT",
+  "TURMIOLLINEN"
+ ],
+ "NAMI": [],
+ "NAMU": [],
+ "NAPA": [
+  "KESKUS"
+ ],
+ "NARU": [
+  "LANKA",
+  "NUORA"
+ ],
+ "NASU": [],
+ "NATO": [],
+ "NENÄ": [
+  "HAISTIN",
+  "HUIPPU"
+ ],
+ "NERO": [
+  "MESTARI",
+  "NEROKAS",
+  "KYKY",
+  "LAHJAKKUUS",
+  "TAITURI",
+  "ÄLYKKYYS"
+ ],
+ "NIIN": [
+  "SITEN",
+  "SIKSI"
+ ],
+ "NIMI": [
+  "KUNNIA",
+  "MAINE"
+ ],
+ "NOIN": [
+  "LIKIMÄÄRIN",
+  "ARVIOLTA",
+  "LIKIMAIN",
+  "OSAPUILLEEN",
+  "SUUNNILLEEN"
+ ],
+ "NOLO": [
+  "HÄMILLINEN",
+  "NEUVOTON",
+  "HÄKELTYNYT",
+  "HÄMMENTYNYT",
+  "HÄPEILEVÄ",
+  "NOLATTU",
+  "NOLOSTUNUT",
+  "EPÄTIETOINEN"
+ ],
+ "NOVA": [],
+ "NUHA": [],
+ "NÄES": [],
+ "NÄET": [],
+ "NÄIN": [],
+ "NÄKY": [
+  "KUVAJAINEN",
+  "HARHAKUVA",
+  "HARHANÄKY",
+  "ILMESTYS",
+  "UNIKUVA",
+  "NÄKYMÄ"
+ ],
+ "NÄKÖ": [],
+ "NÄÄT": [],
+ "OHJE": [
+  "NEUVO",
+  "NORMI",
+  "KEHOTUS",
+  "OPASTUS",
+  "VIHJE",
+  "KÄSKY",
+  "MÄÄRÄYS",
+  "SÄÄNTÖ"
+ ],
+ "OHUT": [
+  "HARVA",
+  "HENTO",
+  "HIENO",
+  "LITTEÄ",
+  "HOIKKA",
+  "KAITA",
+  "KAPEA",
+  "SOLAKKA",
+  "LAAKEA",
+  "LATTEA",
+  "LATUSKA",
+  "LITISTYNYT",
+  "LITTANA",
+  "MATALA",
+  "NIUKKA",
+  "HEIKKO",
+  "HEIVERÖINEN",
+  "KEVYT",
+  "LIEVÄ",
+  "VÄHÄINEN",
+  "PINNALLINEN",
+  "VERETÖN",
+  "VOIMATON",
+  "VÄRITÖN"
+ ],
+ "OIRE": [
+  "ENNE",
+  "ENNUSMERKKI",
+  "MERKKI",
+  "ILMAUS",
+  "OSOITUS",
+  "TODISTE",
+  "TUNNUSMERKKI"
+ ],
+ "OIVA": [
+  "HIENO",
+  "KELPO",
+  "KIVA",
+  "KUNNOLLINEN",
+  "AIMO",
+  "ENSILUOKKAINEN",
+  "ERINOMAINEN",
+  "HYVÄ",
+  "KIITETTÄVÄ",
+  "KUNNON",
+  "MAINIO",
+  "MOITTEETON",
+  "TÄYDELLINEN",
+  "VERRATON"
+ ],
+ "OKEI": [],
+ "OKSA": [
+  "HAARA",
+  "LONKERO",
+  "RISU"
+ ],
+ "OLIO": [
+  "AAVE",
+  "OLEMUS"
+ ],
+ "OLLA": [
+  "ELÄÄ",
+  "ESIINTYÄ",
+  "OLESKELLA"
+ ],
+ "OLUT": [],
+ "OMIA": [],
+ "ONNI": [
+  "ILO",
+  "KOHTALO",
+  "MENESTYS",
+  "SALLIMUS",
+  "SATTUMA",
+  "TAIVAS"
+ ],
+ "OPAS": [
+  "NEUVOJA",
+  "OHJAAJA",
+  "OPASTAJA",
+  "PEREHDYTTÄJÄ",
+  "TIENNÄYTTÄJÄ",
+  "KÄSIKIRJA",
+  "OHJEKIRJA",
+  "OPASKIRJA"
+ ],
+ "OPPI": [
+  "KOULUSIVISTYS",
+  "VALISTUS",
+  "TIETO",
+  "KÄSITYS",
+  "AJATUSSUUNTA",
+  "OPPIJÄRJESTELMÄ",
+  "PERIAATE",
+  "TEORIA",
+  "KATSOMUS"
+ ],
+ "OPUS": [
+  "TEOS"
+ ],
+ "ORJA": [],
+ "ORPO": [],
+ "OSIO": [],
+ "OSTO": [],
+ "OSUA": [
+  "KÄYDÄ",
+  "SATTUA",
+  "TAVATA"
+ ],
+ "OTIN": [],
+ "OTOS": [],
+ "OTSA": [],
+ "OTTO": [
+  "VARASTAMINEN"
+ ],
+ "OTUS": [],
+ "OUTO": [
+  "EKSOOTTINEN",
+  "EPÄTAVALLINEN",
+  "ERIKOINEN",
+  "HIRVEÄ",
+  "IHMEELLINEN",
+  "KUMMALLINEN",
+  "MERKILLINEN",
+  "MUUKALAINEN",
+  "OMITUINEN",
+  "TUNTEMATON",
+  "VIERAS",
+  "PEREHTYMÄTÖN",
+  "TOTTUMATON",
+  "ÄKKINÄINEN",
+  "HARVINAINEN",
+  "HÄMMÄSTYTTÄVÄ",
+  "KUMMA",
+  "OUDOKSUTTAVA",
+  "POIKKEUKSELLINEN",
+  "TAVATON",
+  "ÄKILLINEN"
+ ],
+ "PAHA": [
+  "EPÄSUOTUISA",
+  "HUONO",
+  "IKÄVÄ",
+  "ILKEÄ",
+  "PIRULLINEN",
+  "RAAKA",
+  "RASITTAVA",
+  "RASKAS",
+  "SYNTINEN",
+  "TUHMA",
+  "TYÖLÄS",
+  "TÖRKEÄ",
+  "VÄÄRÄ"
+ ],
+ "PAHE": [],
+ "PAKO": [],
+ "PAKU": [],
+ "PALA": [
+  "LAPPU",
+  "MURU",
+  "HITUNEN",
+  "KAPPALE",
+  "KIPENE",
+  "KIMPALE",
+  "LOHKARE",
+  "MUREN",
+  "MURUNEN",
+  "MÖHKÄLE",
+  "MÖYKKY",
+  "PALANEN",
+  "PÄTKÄ",
+  "SIRPALE",
+  "SIRU",
+  "PIRSTALE",
+  "TILKKU"
+ ],
+ "PALO": [
+  "HALU",
+  "HEHKU",
+  "HOHDE",
+  "HIMO",
+  "INTO",
+  "KASKI",
+  "KIIHKO",
+  "KUUME",
+  "TULI",
+  "TULIPALO",
+  "INTOHIMO",
+  "VIMMA",
+  "KUMOTUS",
+  "LOISTE",
+  "PAAHDE"
+ ],
+ "PANO": [],
+ "PAPU": [],
+ "PARI": [
+  "KAKSI"
+ ],
+ "PATA": [
+  "KASARI"
+ ],
+ "PATO": [],
+ "PELI": [
+  "MATSI"
+ ],
+ "PERU": [],
+ "PERÄ": [
+  "PERUKKA",
+  "LOPPUPÄÄ",
+  "TAKAOSA",
+  "TAKAPÄÄ",
+  "ÄÄRI",
+  "PAKARAT",
+  "PEPPU",
+  "TAKALISTO",
+  "TAKAMUS",
+  "TAKAPUOLI",
+  "KOLKKA",
+  "KULMAKUNTA",
+  "LOUKKO",
+  "POHJUKKA",
+  "SEUTU",
+  "SYRJÄSEUTU",
+  "TIENOO",
+  "KAHVA",
+  "PÄÄ",
+  "PYLLY"
+ ],
+ "PESU": [],
+ "PESÄ": [
+  "KOTI",
+  "TAKKA"
+ ],
+ "PETI": [
+  "SÄNKY"
+ ],
+ "PETO": [],
+ "PIAN": [
+  "HETI",
+  "LÄHIAIKOINA",
+  "MAHDOLLISESTI",
+  "NOPEASTI",
+  "PIAKKOIN",
+  "HETKESSÄ",
+  "JOUTUIN",
+  "PIKIMMITEN",
+  "SILMÄNRÄPÄYKSESSÄ",
+  "ÄKKIÄ",
+  "KOHTA",
+  "LIKI",
+  "LÄHES",
+  "MELKEIN",
+  "YHTÄKKIÄ"
+ ],
+ "PIHA": [],
+ "PIHI": [
+  "ITARA",
+  "SAITA"
+ ],
+ "PILA": [
+  "IVA",
+  "KOKKAPUHE",
+  "KOMPA",
+  "KUJE",
+  "SUKKELUUS",
+  "SUTKAUS",
+  "VITSI",
+  "HASSUTUS",
+  "HULLUTUS",
+  "ILVE",
+  "KEPPONEN",
+  "KOIRUUS",
+  "KOLTTONEN",
+  "METKU",
+  "TEPPONEN",
+  "PILKKA",
+  "SARKASMI"
+ ],
+ "PILI": [],
+ "PIMU": [
+  "MIMMI",
+  "TYTTÖ"
+ ],
+ "PINO": [
+  "KASA",
+  "PINKKA"
+ ],
+ "PIPI": [],
+ "PIPO": [
+  "PÄÄHINE"
+ ],
+ "PIRU": [
+  "HENKI",
+  "PAHOILLAAN",
+  "PERKELE",
+  "DEMONI",
+  "PAHOLAINEN"
+ ],
+ "PITO": [],
+ "PLUS": [],
+ "POIS": [],
+ "POJU": [
+  "POIKA"
+ ],
+ "POKA": [],
+ "POLO": [],
+ "POMO": [],
+ "PONI": [],
+ "PORA": [],
+ "PORO": [
+  "SAKKA"
+ ],
+ "PUBI": [],
+ "PUHE": [
+  "KUISKE",
+  "MURAHDUS",
+  "MURINA",
+  "PORINA",
+  "SORINA",
+  "SUPINA",
+  "ÄRÄHDYS"
+ ],
+ "PUIN": [],
+ "PUKU": [
+  "ASU",
+  "PUKIMET",
+  "VAATETUS",
+  "VAATTEET"
+ ],
+ "PULA": [
+  "HÄTÄ",
+  "KIIPELI",
+  "KÖYHYYS",
+  "KYETÄ",
+  "OSATA",
+  "SAATTAA",
+  "TAITAA",
+  "VOIDA",
+  "MAHTAA",
+  "PUUTE"
+ ],
+ "PULU": [],
+ "PUNA": [],
+ "PUNK": [],
+ "PUPU": [
+  "JÄNIS",
+  "POIKANEN"
+ ],
+ "PURE": [],
+ "PURO": [
+  "JOKI",
+  "UOMA",
+  "VIRTA"
+ ],
+ "PUSU": [
+  "MUISKU",
+  "SUUDELMA",
+  "SUUKKO"
+ ],
+ "PYHÄ": [
+  "HARRAS",
+  "HURSKAS",
+  "KOSKEMATON",
+  "LOUKKAAMATON",
+  "JUMALALLINEN",
+  "PALVOTTAVA",
+  "TAIVAALLINEN",
+  "PUHDAS",
+  "SANCTUS",
+  "JALO",
+  "KUNNIOITTAVA",
+  "YLEVÄ",
+  "PYHÄPÄIVÄ",
+  "JUHLAPÄIVÄ",
+  "SUNNUNTAI",
+  "TABU"
+ ],
+ "PÄIN": [
+  "KOHDEN"
+ ],
+ "PÖLY": [
+  "TOMU"
+ ],
+ "PÖPI": [],
+ "PÖPÖ": [
+  "AAVE",
+  "KUMMITUS"
+ ],
+ "RAHA": [
+  "KOLIKKO",
+  "LANTTI",
+  "MAKSUVÄLINEN",
+  "VALUUTTA",
+  "KILLINKI",
+  "ROPO",
+  "SETELI"
+ ],
+ "RAJA": [
+  "JUOPA",
+  "KUILU",
+  "LAITA",
+  "LOPPU",
+  "MARGINAALI",
+  "PÄÄ",
+  "PÄÄTEPISTE",
+  "REUNA",
+  "KYNNYS",
+  "SYRJÄ"
+ ],
+ "RAJU": [
+  "HILLITÖN",
+  "HURJA",
+  "KESYTÖN",
+  "KIIHKEÄ",
+  "KIIVAS",
+  "MYRSKYINEN",
+  "RAAKA",
+  "RAISU",
+  "RAIVO",
+  "RAIVOISA",
+  "RIEHAKAS",
+  "VALLATON",
+  "VAUHKO",
+  "VILLI",
+  "VIMMATTU",
+  "KARSKI",
+  "REIPAS",
+  "RIPEÄ",
+  "RIUSKA",
+  "RAIVOKAS",
+  "TUIMA",
+  "RANKKA",
+  "SILMITÖN"
+ ],
+ "RAKO": [
+  "AUKKO",
+  "HALKEAMA",
+  "LOMA",
+  "KOLO",
+  "VÄLI",
+  "SÄRÖ"
+ ],
+ "RAMI": [],
+ "RAPU": [],
+ "RATA": [
+  "LATU",
+  "REITTI",
+  "TIE",
+  "URA"
+ ],
+ "RAVI": [
+  "JUOKSU"
+ ],
+ "REKI": [],
+ "RIKE": [],
+ "RISA": [
+  "ROMU"
+ ],
+ "RITA": [],
+ "RIVI": [
+  "JAKSO",
+  "LINJA",
+  "JONO",
+  "KETJU",
+  "SARJA",
+  "VIIVA"
+ ],
+ "RIVO": [
+  "AISTILLINEN",
+  "HIMOKAS",
+  "HÄVYTÖN",
+  "IRSTAS",
+  "LIKAINEN",
+  "EPÄSIVEELLINEN",
+  "SIVEETÖN",
+  "SOPIMATON",
+  "SÄÄDYTÖN",
+  "PAHEELLINEN",
+  "RIETAS",
+  "RUOKOTON",
+  "SIIVOTON",
+  "RAAKA",
+  "TUHMA",
+  "TÖRKEÄ"
+ ],
+ "ROCK": [],
+ "ROMU": [
+  "ROJU",
+  "HYLKY",
+  "RISA",
+  "RÄHJÄ",
+  "RÄMÄ",
+  "ROSKA"
+ ],
+ "ROTU": [],
+ "RUMA": [
+  "EPÄAISTIKAS",
+  "HUONO",
+  "HÄPEÄLLINEN",
+  "MAUTON",
+  "MUODOTON",
+  "EPÄMUOTOINEN",
+  "EPÄSYMMETRINEN",
+  "MUOTOPUOLI",
+  "PAHANNÄKÖINEN",
+  "RUJO",
+  "KARKEA",
+  "SOPIMATON",
+  "TÖKERÖ",
+  "HALPAMAINEN",
+  "ROISTOMAINEN",
+  "VILPILLINEN"
+ ],
+ "RUNO": [
+  "LAULU",
+  "LYRIIKKA",
+  "RUNOUS",
+  "RUNOELMA"
+ ],
+ "RÄKÄ": [
+  "MÄLLI",
+  "LIMA"
+ ],
+ "SADE": [
+  "TIHKU",
+  "KAATOSADE",
+  "RANKKASADE",
+  "KUURO",
+  "PUUSKA",
+  "RIPSAUS",
+  "ROPSAUS",
+  "RYÖPPY",
+  "SADEKUURO",
+  "LUMISADE",
+  "LUMIPYRY",
+  "LUMITUISKU",
+  "MYRÄKKÄ",
+  "PYRY",
+  "TUISKU"
+ ],
+ "SAHA": [
+  "TERÄASE"
+ ],
+ "SAKU": [],
+ "SALA": [],
+ "SALI": [
+  "HUONE"
+ ],
+ "SANA": [
+  "ILMOITUS",
+  "TIETO",
+  "VIESTI"
+ ],
+ "SARA": [],
+ "SARI": [
+  "KANGASPALA",
+  "VAATE"
+ ],
+ "SATO": [
+  "SAALIS",
+  "ELO",
+  "VUODENTULO",
+  "ANSIO",
+  "HYÖTY",
+  "TULO",
+  "TUOTTO",
+  "VOITTO"
+ ],
+ "SATU": [
+  "KERTOMUS",
+  "TARINA",
+  "TARU",
+  "FAABELI",
+  "MYYTTI",
+  "JUTTU"
+ ],
+ "SAVI": [
+  "KURA",
+  "LIEJU",
+  "LOKA"
+ ],
+ "SAVU": [],
+ "SEIS": [],
+ "SEOS": [
+  "YHDISTE"
+ ],
+ "SETÄ": [],
+ "SHOT": [],
+ "SHOW": [],
+ "SIDE": [
+  "KÄÄRE"
+ ],
+ "SIIS": [],
+ "SIJA": [
+  "ASEMA",
+  "PAIKKA",
+  "OLINPAIKKA",
+  "SIJAINTI",
+  "MAKUUPAIKKA",
+  "SÄNKY",
+  "VUORO",
+  "VUODE",
+  "TILA"
+ ],
+ "SIKA": [
+  "SIAN",
+  "SIKAA"
+ ],
+ "SINI": [],
+ "SIRO": [
+  "HAURAS",
+  "HENTO",
+  "HIENO",
+  "KEVEÄ",
+  "KEVYT",
+  "KORISTEELLINEN",
+  "NÄTTI",
+  "SIEVÄ",
+  "ELEGANTTI",
+  "SOMA",
+  "SOREA",
+  "LAIHA",
+  "SOLAKKA",
+  "HOIKKA",
+  "SORJA",
+  "SULOINEN",
+  "SÖPÖ"
+ ],
+ "SIRU": [
+  "MURU",
+  "PALA",
+  "PIRSTALE",
+  "RAE",
+  "RAHTU",
+  "SIRPALE"
+ ],
+ "SISU": [
+  "ITSETUNTO",
+  "LUONTO",
+  "PUHTI",
+  "TARMO",
+  "USKALLUS",
+  "VOIMA"
+ ],
+ "SITÄ": [],
+ "SIVU": [
+  "KUVE",
+  "LAITA",
+  "OHI",
+  "PUOLI",
+  "SYRJÄ"
+ ],
+ "SOLA": [
+  "KUJA"
+ ],
+ "SOLU": [],
+ "SOMA": [
+  "HAUSKA",
+  "HERTTAINEN",
+  "KAUNIS",
+  "KOREA",
+  "NÄTTI",
+  "SIEVÄ",
+  "SIRO",
+  "SOREA",
+  "SULOINEN",
+  "VIEHKEÄ",
+  "VIEHÄTTÄVÄ",
+  "SÖPÖ"
+ ],
+ "SOME": [],
+ "SOTA": [],
+ "SOUL": [],
+ "SUKU": [
+  "SUKULAINEN"
+ ],
+ "SULA": [
+  "PELKKÄ",
+  "PUHDAS",
+  "SELVÄ",
+  "SILKKA",
+  "SULANUT",
+  "JÄÄTYMÄTÖN",
+  "NESTEMÄINEN",
+  "AVOIN",
+  "JÄÄTÖN",
+  "KULKUKELPOINEN",
+  "VAPAA",
+  "LUMETON",
+  "PALJAS"
+ ],
+ "SUMU": [
+  "USVA",
+  "UTU"
+ ],
+ "SURU": [
+  "HUOLI",
+  "HÄTÄ",
+  "KÄRSIMYS",
+  "MIELIPAHA",
+  "MURHE",
+  "AHDISTUS",
+  "HARMI",
+  "IKÄVYYS",
+  "SIELUNHÄTÄ",
+  "TUSKA"
+ ],
+ "SUSI": [
+  "HUKKA",
+  "HEILUHÄNTÄ",
+  "HÄNTÄHEIKKI",
+  "SUSIHUKKA",
+  "EPÄONNISTUNUT"
+ ],
+ "SUVI": [
+  "KESÄ",
+  "KEVÄT"
+ ],
+ "SYKE": [],
+ "SYVÄ": [
+  "SYVÄLLINEN"
+ ],
+ "SÄKÄ": [],
+ "SÄRÖ": [
+  "HALKEAMA",
+  "RAKO",
+  "MURTUMA"
+ ],
+ "SÄVY": [
+  "AKSENTTI",
+  "PAINAVA",
+  "LEIMA",
+  "LUONNE",
+  "SOINTI",
+  "VIVAHDE"
+ ],
+ "SÖPÖ": [
+  "HERTTAINEN",
+  "IHASTUTTAVA",
+  "LUMOAVA",
+  "SIEVÄ",
+  "SIRO",
+  "SOMA",
+  "SULOINEN",
+  "VIEHÄTTÄVÄ"
+ ],
+ "TAAS": [
+  "JÄLLEEN",
+  "UUDESTAAN",
+  "TAASEN"
+ ],
+ "TABU": [
+  "PYHÄ",
+  "KIELLETTY"
+ ],
+ "TACO": [],
+ "TAHO": [
+  "HAARA"
+ ],
+ "TAJU": [
+  "JÄRKI",
+  "TAJUNTA",
+  "TOLKKU",
+  "TIETO",
+  "TIETOISUUS",
+  "AISTI",
+  "KÄSITYSKYKY",
+  "VAISTO",
+  "ÄLY"
+ ],
+ "TAKA": [],
+ "TALO": [
+  "ASUNTO",
+  "KONTU",
+  "RAKENNUS",
+  "ASUINRAKENNUS",
+  "ASUMUS",
+  "MAJA",
+  "MÖKKI",
+  "HÖKKELI",
+  "PALATSI",
+  "TILA"
+ ],
+ "TAPA": [
+  "PERINNE",
+  "MANEERI",
+  "TOTTUMUS",
+  "TYYLI",
+  "KEINO",
+  "MENETELMÄ",
+  "MENETTELYTAPA",
+  "METODI",
+  "PERIMÄTAPA",
+  "PERIMÄTIETO",
+  "PERINNÄISTAPA",
+  "TAKTIIKKA",
+  "TRADITIO"
+ ],
+ "TARU": [
+  "MYYTTI",
+  "SATU",
+  "TARINA"
+ ],
+ "TASO": [],
+ "TEHO": [
+  "MAHTI",
+  "VAIKUTUS",
+  "VOIMA",
+  "PONSI"
+ ],
+ "TEKO": [
+  "SAAVUTUS",
+  "SUORITUS",
+  "TEKEMINEN",
+  "AIKAANSAANNOS",
+  "TYÖ",
+  "UROTYÖ",
+  "TOIMENPIDE",
+  "TULOS"
+ ],
+ "TEOS": [
+  "JULKAISU",
+  "KIRJA",
+  "KUVA",
+  "LAITE",
+  "LUOMUS",
+  "SOMMITELMA",
+  "AIKAANSAANNOS",
+  "TUOTE",
+  "TYÖ",
+  "MAALAUS",
+  "PIIRROS",
+  "VALOKUVA",
+  "VEISTOS",
+  "SÄVELLYS",
+  "OPUS"
+ ],
+ "TERÄ": [],
+ "THAI": [],
+ "TIES": [],
+ "TILA": [
+  "ASEMA",
+  "KOHTA",
+  "KONTU",
+  "KUNTO",
+  "SIJA",
+  "PAIKKA",
+  "MAATILA",
+  "TALO",
+  "OLOT",
+  "TILANNE",
+  "TERVEYDENTILA",
+  "VOINTI",
+  "VIRE"
+ ],
+ "TILI": [
+  "MAKSU",
+  "PALKKA",
+  "SUORITUS",
+  "TILINTEKO"
+ ],
+ "TINA": [],
+ "TIPU": [
+  "POIKANEN"
+ ],
+ "TOKI": [],
+ "TOMU": [
+  "PÖLY",
+  "TUHKA"
+ ],
+ "TORA": [
+  "ERIMIELISYYS",
+  "ERIPURA",
+  "JUPAKKA",
+  "KIISTA",
+  "KINA",
+  "NUJAKKA",
+  "EPÄSOPU",
+  "ERIPURAISUUS",
+  "KÄRHÄMÄ",
+  "RETTELÖ",
+  "RIITA",
+  "SANAHARKKA"
+ ],
+ "TORI": [],
+ "TOSI": [
+  "OIKEA",
+  "TODELLINEN",
+  "AITO",
+  "PAIKKANSAPITÄVÄ",
+  "TOTUUDENMUKAINEN",
+  "VIRHEETÖN",
+  "VÄÄRENTÄMÄTÖN"
+ ],
+ "TOTO": [],
+ "TOVI": [
+  "AIKA",
+  "HETKI",
+  "KOTVA",
+  "TIIMA",
+  "TUOKIO",
+  "OTE"
+ ],
+ "TRIO": [
+  "YHTYE"
+ ],
+ "TUHO": [
+  "KATASTROFI",
+  "LANKEEMUS",
+  "PERIKATO",
+  "RAPPIO",
+  "HÄVITYS",
+  "VAHINKO",
+  "HÄVIÖ",
+  "TURMIO",
+  "TURMELUS"
+ ],
+ "TUKI": [
+  "AVUSTUS",
+  "PÖNKKÄ",
+  "NOJA",
+  "NYDE",
+  "PUOMI",
+  "APU",
+  "AVUSTAMINEN",
+  "TURVA",
+  "VAHVISTUS"
+ ],
+ "TULI": [
+  "LIEKKI",
+  "PALO",
+  "LEIMU",
+  "LIESKA",
+  "LOIMU",
+  "PALAMINEN",
+  "TULIPALO",
+  "HEHKU",
+  "INTO",
+  "INTOHIMO",
+  "KIIHKO",
+  "KUUME",
+  "VIMMA",
+  "VALKEA",
+  "ROIHU"
+ ],
+ "TULO": [
+  "ANSIO",
+  "SAALIS",
+  "SATO",
+  "SAAPUMINEN",
+  "HYÖTY",
+  "TUOTTO"
+ ],
+ "TUPA": [
+  "HUONE",
+  "MÖKKI",
+  "PIRTTI",
+  "MAJA",
+  "TÖLLI",
+  "TÖNÖ"
+ ],
+ "TUTA": [],
+ "TYKÖ": [
+  "LUOKSE"
+ ],
+ "TYLY": [
+  "ARMOTON",
+  "EPÄKOHTELIAS",
+  "EPÄYSTÄVÄLLINEN",
+  "HIENOSTUMATON",
+  "KARSAS",
+  "NURJA",
+  "RAAKA",
+  "SYDÄMETÖN",
+  "SÄÄLIMÄTÖN",
+  "TUNNOTON",
+  "TUNTEETON",
+  "EPÄHIENO",
+  "HIOMATON",
+  "KARKEA",
+  "TÖYKEÄ",
+  "YNSEÄ",
+  "POIKKIPUOLINEN"
+ ],
+ "TYPY": [],
+ "TÄTI": [],
+ "UHKA": [
+  "VAARA",
+  "RISKI"
+ ],
+ "UHRI": [],
+ "UIDA": [
+  "UISKENNELLA",
+  "PULIKOIDA",
+  "KAHLATA",
+  "KELLUA",
+  "SUKELLELLA",
+  "SUKELTAA"
+ ],
+ "UKKI": [
+  "ISOISÄ",
+  "UKKO"
+ ],
+ "UKKO": [
+  "MIES",
+  "PAPPA",
+  "UKKELI",
+  "VAARI",
+  "VANHUS",
+  "ÄIJÄ",
+  "UKKI"
+ ],
+ "ULKO": [],
+ "ULOS": [],
+ "UPEA": [
+  "HIENO",
+  "KUKKEA",
+  "KOMEA",
+  "KORSKEA",
+  "LOISTAVA",
+  "LOISTELIAS",
+  "MUHKEA",
+  "PULSKA",
+  "SUURENMOINEN",
+  "UHKEA",
+  "ULJAS",
+  "EDUSTAVA",
+  "ISO",
+  "KOOKAS",
+  "YLELLINEN"
+ ],
+ "UROS": [
+  "MIES",
+  "SANKARI",
+  "KOIRAS",
+  "URHO"
+ ],
+ "URPO": [],
+ "USKO": [
+  "LUULO",
+  "LUOTTAMUS",
+  "VAKAUMUS",
+  "USKONTO"
+ ],
+ "USVA": [
+  "SUMU",
+  "UTU"
+ ],
+ "UUNI": [
+  "TULISIJA"
+ ],
+ "UUNO": [],
+ "UUSI": [
+  "SEURAAVA",
+  "TUORE",
+  "KÄYTTÄMÄTÖN",
+  "RAKAS",
+  "VERES",
+  "NUORI"
+ ],
+ "VAAN": [],
+ "VAHA": [],
+ "VAIN": [
+  "PELKKÄ",
+  "YKSIN"
+ ],
+ "VAJA": [
+  "KATOS",
+  "MAJA",
+  "RAKENNUS"
+ ],
+ "VALA": [],
+ "VALE": [],
+ "VALO": [
+  "LOISTE"
+ ],
+ "VANA": [
+  "JUOVA",
+  "JÄLKI",
+  "URA",
+  "VIIVA"
+ ],
+ "VARA": [],
+ "VELI": [],
+ "VENE": [
+  "ALUS",
+  "HAAKSI",
+  "JOLLA",
+  "PURSI",
+  "RUUHI"
+ ],
+ "VERI": [
+  "HURME",
+  "LEPPÄ",
+  "LEPPA"
+ ],
+ "VERO": [],
+ "VESI": [],
+ "VETO": [],
+ "VETY": [],
+ "VIHA": [
+  "SUUTTUMUS",
+  "KIUKKU",
+  "VASTENMIELISYYS",
+  "VIHASTUS",
+  "VIMMASTUS",
+  "ÄKÄ"
+ ],
+ "VIIS": [],
+ "VIKA": [
+  "HEIKKOUS",
+  "HÄIRIÖ",
+  "VAMMA",
+  "VAURIO",
+  "VIOTTUMA",
+  "EPÄKOHTA",
+  "PUUTE",
+  "PUUTTEELLISUUS"
+ ],
+ "VINO": [
+  "KIERO",
+  "VIISTO",
+  "KALTEVA",
+  "VIETTÄVÄ",
+  "KIERTEINEN",
+  "KÄYRÄ",
+  "VÄÄRÄ"
+ ],
+ "VIPU": [],
+ "VISA": [],
+ "VÄHÄ": [],
+ "VÄKI": [
+  "VÄESTÖ",
+  "IHMISET",
+  "IHMISMASSA",
+  "JOUKKO",
+  "ASUJAIMISTO",
+  "ASUKKAAT",
+  "KANSA",
+  "MIEHISTÖ"
+ ],
+ "VÄLI": [
+  "AUKKO",
+  "LOMA",
+  "MATKA",
+  "RAKO",
+  "KOLO",
+  "LOVI",
+  "ETÄISYYS",
+  "VÄLIMATKA",
+  "MERKITYS",
+  "EROTUS"
+ ],
+ "VÄRI": [],
+ "VÄSY": [],
+ "VÄVY": [],
+ "YANG": [],
+ "YDIN": [
+  "SIELU",
+  "SISIN",
+  "SISUS",
+  "SYDÄN",
+  "SYDÄMEN",
+  "UUMEN",
+  "KESKUS",
+  "SISUSTA",
+  "YTY"
+ ],
+ "YHTÄ": [],
+ "YKSI": [],
+ "YLEN": [
+  "ERITTÄIN",
+  "HYVIN",
+  "KOVIN",
+  "OIKEIN",
+  "PERIN",
+  "PERÄKKÄIN",
+  "SANGEN",
+  "TUIKI",
+  "TÄYSIN",
+  "VARSIN",
+  "AIVAN",
+  "ERIKOISEN",
+  "IHAN",
+  "KERRASSAAN",
+  "KOHTUUTTOMAN",
+  "LOPEN",
+  "SANOMATTOMAN",
+  "TAVATTOMAN",
+  "VALLAN"
+ ],
+ "YLIN": [],
+ "YLLE": [],
+ "YLLÄ": [],
+ "YLTÄ": [],
+ "YLÖS": [
+  "KORKEALLE"
+ ],
+ "YRJÖ": [],
+ "YSKÄ": [],
+ "YUAN": [],
+ "ZULU": [],
+ "ÄIJÄ": [
+  "MIES",
+  "UKKO",
+  "PAPPA",
+  "UKKELI",
+  "VAARI",
+  "VANHUS"
+ ],
+ "ÄITI": [
+  "EMO",
+  "MAAMMO",
+  "MAMMA"
+ ],
+ "ÄKSY": [
+  "KÄRTTYISÄ",
+  "PAHANSISUINEN",
+  "TUITTUPÄINEN",
+  "VIHAINEN",
+  "KIIVAS",
+  "KIUKUTTELEVA",
+  "KUOHAHTAVA",
+  "KUUMAVERINEN",
+  "PAHANSUINEN",
+  "ÄKEÄ",
+  "ÄKKIPIKAINEN",
+  "OMAPÄINEN",
+  "ÄKÄINEN",
+  "ÄREÄ"
+ ],
+ "ÄLLÖ": [],
+ "ÄMMÄ": [
+  "AKKA",
+  "EUKKO",
+  "MUIJA",
+  "MUMMO",
+  "MUMMU",
+  "MUORI",
+  "VANHUS"
+ ],
+ "ÄREÄ": [
+  "HAPAN",
+  "KÄRTTYISÄ",
+  "NYRPEÄ",
+  "PAHANSISUINEN",
+  "TYYTYMÄTÖN",
+  "VIHAINEN",
+  "ÄKSY",
+  "ÄKÄINEN",
+  "JÖRÖ",
+  "KÄRTTYINEN",
+  "TÖYKEÄ",
+  "YNSEÄ",
+  "ÄKEÄ",
+  "ÄRTYISÄ",
+  "ÄRTYNYT"
+ ],
+ "ÄSSÄ": [],
+ "ÄÄNI": [
+  "HELAKKA",
+  "HELEÄ",
+  "HELISEVÄ",
+  "KIRKAS",
+  "RAIKAS",
+  "SÄVEL",
+  "HUUDAHDUS",
+  "HUUTO",
+  "KARJUNTA",
+  "KILJUNTA",
+  "KIRKUNA",
+  "PARKU",
+  "REMU",
+  "RÄYHÄÄMINEN",
+  "RÄÄKÄISY",
+  "RÄÄYNTÄ",
+  "MOURU",
+  "VALITUS",
+  "ULINA",
+  "ULVONTA",
+  "ÄRÄHDYS",
+  "HAVINA",
+  "HELINÄ",
+  "HUMINA",
+  "HÄLY",
+  "KILINÄ",
+  "LIVERRYS",
+  "NAKSAHDUS",
+  "PIRINÄ",
+  "RAPINA",
+  "RIPSAHDUS",
+  "RITINÄ",
+  "SIHINÄ",
+  "SIRKUTUS",
+  "SUIHKE",
+  "SUIHKINA",
+  "JYMINÄ",
+  "JYRINÄ",
+  "JYSKE",
+  "KALSKE",
+  "KOLINA",
+  "KOLKE",
+  "KUMINA",
+  "MELSKE",
+  "MELU",
+  "METELI",
+  "PAUKE",
+  "PÄRINÄ",
+  "RÄISKE",
+  "TOITOTUS",
+  "ÄRJYNTÄ"
+ ],
+ "ÖLJY": [
+  "RASVA"
+ ]
+}

@@ -11,6 +11,9 @@ list or all words). Sanapiilo's puzzles are generated in the browser on every ne
 Sanajahti is a two-minute word hunt on a 10 × 10 grid: trace paths of neighbouring letters (any
 direction, bending freely), one point per letter of every valid word; see
 [docs/plans/sanajahti-implementation-plan.md](docs/plans/sanajahti-implementation-plan.md).
+Synonyymiristikko is a small crossword whose 5–10 numbered words each have a synonym as their clue;
+its puzzles are generated offline from synonyms scraped from synonyymit.net; see
+[docs/plans/synonyymiristikko-implementation-plan.md](docs/plans/synonyymiristikko-implementation-plan.md).
 
 See [docs/plans/sanuri-implementation-plan.md](docs/plans/sanuri-implementation-plan.md) for the
 full implementation plan.
@@ -29,6 +32,10 @@ full implementation plan.
   and frequency sources
 - `npm run build:sanajahti-words` — regenerate `src/data/sanajahti-words.json` (every Kotus word of
   4+ letters) for Sanajahti
+- `npm run collect:synonyms -- <4|5|6|7>` — manually scrape synonyms for the easy word lists from
+  synonyymit.net into `scripts/data/synonyms/` (2 s per word, resumable; never run automatically)
+- `npm run build:synonyymiristikko-puzzles` — regenerate `src/data/synonyymiristikko-puzzles.json`
+  from the collected synonyms (deterministic; no network)
 - `npm run build:sanasuppilo-compound-families`, `build:sanasuppilo-hidden-word-families`,
   `build:sanasuppilo-hidden-names`, `build:sanasuppilo-palindromes` — regenerate the candidate
   Sanasuppilo word-group files under `scripts/data/`, mined from the full Kotus dictionary (see
@@ -59,6 +66,16 @@ adjectives, verbs and adverbs.
 
 These files are committed to the repo rather than fetched at runtime, so the app doesn't depend
 on kaino.kotus.fi or GitHub being reachable. Re-run `npm run build:wordlists` to refresh them.
+
+## Synonyymiristikko puzzle data
+
+`scripts/data/synonyms/synonyms-{4,5,6,7}.json` hold the synonyms of every word in the easy lists,
+scraped from [synonyymit.net](https://synonyymit.net) by `npm run collect:synonyms -- <length>`
+(run by hand, 2 s per word, resumable; `*.skipped.json` lists pages that were for a different
+word). `npm run build:synonyymiristikko-puzzles` turns them into about 300 crossword puzzles in
+`src/data/synonyymiristikko-puzzles.json`: one clue per word (a synonym that neither contains nor
+is contained in the answer and is not also a synonym of another answer on the board), words
+crossing at right angles with no stray letter runs, boards of at most 12 × 12 tiles.
 
 ## Sanasuppilo puzzle data
 

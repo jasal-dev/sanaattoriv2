@@ -21,7 +21,9 @@
     "build:sanasuppilo-palindromes": "node scripts/build-sanasuppilo-palindromes.mjs",
     "build:name-lists": "node scripts/build-name-lists.mjs",
     "build:sanasuppilo-hidden-names": "node scripts/build-sanasuppilo-hidden-names.mjs",
-    "build:sanasuppilo-puzzles": "node scripts/build-sanasuppilo-puzzles.mjs"
+    "build:sanasuppilo-puzzles": "node scripts/build-sanasuppilo-puzzles.mjs",
+    "collect:synonyms": "node scripts/collect-synonyms.mjs",
+    "build:synonyymiristikko-puzzles": "node scripts/build-synonyymiristikko-puzzles.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
