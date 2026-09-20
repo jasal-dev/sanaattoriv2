@@ -64,6 +64,9 @@ describe('synonyymiristikko-puzzles.json', () => {
     expect(puzzle.size.cols).toBe(Math.max(...positions.map((p) => p.col)) + 1)
     expect(Math.min(...positions.map((p) => p.row))).toBe(0)
     expect(Math.min(...positions.map((p) => p.col))).toBe(0)
+    // Phone-friendly: at most 8 columns keeps the tiles large enough to tap.
+    expect(puzzle.size.cols).toBeLessThanOrEqual(8)
+    expect(puzzle.size.rows).toBeLessThanOrEqual(10)
   })
 
   it.each(typedPuzzles)('$id agrees on every crossing letter', (puzzle) => {

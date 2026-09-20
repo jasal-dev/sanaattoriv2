@@ -1,4 +1,7 @@
-export const MAX_BOARD = 12
+// Phone-friendly limits: 8 columns give ~42 px tiles on a 360 px screen, and
+// the board scrolls vertically above the pinned keyboard if it gets tall.
+export const MAX_COLS = 8
+export const MAX_ROWS = 10
 const MIN_CLUE_LENGTH = 3
 const CLUE_CHOICES = 3
 
@@ -67,7 +70,7 @@ class Board {
    * Returns the number of crossings if `word` can be placed at (row, col) in
    * `dir`, or -1. A placement is valid when it crosses existing words only at
    * matching letters, never runs alongside or end-to-end into another word
-   * (so no unintended letter runs form), and keeps the board within MAX_BOARD.
+   * (so no unintended letter runs form), and keeps the board within MAX_ROWS x MAX_COLS.
    */
   evaluate(word, row, col, dir) {
     const { dr, dc } = step(dir)
@@ -97,7 +100,7 @@ class Board {
     if (crossings === 0 || fresh.length === 0) return -1
 
     const b = this.bounds(fresh)
-    if (b.maxR - b.minR + 1 > MAX_BOARD || b.maxC - b.minC + 1 > MAX_BOARD) return -1
+    if (b.maxR - b.minR + 1 > MAX_ROWS || b.maxC - b.minC + 1 > MAX_COLS) return -1
     return crossings
   }
 

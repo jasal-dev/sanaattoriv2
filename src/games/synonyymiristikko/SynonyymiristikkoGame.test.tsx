@@ -111,6 +111,31 @@ describe('SynonyymiristikkoGame', () => {
     expect(screen.getByTestId('active-clue')).toHaveTextContent('3 ↓')
   })
 
+  it('steps through the words with the previous and next buttons, wrapping around', async () => {
+    await renderGame()
+    fireEvent.click(screen.getByRole('button', { name: 'Seuraava sana' }))
+    expect(screen.getByTestId('active-clue')).toHaveTextContent('2 ↓ HANA (5)')
+    fireEvent.click(screen.getByRole('button', { name: 'Edellinen sana' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Edellinen sana' }))
+    expect(screen.getByTestId('active-clue')).toHaveTextContent('4 → ITSE (3)')
+    fireEvent.click(screen.getByRole('button', { name: 'Seuraava sana' }))
+    expect(screen.getByTestId('active-clue')).toHaveTextContent('1 → KOTIELÄIN (5)')
+  })
+
+  it('flips the direction at a crossing when the clue itself is tapped', async () => {
+    await renderGame()
+    fireEvent.click(screen.getByTestId('active-clue'))
+    expect(screen.getByTestId('active-clue')).toHaveTextContent('2 ↓ HANA (5)')
+    fireEvent.click(screen.getByTestId('active-clue'))
+    expect(screen.getByTestId('active-clue')).toHaveTextContent('1 → KOTIELÄIN (5)')
+  })
+
+  it('disables the clue bar once the game is over', async () => {
+    await renderGame()
+    fireEvent.click(screen.getByRole('button', { name: 'Luovuta' }))
+    expect(screen.getByRole('button', { name: 'Seuraava sana' })).toBeDisabled()
+  })
+
   it('moves with the arrow keys and flips direction with space', async () => {
     await renderGame()
     fireEvent.keyDown(window, { key: 'ArrowDown' })
@@ -122,16 +147,13 @@ describe('SynonyymiristikkoGame', () => {
     expect(screen.getByTestId('active-clue')).toHaveTextContent('1 →')
   })
 
-  it('marks wrong letters on check and clears the mark when they are edited', async () => {
+  it('gives no hint about wrong letters: a full but wrong word looks like any other', async () => {
     await renderGame()
-    type('KO')
-    fireEvent.click(screen.getByRole('button', { name: 'Tarkista' }))
-    expect(tile('0,1')).toHaveAttribute('data-state', 'wrong')
-    expect(tile('0,0')).toHaveAttribute('data-state', 'open')
-    expect(tile('0,1')).toHaveAccessibleName(/väärin/)
-    fireEvent.click(tile('0,1'))
-    type('I')
-    expect(tile('0,1')).toHaveAttribute('data-state', 'open')
+    type('KOSSA')
+    expect(screen.queryByRole('button', { name: 'Tarkista' })).not.toBeInTheDocument()
+    for (const key of ['0,0', '0,1', '0,2', '0,3', '0,4']) {
+      expect(tile(key)).toHaveAttribute('data-state', 'open')
+    }
   })
 
   it('reveals a letter and locks it', async () => {

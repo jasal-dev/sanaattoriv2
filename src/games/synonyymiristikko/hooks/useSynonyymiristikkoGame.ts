@@ -6,7 +6,6 @@ import {
   backspace,
   initialState,
   isSolved,
-  markWrong,
   moveCursor,
   revealAll,
   sanitizeState,
@@ -51,7 +50,6 @@ export interface UseSynonyymiristikkoGame {
   backspace: () => void
   moveCursor: (dRow: number, dCol: number) => void
   stepWord: (delta: 1 | -1) => void
-  check: () => void
   hint: () => void
   giveUp: () => void
   newGame: () => void
@@ -163,7 +161,6 @@ export function useSynonyymiristikkoGame(): UseSynonyymiristikkoGame {
       [edit],
     ),
     stepWord: useCallback((delta) => edit((board, game) => stepWord(board, game, delta)), [edit]),
-    check: useCallback(() => edit(markWrong), [edit]),
     hint: useCallback(
       () =>
         update((current) => {

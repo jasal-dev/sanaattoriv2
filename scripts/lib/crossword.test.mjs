@@ -2,7 +2,8 @@
 import { describe, expect, it } from 'vitest'
 import {
   buildCrossword,
-  MAX_BOARD,
+  MAX_COLS,
+  MAX_ROWS,
   numberWords,
   seededRng,
   usableClues,
@@ -106,8 +107,8 @@ describe('buildCrossword', () => {
       for (const w of words) expect(synonymsByWord.get(w.answer)).toContain(w.clue)
       const rows = Math.max(...words.map((w) => w.row + (w.dir === 'down' ? w.answer.length : 1)))
       const cols = Math.max(...words.map((w) => w.col + (w.dir === 'across' ? w.answer.length : 1)))
-      expect(rows).toBeLessThanOrEqual(MAX_BOARD)
-      expect(cols).toBeLessThanOrEqual(MAX_BOARD)
+      expect(rows).toBeLessThanOrEqual(MAX_ROWS)
+      expect(cols).toBeLessThanOrEqual(MAX_COLS)
     }
     expect(built).toBeGreaterThan(0)
   })

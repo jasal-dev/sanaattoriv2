@@ -8,7 +8,6 @@ import {
   initialState,
   isSolved,
   lockedKeys,
-  markWrong,
   moveCursor,
   revealAll,
   sanitizeState,
@@ -152,16 +151,6 @@ describe('typeLetter', () => {
     expect(state.entries['0,0']).toBe('K')
     expect(state.entries['0,1']).toBe('I')
   })
-
-  it('clears the wrong mark of the tile it edits', () => {
-    let state = typeAll(initialState(board), 'X')
-    state = markWrong(board, state)
-    expect(state.wrong).toEqual(['0,0'])
-    state = typeLetter(board, selectCell(board, state, { row: 0, col: 1 }), 'I')
-    expect(state.wrong).toEqual(['0,0'])
-    state = typeLetter(board, selectCell(board, state, { row: 0, col: 0 }), 'K')
-    expect(state.wrong).toEqual([])
-  })
 })
 
 describe('backspace', () => {
@@ -188,13 +177,6 @@ describe('backspace', () => {
     const solved = typeAll(selectWord(initialState(board), kukko), 'KUKKO')
     const state = backspace(board, selectCell(board, solved, { row: 2, col: 0 }))
     expect(state.entries).toEqual(solved.entries)
-  })
-})
-
-describe('markWrong', () => {
-  it('marks filled tiles that differ from the answer only', () => {
-    const state = markWrong(board, typeAll(initialState(board), 'KOS'))
-    expect(state.wrong).toEqual(['0,1'])
   })
 })
 

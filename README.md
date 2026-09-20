@@ -75,7 +75,7 @@ scraped from [synonyymit.net](https://synonyymit.net) by `npm run collect:synony
 word). `npm run build:synonyymiristikko-puzzles` turns them into about 300 crossword puzzles in
 `src/data/synonyymiristikko-puzzles.json`: one clue per word (a synonym that neither contains nor
 is contained in the answer and is not also a synonym of another answer on the board), words
-crossing at right angles with no stray letter runs, boards of at most 12 × 12 tiles.
+crossing at right angles with no stray letter runs, boards of at most 8 columns × 10 rows so the tiles stay large enough to tap on a phone.
 
 ## Sanasuppilo puzzle data
 

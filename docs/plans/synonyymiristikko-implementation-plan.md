@@ -162,10 +162,9 @@ AGENTS.md and README get the extra game/script.
   or Enter cycle through words. Mobile: an on-screen keyboard reusing the Sanuri keyboard
   component (if it is generic enough to lift out — check during implementation), otherwise a
   hidden input to raise the OS keyboard. Finnish letters Ä/Ö included.
-- **Checking**: no submit button, and no penalty. A **Tarkista** ("Check") button marks wrong
-  letters (red); correct filled letters stay neutral. A word that is completely and correctly
-  filled turns green and locks. **Win** when every word is correct → dialog with "Uusi peli" /
-  "Lopeta", like the other games.
+- **Checking**: there is no submit or check button, and wrong letters are never marked. Only a
+  word that is completely and correctly filled changes appearance: it turns dark and locks.
+  **Win** when every word is correct → dialog with "Uusi peli" / "Lopeta", like the other games.
 - **Help**: "Vihje" reveals one letter of the selected word (counts as used help); "Luovuta"
   reveals all and counts as a played, unsolved game. (Kept small, as in Sanapiilo.)
 - **Persisting**: the puzzle in progress (puzzle id + typed letters) is saved to `localStorage`,
@@ -181,8 +180,8 @@ AGENTS.md and README get the extra game/script.
   that in mind — verify in the browser, and reduce to 10 × 12 if it's too small).
 - The clue list is a single column of rows under the board, wrapped and scrollable with the page.
 - Accessibility: tiles are buttons with `aria-label` ("Rivi 2, sarake 3, vaakasana 4, tyhjä"),
-  the selected clue is announced, and colours (highlight, wrong, correct) are never the only
-  cue (wrong letters also get an icon/aria-label).
+  the selected clue is announced, and the selected and solved states are not conveyed by colour
+  alone (solved words are also announced in the clue list).
 
 ### Data loading
 
@@ -193,9 +192,8 @@ lists) so it isn't in the main bundle.
 
 - **Unit (Vitest)**: synonym parsing and normalising against fixtures; crossword generator
   invariants (seeded rng); clue-selection filters (giveaway substrings, ambiguous clues);
-  numbering; the game's selection/typing/check/win logic as pure functions.
-- **Component**: typing into tiles, direction toggle at crossings, clue tap, Check marks errors,
-  hint, give up, win dialog, restore from `localStorage`.
+  numbering; the game's selection/typing/win logic as pure functions.
+- **Component**: typing into tiles, direction toggle at crossings, clue tap, hint, give up, win dialog, restore from `localStorage`.
 - **E2E (Playwright)**: `tests/e2e/synonyymiristikko.spec.ts` — start a game, solve it by reading
   the answers from the shipped data (the test imports the JSON, picks the puzzle that is loaded by
   its id, and types every word), see the win dialog; plus a reload-keeps-progress test.
@@ -244,3 +242,16 @@ Everything above is a default I picked; these are the ones worth a quick look:
 - The shipped pool has 300 puzzles built from all four collected word lengths (seeded, so
   `npm run build:synonyymiristikko-puzzles` is reproducible). Clues are not restricted beyond the
   rules in Part 2.
+- **Mobile layout**: the game is laid out like an app. The clue bar (with previous/next arrows,
+  and a tap on the clue flipping the direction at a crossing) is pinned at the top, the keyboard
+  and buttons at the bottom, and only the board and clue list scroll between them, keeping the
+  cursor tile in view. Boards are limited to 8 columns × 10 rows (about 42 px tiles on a phone)
+  instead of 12 × 12. Tiles, keys and buttons use `touch-action: manipulation` and no text
+  selection, so quick tapping does not trigger double-tap zoom, and keys highlight on press.
+- **Board scaling**: the board shrinks to fit the space between the clue bar and the keyboard, but
+  never below half of the width it could otherwise fill (about 19 px tiles on a 320 px screen); a
+  board that still does not fit scrolls. It is done in CSS with container units (the scroll area is
+  a size container), so no resize listeners are needed.
+- **No Tarkista / no error marks**: the plan's check button and red wrong-letter marks were
+  removed again. The player gets no feedback on a wrong letter beyond a word not locking; the only
+  help is "Paljasta kirjain" (which counts against "solved without reveals").

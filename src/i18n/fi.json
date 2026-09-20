@@ -92,7 +92,6 @@
   "synonyymiristikko.row": "rivi",
   "synonyymiristikko.column": "sarake",
   "synonyymiristikko.empty": "tyhjä",
-  "synonyymiristikko.wrong": "väärin",
   "synonyymiristikko.across": "vaaka",
   "synonyymiristikko.down": "pysty",
   "synonyymiristikko.letters": "kirjainta",
@@ -101,7 +100,6 @@
   "synonyymiristikko.activeClue": "Valittu vihje",
   "synonyymiristikko.keyboard": "Näppäimistö",
   "synonyymiristikko.deleteLetter": "Poista kirjain",
-  "synonyymiristikko.check": "Tarkista",
   "synonyymiristikko.reveal": "Paljasta kirjain",
   "synonyymiristikko.giveUp": "Luovuta",
   "synonyymiristikko.youWon": "Ristikko ratkaistu!",
@@ -110,5 +108,8 @@
   "synonyymiristikko.quit": "Lopeta",
   "synonyymiristikko.exitGame": "Lopeta peli",
   "synonyymiristikko.statsButton": "Tilastot",
-  "stats.solvedWithoutHints": "Ilman paljastuksia"
+  "stats.solvedWithoutHints": "Ilman paljastuksia",
+  "synonyymiristikko.previousWord": "Edellinen sana",
+  "synonyymiristikko.nextWord": "Seuraava sana",
+  "synonyymiristikko.flipDirection": "Vaihda suuntaa"
 }

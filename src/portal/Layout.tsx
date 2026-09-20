@@ -20,6 +20,10 @@ import { loadStats, type SanuriStats } from '../storage/stats'
 import { GAMES } from './games'
 import { SettingsMenu } from './SettingsMenu'
 
+// Width per letter (in em) of the uppercase display font, with a little slack, so the title always
+// fits its share of the row. The room left for the badge is the --title-reserved variable below.
+const TITLE_EM_PER_CHAR = 0.56
+
 export function Layout() {
   const { t } = useI18n()
   const location = useLocation()
@@ -44,13 +48,23 @@ export function Layout() {
   return (
     <main className="flex h-svh justify-center bg-slate-50 px-2 py-[clamp(0.5rem,2dvh,2rem)] sm:px-4">
       <div className="flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-2xl shadow-lg">
-        <header className="flex shrink-0 flex-row items-center justify-between gap-4 bg-ink-900 px-5 py-[clamp(0.6rem,3dvh,1.5rem)] sm:px-8">
-          <div className="text-left">
+        <header className="flex shrink-0 flex-row items-center justify-between gap-2 bg-ink-900 px-3 py-[clamp(0.6rem,3dvh,1.5rem)] sm:gap-4 sm:px-8">
+          {/* The title scales down (never up past its usual size) so that a long name shares the
+              row with the badge and the icon buttons instead of pushing them off a small screen. */}
+          <div
+            className="min-w-0 flex-1 text-left [--title-max:1.5rem] [--title-reserved:2.6rem] sm:[--title-max:1.875rem] sm:[--title-reserved:4.5rem] md:[--title-max:2.25rem]"
+            style={{ containerType: 'inline-size' }}
+          >
             <div className="flex items-center gap-2 sm:gap-3">
-              <h1 className="font-display text-2xl font-bold tracking-wide text-white uppercase sm:text-3xl md:text-4xl">
+              <h1
+                className="font-display font-bold tracking-wide whitespace-nowrap text-white uppercase"
+                style={{
+                  fontSize: `min(var(--title-max), calc((100cqw - var(--title-reserved)) / ${headerTitle.length * TITLE_EM_PER_CHAR}))`,
+                }}
+              >
                 <Link to="/">{headerTitle}</Link>
               </h1>
-              <span className="font-display rounded-full border border-white/30 px-2 py-0.5 text-[0.6rem] font-semibold tracking-widest text-ink-100 uppercase sm:text-xs">
+              <span className="font-display rounded-full border border-white/30 px-1.5 py-0.5 sm:px-2 text-[0.5rem] font-semibold tracking-widest text-ink-100 uppercase sm:text-xs">
                 {t('app.beta')}
               </span>
             </div>
@@ -60,7 +74,7 @@ export function Layout() {
               </p>
             )}
           </div>
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
             {activeGame && (
               <button
                 type="button"

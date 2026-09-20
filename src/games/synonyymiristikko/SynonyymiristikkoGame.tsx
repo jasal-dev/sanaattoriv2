@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../i18n/I18nProvider'
+import { ActiveClueBar } from './components/ActiveClueBar'
 import { Board } from './components/Board'
 import { ClueList } from './components/ClueList'
-import { DIRECTION_ARROW } from './components/directionArrow'
 import { GameOverModal } from './components/GameOverModal'
 import { LetterKeyboard } from './components/LetterKeyboard'
 import { useSynonyymiristikkoGame } from './hooks/useSynonyymiristikkoGame'
@@ -19,9 +19,9 @@ const ARROWS: Record<string, [number, number]> = {
 }
 
 const SECONDARY_BUTTON =
-  'rounded border border-ink-700 px-4 py-2 font-semibold text-ink-700 transition-colors hover:bg-ink-100'
+  'rounded border border-ink-700 px-3 py-1.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-100 active:bg-present sm:px-4 sm:py-2 sm:text-base'
 const PRIMARY_BUTTON =
-  'rounded bg-ink-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-ink-900'
+  'rounded bg-ink-700 px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-ink-900 active:bg-ink-900 sm:px-4 sm:py-2 sm:text-base'
 
 export function SynonyymiristikkoGame() {
   const { t } = useI18n()
@@ -37,7 +37,6 @@ export function SynonyymiristikkoGame() {
       activeKeys: new Set((word ? wordPositions(word) : []).map((p) => cellKey(p.row, p.col))),
       locked: lockedKeys(board, state),
       solved: solvedNumbers(board, state),
-      wrong: new Set(state.wrong),
     }
   }, [session])
 
@@ -76,39 +75,54 @@ export function SynonyymiristikkoGame() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [isPlaying, cursor, typeLetter, backspace, moveCursor, stepWord, selectCell])
 
+  // The board scrolls above the pinned keyboard, so keep the cursor tile visible.
+  const cursorKey = cursor ? cellKey(cursor.row, cursor.col) : null
+  useEffect(() => {
+    if (!cursorKey) return
+    document
+      .querySelector<HTMLElement>(`[data-cell="${cursorKey}"]`)
+      ?.scrollIntoView?.({ block: 'nearest' })
+  }, [cursorKey])
+
   if (!session || !derived) return null
   const { board, game: state, status } = session
   const { word } = derived
 
   return (
-    <div className="flex w-full max-w-xl min-w-0 flex-col items-center gap-3">
-      <p
-        aria-live="polite"
-        data-testid="active-clue"
-        className="flex min-h-9 w-full items-center justify-center rounded bg-white px-2 py-1 text-center font-display text-lg font-bold tracking-wide text-ink-900 uppercase shadow-sm"
-      >
-        {word && (
-          <>
-            {word.n} {DIRECTION_ARROW[word.dir]} {word.clue} ({word.answer.length})
-          </>
-        )}
-      </p>
-      <Board
-        board={board}
-        entries={state.entries}
-        cursor={state.cursor}
-        activeKeys={derived.activeKeys}
-        locked={derived.locked}
-        wrong={derived.wrong}
+    // Laid out like an app: the clue bar and the keyboard stay put, and only the
+    // board and clue list scroll between them. touch-manipulation and select-none
+    // stop double-tap zoom and text selection while tapping keys quickly.
+    <div className="flex min-h-0 w-full max-w-xl flex-1 touch-manipulation flex-col items-center gap-2 select-none [-webkit-tap-highlight-color:transparent]">
+      <ActiveClueBar
+        word={word}
         disabled={status !== 'playing'}
-        onSelect={selectCell}
+        onPrevious={() => stepWord(-1)}
+        onNext={() => stepWord(1)}
+        onFlip={() => selectCell(state.cursor)}
       />
+      <div
+        className="flex min-h-0 w-full flex-1 flex-col items-center gap-3 overflow-y-auto"
+        style={{ containerType: 'size' }}
+      >
+        <Board
+          board={board}
+          entries={state.entries}
+          cursor={state.cursor}
+          activeKeys={derived.activeKeys}
+          locked={derived.locked}
+          disabled={status !== 'playing'}
+          onSelect={selectCell}
+        />
+        <ClueList
+          words={board.words}
+          activeNumber={word?.n}
+          solved={derived.solved}
+          onSelect={game.selectWord}
+        />
+      </div>
       {status === 'playing' && (
-        <>
-          <div className="flex shrink-0 flex-wrap justify-center gap-3">
-            <button type="button" onClick={game.check} className={SECONDARY_BUTTON}>
-              {t('synonyymiristikko.check')}
-            </button>
+        <div className="flex w-full shrink-0 flex-col items-center gap-2">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
             <button type="button" onClick={game.hint} className={SECONDARY_BUTTON}>
               {t('synonyymiristikko.reveal')}
             </button>
@@ -117,7 +131,7 @@ export function SynonyymiristikkoGame() {
             </button>
           </div>
           <LetterKeyboard onLetter={typeLetter} onBackspace={backspace} />
-        </>
+        </div>
       )}
       {status === 'gaveUp' && (
         <div className="flex shrink-0 flex-col items-center gap-3">
@@ -132,12 +146,6 @@ export function SynonyymiristikkoGame() {
           </div>
         </div>
       )}
-      <ClueList
-        words={board.words}
-        activeNumber={word?.n}
-        solved={derived.solved}
-        onSelect={game.selectWord}
-      />
       {status === 'won' && <GameOverModal onPlayAgain={game.newGame} />}
     </div>
   )

@@ -92,7 +92,6 @@
   "synonyymiristikko.row": "row",
   "synonyymiristikko.column": "column",
   "synonyymiristikko.empty": "empty",
-  "synonyymiristikko.wrong": "wrong",
   "synonyymiristikko.across": "across",
   "synonyymiristikko.down": "down",
   "synonyymiristikko.letters": "letters",
@@ -101,7 +100,6 @@
   "synonyymiristikko.activeClue": "Selected clue",
   "synonyymiristikko.keyboard": "Keyboard",
   "synonyymiristikko.deleteLetter": "Delete letter",
-  "synonyymiristikko.check": "Check",
   "synonyymiristikko.reveal": "Reveal letter",
   "synonyymiristikko.giveUp": "Give up",
   "synonyymiristikko.youWon": "Crossword solved!",
@@ -110,5 +108,8 @@
   "synonyymiristikko.quit": "Quit",
   "synonyymiristikko.exitGame": "Quit game",
   "synonyymiristikko.statsButton": "Stats",
-  "stats.solvedWithoutHints": "Without reveals"
+  "stats.solvedWithoutHints": "Without reveals",
+  "synonyymiristikko.previousWord": "Previous word",
+  "synonyymiristikko.nextWord": "Next word",
+  "synonyymiristikko.flipDirection": "Switch direction"
 }

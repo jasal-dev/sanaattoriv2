@@ -3,7 +3,7 @@ import { cellKey, otherDirection, wordPositions, type Board, type Position } fro
 
 /**
  * Everything about a game in progress that isn't derived from the puzzle:
- * what has been typed, the cursor and which tiles carry an error mark. All
+ * what has been typed and where the cursor is. All
  * plain data so it can go straight into localStorage.
  */
 export interface CrosswordState {
@@ -13,8 +13,6 @@ export interface CrosswordState {
   hinted: readonly string[]
   cursor: Position
   dir: Direction
-  /** Tiles marked wrong by "check"; a mark clears when its tile is edited. */
-  wrong: readonly string[]
 }
 
 const positionKey = (position: Position) => cellKey(position.row, position.col)
@@ -26,7 +24,6 @@ export function initialState(board: Board): CrosswordState {
     hinted: [],
     cursor: wordPositions(first)[0],
     dir: first.dir,
-    wrong: [],
   }
 }
 
@@ -109,10 +106,6 @@ export function moveCursor(
   return { ...state, cursor: { row: target.row, col: target.col }, dir }
 }
 
-function withoutMark(wrong: readonly string[], key: string): string[] {
-  return wrong.filter((existing) => existing !== key)
-}
-
 /**
  * Types into the cursor's tile (skipping locked ones) and moves on to the
  * next empty tile of the word, so a player only ever types the letters they
@@ -136,7 +129,6 @@ export function typeLetter(board: Board, state: CrosswordState, letter: string):
   return {
     ...state,
     entries,
-    wrong: withoutMark(state.wrong, key),
     cursor: positions[next],
   }
 }
@@ -153,7 +145,7 @@ export function backspace(board: Board, state: CrosswordState): CrosswordState {
     const key = positionKey(position)
     const entries = { ...state.entries }
     delete entries[key]
-    return { ...state, entries, wrong: withoutMark(state.wrong, key), cursor: position }
+    return { ...state, entries, cursor: position }
   }
 
   if (state.entries[cursorKey] && !locked.has(cursorKey)) return clear(state.cursor)
@@ -161,14 +153,6 @@ export function backspace(board: Board, state: CrosswordState): CrosswordState {
   let index = positions.findIndex((position) => positionKey(position) === cursorKey) - 1
   while (index >= 0 && locked.has(positionKey(positions[index]))) index--
   return index < 0 ? state : clear(positions[index])
-}
-
-/** Marks every filled tile that doesn't match the answer. */
-export function markWrong(board: Board, state: CrosswordState): CrosswordState {
-  const wrong = [...board.cells.values()]
-    .filter((cell) => state.entries[cell.key] && state.entries[cell.key] !== cell.letter)
-    .map((cell) => cell.key)
-  return { ...state, wrong }
 }
 
 /** Reveals the first tile of the active word that isn't correct yet, or returns null if the word is done. */
@@ -185,7 +169,6 @@ export function applyHint(board: Board, state: CrosswordState): CrosswordState |
     ...state,
     entries: { ...state.entries, [key]: word.answer[index] },
     hinted: state.hinted.includes(key) ? state.hinted : [...state.hinted, key],
-    wrong: withoutMark(state.wrong, key),
     cursor: positions[index],
   }
 }
@@ -194,7 +177,7 @@ export function applyHint(board: Board, state: CrosswordState): CrosswordState |
 export function revealAll(board: Board, state: CrosswordState): CrosswordState {
   const entries: Record<string, string> = {}
   for (const cell of board.cells.values()) entries[cell.key] = cell.letter
-  return { ...state, entries, wrong: [] }
+  return { ...state, entries }
 }
 
 /**
