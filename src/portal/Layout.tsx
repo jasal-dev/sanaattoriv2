@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { SanajahtiStatsModal } from '../games/sanajahti/components/SanajahtiStatsModal'
+import { SanasykeroStatsModal } from '../games/sanasykero/components/SanasykeroStatsModal'
 import { SanapiiloStatsModal } from '../games/sanapiilo/components/SanapiiloStatsModal'
 import { SanasuppiloStatsModal } from '../games/sanasuppilo/components/SanasuppiloStatsModal'
 import { SynonyymiristikkoStatsModal } from '../games/synonyymiristikko/components/SynonyymiristikkoStatsModal'
@@ -16,6 +17,7 @@ import {
   loadSynonyymiristikkoStats,
   type SynonyymiristikkoStats,
 } from '../storage/synonyymiristikkoStats'
+import { loadSanasykeroStats, type SanasykeroStats } from '../storage/sanasykeroStats'
 import { loadStats, type SanuriStats } from '../storage/stats'
 import { GAMES } from './games'
 import { SettingsMenu } from './SettingsMenu'
@@ -37,6 +39,7 @@ export function Layout() {
   const [sanajahtiStats, setSanajahtiStats] = useState<SanajahtiStats | null>(null)
   const [synonyymiristikkoStats, setSynonyymiristikkoStats] =
     useState<SynonyymiristikkoStats | null>(null)
+  const [sanasykeroStats, setSanasykeroStats] = useState<SanasykeroStats | null>(null)
 
   function handleWordLengthChange(length: WordLength) {
     setWordLength(length)
@@ -84,6 +87,8 @@ export function Layout() {
                     setSanasuppiloStats(loadSanasuppiloStats())
                   else if (activeGame.kind === 'sanapiilo') setSanapiiloStats(loadSanapiiloStats())
                   else if (activeGame.kind === 'sanajahti') setSanajahtiStats(loadSanajahtiStats())
+                  else if (activeGame.kind === 'sanasykero')
+                    setSanasykeroStats(loadSanasykeroStats())
                   else setSynonyymiristikkoStats(loadSynonyymiristikkoStats())
                 }}
                 aria-label={t(`${activeGame.kind}.statsButton`)}
@@ -151,6 +156,9 @@ export function Layout() {
       )}
       {sanajahtiStats && (
         <SanajahtiStatsModal stats={sanajahtiStats} onClose={() => setSanajahtiStats(null)} />
+      )}
+      {sanasykeroStats && (
+        <SanasykeroStatsModal stats={sanasykeroStats} onClose={() => setSanasykeroStats(null)} />
       )}
       {synonyymiristikkoStats && (
         <SynonyymiristikkoStatsModal

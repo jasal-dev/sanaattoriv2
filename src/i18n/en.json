@@ -111,5 +111,22 @@
   "stats.solvedWithoutHints": "Without reveals",
   "synonyymiristikko.previousWord": "Previous word",
   "synonyymiristikko.nextWord": "Next word",
-  "synonyymiristikko.flipDirection": "Switch direction"
+  "synonyymiristikko.flipDirection": "Switch direction",
+  "games.sanasykero.title": "Word whirl",
+  "games.sanasykero.description": "Link every letter of the grid into words",
+  "sanasykero.grid": "Letter grid",
+  "sanasykero.usedCell": "used",
+  "sanasykero.builtWords": "Words built",
+  "sanasykero.removeWord": "Remove word",
+  "sanasykero.notAWord": "not accepted",
+  "sanasykero.alreadyUsed": "already used",
+  "sanasykero.exampleSolution": "Example solution",
+  "sanasykero.combine": "Combine",
+  "sanasykero.giveUp": "Quit",
+  "sanasykero.hint": "Hint",
+  "sanasykero.newGame": "New game",
+  "sanasykero.quit": "Quit",
+  "sanasykero.solved": "Solved!",
+  "sanasykero.exitGame": "Quit game",
+  "sanasykero.statsButton": "Stats"
 }

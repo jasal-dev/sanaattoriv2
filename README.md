@@ -14,6 +14,9 @@ direction, bending freely), one point per letter of every valid word; see
 Synonyymiristikko is a small crossword whose 5–10 numbered words each have a synonym as their clue;
 its puzzles are generated offline from synonyms scraped from synonyymit.net; see
 [docs/plans/synonyymiristikko-implementation-plan.md](docs/plans/synonyymiristikko-implementation-plan.md).
+Sanasykerö is a 6 × 6 word puzzle: every letter of the grid belongs to a hidden word, and the game is
+solved when all letters have been linked into words; boards are generated in the browser on every new
+game; see [docs/plans/sanasykero-implementation-plan.md](docs/plans/sanasykero-implementation-plan.md).
 
 See [docs/plans/sanuri-implementation-plan.md](docs/plans/sanuri-implementation-plan.md) for the
 full implementation plan.
@@ -30,6 +33,9 @@ full implementation plan.
 - `npm run test:e2e` — end-to-end tests (Playwright)
 - `npm run build:wordlists` — regenerate `src/data/words-{4,5,6,7}[-easy].json` from the Kotus
   and frequency sources
+- `npm run build:sanasykero-words` — regenerate `src/data/sanasykero-words.json` (the words Sanasykerö
+  accepts) and `src/data/sanasykero-pool.json` (familiar words its boards are built from), both
+  without compounds
 - `npm run build:sanajahti-words` — regenerate `src/data/sanajahti-words.json` (every Kotus word of
   4+ letters) for Sanajahti
 - `npm run collect:synonyms -- <4|5|6|7>` — manually scrape synonyms for the easy word lists from

@@ -30,6 +30,11 @@ const SynonyymiristikkoRoute = lazy(() =>
     default: module.SynonyymiristikkoRoute,
   })),
 )
+const SanasykeroRoute = lazy(() =>
+  import('./games/sanasykero/SanasykeroRoute').then((module) => ({
+    default: module.SanasykeroRoute,
+  })),
+)
 
 function App() {
   return (
@@ -83,6 +88,14 @@ function App() {
               element={
                 <Suspense fallback={null}>
                   <SynonyymiristikkoRoute />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/sanasykero"
+              element={
+                <Suspense fallback={null}>
+                  <SanasykeroRoute />
                 </Suspense>
               }
             />

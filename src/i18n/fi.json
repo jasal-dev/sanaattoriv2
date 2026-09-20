@@ -111,5 +111,22 @@
   "stats.solvedWithoutHints": "Ilman paljastuksia",
   "synonyymiristikko.previousWord": "Edellinen sana",
   "synonyymiristikko.nextWord": "Seuraava sana",
-  "synonyymiristikko.flipDirection": "Vaihda suuntaa"
+  "synonyymiristikko.flipDirection": "Vaihda suuntaa",
+  "games.sanasykero.title": "Sanasykerö",
+  "games.sanasykero.description": "Yhdistä ruudukon kaikki kirjaimet sanoiksi",
+  "sanasykero.grid": "Kirjainruudukko",
+  "sanasykero.usedCell": "käytetty",
+  "sanasykero.builtWords": "Muodostetut sanat",
+  "sanasykero.removeWord": "Poista sana",
+  "sanasykero.notAWord": "ei kelpaa",
+  "sanasykero.alreadyUsed": "jo käytetty",
+  "sanasykero.exampleSolution": "Esimerkkiratkaisu",
+  "sanasykero.combine": "Yhdistä",
+  "sanasykero.giveUp": "Lopeta",
+  "sanasykero.hint": "Vihje",
+  "sanasykero.newGame": "Uusi peli",
+  "sanasykero.quit": "Lopeta",
+  "sanasykero.solved": "Ratkaistu!",
+  "sanasykero.exitGame": "Lopeta peli",
+  "sanasykero.statsButton": "Tilastot"
 }
