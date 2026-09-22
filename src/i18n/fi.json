@@ -56,6 +56,8 @@
   "offline.installing": "Ladataan pelejä offline-käyttöön…",
   "offline.ready": "Käytettävissä ilman verkkoyhteyttä",
   "offline.error": "Offline-tilan käyttöönotto epäonnistui, yritä uudelleen",
+  "offline.updateAvailable": "Päivitys saatavilla, asenna napauttamalla",
+  "offline.updating": "Päivitetään…",
   "games.sanapiilo.title": "Sanapiilo",
   "games.sanapiilo.description": "Etsi ruudukkoon piilotetut kymmenen sanaa",
   "sanapiilo.grid": "Kirjainruudukko",

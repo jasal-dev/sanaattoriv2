@@ -56,6 +56,8 @@
   "offline.installing": "Downloading games for offline play…",
   "offline.ready": "Available offline",
   "offline.error": "Couldn't enable offline play, try again",
+  "offline.updateAvailable": "Update available, tap to install",
+  "offline.updating": "Updating…",
   "games.sanapiilo.title": "Sanapiilo",
   "games.sanapiilo.description": "Find the ten words hidden in the letter grid",
   "sanapiilo.grid": "Letter grid",

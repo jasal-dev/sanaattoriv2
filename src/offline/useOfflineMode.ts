@@ -1,6 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export type OfflineModeState = 'unsupported' | 'idle' | 'installing' | 'ready' | 'error'
+
+/** Signature of the function vite-plugin-pwa's registerSW() returns to apply a waiting update. */
+type UpdateServiceWorker = (reloadPage?: boolean) => Promise<void>
 
 // Persists that the visitor opted in before, so the service worker
 // re-registers itself on the next visit without another click -- the
@@ -29,6 +32,12 @@ export interface UseOfflineModeResult {
   state: OfflineModeState
   /** Registers the service worker and precaches every game. No-op once ready or installing. */
   enable: () => void
+  /** True once a newer, already-downloaded version is waiting to replace the active one. */
+  updateAvailable: boolean
+  /** True while the waiting update is being activated, just before the page reloads onto it. */
+  updating: boolean
+  /** Activates the waiting update and reloads onto it. No-op unless updateAvailable is true. */
+  applyUpdate: () => void
 }
 
 /**
@@ -51,12 +60,18 @@ function getInitialState(): OfflineModeState {
 
 export function useOfflineMode(): UseOfflineModeResult {
   const [state, setState] = useState<OfflineModeState>(getInitialState)
+  const [updateAvailable, setUpdateAvailable] = useState(false)
+  const [updating, setUpdating] = useState(false)
+  // Holds the function registerSW() returns for applying a waiting update --
+  // a ref rather than state since calling it doesn't itself need a re-render,
+  // only the updateAvailable/updating flags above do.
+  const updateServiceWorkerRef = useRef<UpdateServiceWorker | null>(null)
 
   const register = useCallback(() => {
     setState('installing')
     void import('virtual:pwa-register')
       .then(({ registerSW }) => {
-        registerSW({
+        const updateServiceWorker = registerSW({
           immediate: true,
           // Fires once Workbox has finished precaching every game for a
           // *newly installed* worker -- that's the point at which the
@@ -76,10 +91,20 @@ export function useOfflineMode(): UseOfflineModeResult {
               setState('ready')
             }
           },
+          // A newer build has already finished downloading and precaching
+          // in the background and is sat waiting -- surface it instead of
+          // silently sitting on the old version until the app is fully
+          // closed and reopened (the only way an update would otherwise
+          // take effect, since a worker never interrupts pages it doesn't
+          // yet control).
+          onNeedRefresh: () => {
+            setUpdateAvailable(true)
+          },
           onRegisterError: () => {
             setState('error')
           },
         })
+        updateServiceWorkerRef.current = updateServiceWorker
       })
       .catch(() => {
         setState('error')
@@ -101,5 +126,15 @@ export function useOfflineMode(): UseOfflineModeResult {
     register()
   }, [state, register])
 
-  return { state, enable }
+  const applyUpdate = useCallback(() => {
+    if (!updateServiceWorkerRef.current) return
+    setUpdating(true)
+    // Tells the waiting worker to activate. We don't pass an onNeedReload
+    // callback to registerSW, so vite-plugin-pwa's own default -- a plain
+    // window.location.reload() once the new worker takes control -- runs on
+    // its own; there's nothing further to do here beyond disabling the button.
+    void updateServiceWorkerRef.current(true)
+  }, [])
+
+  return { state, enable, updateAvailable, updating, applyUpdate }
 }
