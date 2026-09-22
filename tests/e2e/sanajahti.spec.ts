@@ -32,6 +32,10 @@ async function centreOf(grid: Locator, cell: Point) {
   }
 }
 
+function triangularScore(word: string): number {
+  return (word.length * (word.length + 1)) / 2
+}
+
 async function dragOver(page: Page, cells: Point[]) {
   const grid = page.getByRole('grid')
   const start = await centreOf(grid, cells[0])
@@ -44,16 +48,14 @@ async function dragOver(page: Page, cells: Point[]) {
   await page.mouse.up()
 }
 
-test('finds a word by dragging its bending path and scores one point per letter', async ({
-  page,
-}) => {
+test('finds a word by dragging its bending path and scores triangular points', async ({ page }) => {
   await openGame(page)
   const words = findAllWords(await readGrid(page), dictionary)
   expect(words.size).toBeGreaterThanOrEqual(10)
 
   const [word, cells] = [...words][0]
   await dragOver(page, cells)
-  await expect(page.getByTestId('score')).toHaveText(String(word.length))
+  await expect(page.getByTestId('score')).toHaveText(String(triangularScore(word)))
   await expect(page.getByRole('list')).toContainText(word)
 })
 
@@ -68,7 +70,7 @@ test('ends the round after two minutes and offers Uusi peli and Lopeta', async (
   await page.clock.fastForward(121_000)
   const dialog = page.getByRole('dialog')
   await expect(dialog).toContainText('Aika loppui!')
-  await expect(page.getByTestId('final-score')).toHaveText(String(word.length))
+  await expect(page.getByTestId('final-score')).toHaveText(String(triangularScore(word)))
   await expect(dialog.getByRole('link', { name: 'Lopeta' })).toBeVisible()
 
   await dialog.getByRole('button', { name: 'Uusi peli' }).click()
