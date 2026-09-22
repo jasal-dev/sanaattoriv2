@@ -40,6 +40,9 @@ vi.mock('./wordPool', () => ({
 
 const SEED = 'test'
 
+/** Triangular scoring: 1st letter worth 1, 2nd worth 2, and so on. */
+const triangularScore = (word: string) => (word.length * (word.length + 1)) / 2
+
 /** The grid the game will generate: same pool, same seed, so the same letters. */
 function expectedWords() {
   const grid = generateGrid(POOL, dictionary, seededRng(hashSeed(SEED)))
@@ -105,17 +108,17 @@ describe('SanajahtiGame', () => {
     expect(screen.getByTestId('score')).toHaveTextContent('0')
   })
 
-  it('scores one point per letter for a dragged word, and ignores it the second time', async () => {
+  it('scores triangular points for a dragged word, and ignores it the second time', async () => {
     const grid = await renderGame()
     stubGridRect(grid)
     const [word, cells] = [...expectedWords()][0]
 
     dragPath(grid, cells)
-    expect(screen.getByTestId('score')).toHaveTextContent(String(word.length))
+    expect(screen.getByTestId('score')).toHaveTextContent(String(triangularScore(word)))
     expect(screen.getByRole('list')).toHaveTextContent(word)
 
     dragPath(grid, cells)
-    expect(screen.getByTestId('score')).toHaveTextContent(String(word.length))
+    expect(screen.getByTestId('score')).toHaveTextContent(String(triangularScore(word)))
   })
 
   it('scores a tapped path once its last letter is tapped again', async () => {
@@ -123,7 +126,7 @@ describe('SanajahtiGame', () => {
     const [word, cells] = [...expectedWords()][0]
 
     tapWord(grid, cells)
-    expect(screen.getByTestId('score')).toHaveTextContent(String(word.length))
+    expect(screen.getByTestId('score')).toHaveTextContent(String(triangularScore(word)))
   })
 
   it('does not score a path that is not a word', async () => {
@@ -150,13 +153,13 @@ describe('SanajahtiGame', () => {
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toHaveTextContent('Aika loppui!')
-    expect(screen.getByTestId('final-score')).toHaveTextContent(String(word.length))
+    expect(screen.getByTestId('final-score')).toHaveTextContent(String(triangularScore(word)))
     expect(screen.getByRole('link', { name: 'Lopeta' })).toBeInTheDocument()
-    expect(loadSanajahtiStats()).toEqual({ played: 1, highScore: word.length })
+    expect(loadSanajahtiStats()).toEqual({ played: 1, highScore: triangularScore(word) })
 
     // Input is ignored once the time is up.
     dragPath(grid, [...expectedWords()][1][1])
-    expect(screen.getByTestId('score')).toHaveTextContent(String(word.length))
+    expect(screen.getByTestId('score')).toHaveTextContent(String(triangularScore(word)))
 
     fireEvent.click(screen.getByRole('button', { name: 'Uusi peli' }))
     await screen.findByRole('timer')

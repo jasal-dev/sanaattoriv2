@@ -52,7 +52,11 @@ export type ScoreResult =
   | { kind: 'duplicate'; word: string }
   | { kind: 'invalid'; word: string }
 
-/** Judges a submitted path: a real, not-yet-found word scores one point per letter. */
+/**
+ * Judges a submitted path: a real, not-yet-found word scores triangular
+ * points (1st letter worth 1, 2nd worth 2, ...), so longer words are
+ * rewarded much more than their length alone would suggest.
+ */
 export function scorePath(
   path: readonly Cell[],
   grid: readonly (readonly string[])[],
@@ -62,5 +66,5 @@ export function scorePath(
   const word = pathToWord(path, grid)
   if (word.length < MIN_WORD_LENGTH || !dictionary.hasWord(word)) return { kind: 'invalid', word }
   if (found.has(word)) return { kind: 'duplicate', word }
-  return { kind: 'score', word, points: word.length }
+  return { kind: 'score', word, points: (word.length * (word.length + 1)) / 2 }
 }

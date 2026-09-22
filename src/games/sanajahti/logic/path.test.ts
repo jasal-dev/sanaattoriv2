@@ -64,14 +64,14 @@ describe('scorePath', () => {
     expect(pathToWord(kala, grid)).toBe('KALA')
   })
 
-  it('scores one point per letter', () => {
+  it('scores triangular points: 1st letter worth 1, 2nd worth 2, and so on', () => {
     expect(scorePath(kala, grid, dictionary, new Set())).toEqual({
       kind: 'score',
       word: 'KALA',
-      points: 4,
+      points: 10,
     })
     expect(scorePath([...kala, c(1, 3)], grid, dictionary, new Set())).toMatchObject({
-      points: 5,
+      points: 15,
     })
   })
 
