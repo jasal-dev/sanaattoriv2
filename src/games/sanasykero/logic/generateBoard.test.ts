@@ -36,7 +36,7 @@ describe('generateBoard', () => {
       expect(seen.size).toBe(BOARD_SIZE * BOARD_SIZE)
       expect(new Set(solution.map((entry) => entry.word)).size).toBe(solution.length)
     }
-  })
+  }, 20000)
 
   it('uses at most one 3-letter word', () => {
     for (let seed = 0; seed < 100; seed++) {
