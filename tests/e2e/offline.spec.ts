@@ -27,3 +27,26 @@ test('downloads every game for offline play via the header button, then plays fu
   await page.goto('/sanajahti')
   await expect(page.getByRole('grid')).toBeVisible()
 })
+
+test('shows "available offline" immediately on a later visit instead of spinning forever', async ({
+  page,
+  context,
+}) => {
+  // Regression test: onOfflineReady (the callback the button relied on to
+  // leave its "installing" state) only ever fires once, the first time a
+  // worker installs -- a later navigation, already controlled by that same
+  // worker, must not wait on it again.
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Lataa pelit offline-käyttöön' }).click()
+  await expect(
+    page.getByRole('status', { name: 'Käytettävissä ilman verkkoyhteyttä' }),
+  ).toBeVisible({ timeout: 15_000 })
+
+  await context.setOffline(true)
+  await page.reload()
+
+  await expect(
+    page.getByRole('status', { name: 'Käytettävissä ilman verkkoyhteyttä' }),
+  ).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Lataa pelit offline-käyttöön' })).toHaveCount(0)
+})

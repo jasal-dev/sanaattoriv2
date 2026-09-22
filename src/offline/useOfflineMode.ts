@@ -39,7 +39,14 @@ export interface UseOfflineModeResult {
  * said yes before.
  */
 function getInitialState(): OfflineModeState {
-  return typeof navigator !== 'undefined' && 'serviceWorker' in navigator ? 'idle' : 'unsupported'
+  if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return 'unsupported'
+  // This navigation is already being served by an active worker (e.g.
+  // reopening the app from its home-screen icon after offline mode was
+  // enabled in an earlier session) -- start at 'ready' immediately instead
+  // of replaying the installing spinner, which would otherwise wait forever
+  // for an "offline ready" event that only ever fires once, the very first
+  // time a worker installs (see the onRegisteredSW comment below).
+  return navigator.serviceWorker.controller ? 'ready' : 'idle'
 }
 
 export function useOfflineMode(): UseOfflineModeResult {
@@ -51,12 +58,23 @@ export function useOfflineMode(): UseOfflineModeResult {
       .then(({ registerSW }) => {
         registerSW({
           immediate: true,
-          // Fires once Workbox has finished precaching every game, not just
-          // once the worker is registered -- that's the point at which the
-          // portal is actually safe to use offline.
+          // Fires once Workbox has finished precaching every game for a
+          // *newly installed* worker -- that's the point at which the
+          // portal is actually safe to use offline for the first time.
           onOfflineReady: () => {
             writeEnabledFlag()
             setState('ready')
+          },
+          // Covers re-registering an already-active worker from a previous
+          // session (e.g. a plain reload, or getInitialState's controller
+          // check missing it), where onOfflineReady above never fires again
+          // -- without this, the button would spin forever on every repeat
+          // visit instead of just the first one.
+          onRegisteredSW: (_url, registration) => {
+            if (registration?.active) {
+              writeEnabledFlag()
+              setState('ready')
+            }
           },
           onRegisterError: () => {
             setState('error')
