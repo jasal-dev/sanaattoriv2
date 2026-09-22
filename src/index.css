@@ -1,5 +1,15 @@
 @import 'tailwindcss';
 
+/* Self-hosted Oswald weights (matches the weights previously loaded from
+   Google Fonts) so the app has no cross-origin dependency and the font
+   files are included in the offline precache like any other build asset.
+   The "latin" subset covers Finnish (å/ä/ö live in Latin-1 Supplement) --
+   importing only it, rather than every script fontsource ships, keeps the
+   offline download from precaching Cyrillic/Vietnamese glyphs nobody uses. */
+@import '@fontsource/oswald/latin-500.css';
+@import '@fontsource/oswald/latin-600.css';
+@import '@fontsource/oswald/latin-700.css';
+
 @theme {
   --font-display: 'Oswald', ui-sans-serif, system-ui, sans-serif;
 

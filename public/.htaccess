@@ -23,6 +23,17 @@
   <FilesMatch "^index\.html$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
+  # The generated service worker and manifest also live at a fixed,
+  # un-hashed filename (unlike the /assets/*.js chunks above), so they need
+  # the same no-cache treatment as index.html: otherwise the immutable-js
+  # rule above would pin browsers to the first sw.js they ever fetched and
+  # a new deploy's offline precache list would never be picked up.
+  <FilesMatch "^sw\.js$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "^manifest\.webmanifest$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
 </IfModule>
 
 # --- Single-page app routing: the React app handles routes like /sanuri

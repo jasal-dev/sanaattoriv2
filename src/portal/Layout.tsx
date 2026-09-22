@@ -20,6 +20,7 @@ import {
 import { loadSanasykeroStats, type SanasykeroStats } from '../storage/sanasykeroStats'
 import { loadStats, type SanuriStats } from '../storage/stats'
 import { GAMES } from './games'
+import { OfflineButton } from './OfflineButton'
 import { SettingsMenu } from './SettingsMenu'
 
 // Width per letter (in em) of the uppercase display font, with a little slack, so the title always
@@ -112,6 +113,7 @@ export function Layout() {
                 </svg>
               </button>
             )}
+            <OfflineButton />
             <SettingsMenu
               wordLength={activeGame?.kind === 'sanuri' ? wordLength : undefined}
               onWordLengthChange={
